@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.devrock.beautyappv2.auth.AuthViewModel" />
+    </data>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/authHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/segoe_regular"
+            android:text="@string/header_auth"
+            android:textAlignment="center"
+            android:textColor="#4E8CC1"
+            android:textSize="24sp"
+            android:layout_marginTop="110dp"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/authPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            app:boxStrokeWidth="0.5dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/authPhoneInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="59dp"
+                android:layout_marginEnd="59dp"
+                android:fontFamily="@font/segoe_regular"
+                android:lines="1"
+                android:maxLength="18"
+                android:inputType="phone"
+                android:hint="@string/auth_input_hint" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/authInputCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="63dp"
+            android:layout_marginEnd="59dp"
+            android:fontFamily="@font/segoe_regular"
+            android:text="@string/authInputCaptionText"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/authButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/auth_button_text"
+            android:textColor="#ffffff"
+            android:layout_marginStart="59dp"
+            android:layout_marginEnd="59dp"
+            android:layout_marginTop="63dp"
+            android:height="52dp"
+            android:background="@drawable/auth_button"
+            />
+
+        <TextView
+            android:id="@+id/authBottomCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/auth_bottom_caption_text"
+            android:fontFamily="@font/segoe_regular"
+            android:textSize="12sp"
+            android:layout_marginStart="59dp"
+            android:layout_marginEnd="59dp"
+            android:layout_marginTop="21dp"
+            />
+
+    </LinearLayout>
+</layout>

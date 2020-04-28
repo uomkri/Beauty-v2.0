@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Beauty</string>
+    <string name="header_auth">Авторизация</string>
+    <string name="authInputCaptionText">Мы отправим SMS-сообщение с кодом</string>
+    <string name="auth_input_hint">Номер телефона</string>
+    <string name="auth_button_text">Получить код</string>
+    <string name="auth_bottom_caption_text">Используя это приложение, Вы соглашаетесь с политикой конфиденциальности, с которой Вы можете ознакомиться по этой ссылке</string>
 </resources>

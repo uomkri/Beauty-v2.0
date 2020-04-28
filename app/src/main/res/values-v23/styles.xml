@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:windowLightStatusBar">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
-
-    <style name="AuthButtonDisabled" parent="Widget.AppCompat.Button.Borderless">
-        <item name="cornerRadius">9dp</item>
-        <item name="borderWidth">1dp</item>
-        <item name="android:textColor">#BDBDBD</item>
-    </style>
-
 </resources>
