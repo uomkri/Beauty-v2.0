@@ -1,11 +1,14 @@
 package com.devrock.beautyappv2.auth
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.PorterDuff
+import android.net.Uri
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -15,6 +18,7 @@ import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentAuthBinding
 import ru.tinkoff.decoro.MaskImpl
@@ -28,6 +32,8 @@ class AuthFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentAuthBinding
+
+    private var phone: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,10 +64,24 @@ class AuthFragment : Fragment() {
                     button.isClickable = viewModel.setButtonAvailability(s.length)
                     if(button.isEnabled) button.setTextColor((resources.getColor(R.color.white)))
                     if(!button.isEnabled) button.setTextColor((resources.getColor(R.color.colorButtonDisabled)))
+                    phone = s.toString()
                 }
             }
         })
         formatWatcher.installOn(input)
+
+        binding.authButton.setOnClickListener { view: View ->
+            //view.findNavController().navigate(R.id.action_authFragment_to_authPinFragment)
+            viewModel.sendCode(phone)
+        }
+
+        binding.authBottomCaption.setOnClickListener{
+            val url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        }
+
         return binding.root
     }
 

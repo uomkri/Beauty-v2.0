@@ -53,4 +53,5 @@ dependencies {
     implementation "android.arch.navigation:navigation-ui-ktx:$version_navigation"
     implementation 'android.arch.paging:runtime:1.0.1'
     implementation "ru.tinkoff.decoro:decoro:1.2.0"
+    implementation "com.github.mukeshsolanki:android-otpview-pinview:2.0.0"
 }

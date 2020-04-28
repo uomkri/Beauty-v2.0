@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
     app:startDestination="@id/authFragment">
 
     <fragment
         android:id="@+id/authFragment"
         android:name="com.devrock.beautyappv2.auth.AuthFragment"
-        android:label="AuthFragment" />
+        android:label="AuthFragment">
+        <action
+            android:id="@+id/action_authFragment_to_authPinFragment"
+            app:destination="@id/authPinFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/authPinFragment"
+        android:name="com.devrock.beautyappv2.auth.AuthPinFragment"
+        android:label="AuthPinFragment" />
+    <deepLink
+        android:id="@+id/deepLinkTerms"
+        app:uri="https://www.youtube.com/watch?v=dQw4w9WgXcQ" />
 </navigation>

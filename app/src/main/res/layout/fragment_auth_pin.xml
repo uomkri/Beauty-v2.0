@@ -8,7 +8,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.devrock.beautyappv2.auth.AuthViewModel" />
+            type="com.devrock.beautyappv2.auth.AuthPinViewModel" />
     </data>
 
 
@@ -16,8 +16,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
-        >
+        android:background="#ffffff">
 
         <TextView
             android:id="@+id/authHeader"
@@ -37,57 +36,48 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
             app:boxStrokeWidth="0.5dp"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/authPhoneInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="59dp"
-                android:layout_marginEnd="59dp"
-                android:fontFamily="@font/segoe_regular"
-                android:lines="1"
-                android:maxLength="18"
-                android:inputType="phone"
-                android:hint="@string/auth_input_hint" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            />
 
         <TextView
-            android:id="@+id/authInputCaption"
+            android:id="@+id/authPinInputCaption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="63dp"
             android:layout_marginEnd="59dp"
             android:fontFamily="@font/segoe_regular"
-            android:text="@string/authInputCaptionText"
+            android:text="Код из SMS-сообщения"
+            android:textAlignment="center"
             android:textSize="12sp" />
 
-        <Button
-            android:id="@+id/authButton"
-            android:layout_width="match_parent"
+        <com.mukesh.OtpView
+            android:id="@+id/otp_view"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/auth_button_text"
-            android:textColor="#ffffff"
-            android:fontFamily="@font/segoe_regular"
-            android:layout_marginStart="59dp"
-            android:layout_marginEnd="59dp"
-            android:layout_marginTop="63dp"
-            android:height="52dp"
-            android:background="@drawable/auth_button"
-            />
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:inputType="number"
+            android:itemBackground="@color/colorPrimary"
+            android:textAlignment="center"
+            android:textColor="#191919"
+            app:cursorColor="#FFFFFF"
+            app:hideLineWhenFilled="true"
+            app:itemCount="4"
+            app:itemHeight="41dp"
+            app:itemSpacing="15dp"
+            app:itemWidth="28dp"
+            app:lineColor="#858585"
+            app:viewType="line" />
 
         <TextView
-            android:id="@+id/authBottomCaption"
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/auth_bottom_caption_text"
+            android:text="Получить новый код через 30 с"
             android:fontFamily="@font/segoe_regular"
             android:textSize="12sp"
-            android:layout_marginStart="59dp"
-            android:layout_marginEnd="59dp"
-            android:layout_marginTop="21dp"
-            />
+            android:textColor="#858585"
+            android:layout_marginTop="27dp"
+            android:textAlignment="center" />
 
     </LinearLayout>
 </layout>
