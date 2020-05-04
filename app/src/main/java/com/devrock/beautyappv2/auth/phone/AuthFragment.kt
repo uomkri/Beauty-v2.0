@@ -1,25 +1,22 @@
-package com.devrock.beautyappv2.auth
+package com.devrock.beautyappv2.auth.phone
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
-import android.telephony.PhoneNumberFormattingTextWatcher
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.databinding.DataBindingUtil
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.devrock.beautyappv2.R
+import com.devrock.beautyappv2.auth.phone.AuthFragmentDirections
 import com.devrock.beautyappv2.databinding.FragmentAuthBinding
 import ru.tinkoff.decoro.MaskImpl
 import ru.tinkoff.decoro.parser.UnderscoreDigitSlotsParser
@@ -46,6 +43,7 @@ class AuthFragment : Fragment() {
         binding.viewModel = viewModel
         val input: EditText = binding.authPhoneInput
         val button: Button = binding.authButton
+
         button.isEnabled = false
         button.isClickable = false
         button.setTextColor((resources.getColor(R.color.colorButtonDisabled)))
@@ -70,10 +68,21 @@ class AuthFragment : Fragment() {
         })
         formatWatcher.installOn(input)
 
-        binding.authButton.setOnClickListener { view: View ->
-            //view.findNavController().navigate(R.id.action_authFragment_to_authPinFragment)
+        viewModel.status.observe(this, Observer { newStatus ->
+            val view : View = binding.authButton
+            if(newStatus == "Ok") view.findNavController().navigate(
+                AuthFragmentDirections.actionAuthFragmentToAuthPinFragment(
+                    phone
+                )
+            )
+            else Toast.makeText(context, newStatus, Toast.LENGTH_SHORT).show()
+         })
+
+        binding.authButton.setOnClickListener {
             viewModel.sendCode(phone)
         }
+
+
 
         binding.authBottomCaption.setOnClickListener{
             val url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"

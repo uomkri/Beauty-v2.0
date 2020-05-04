@@ -1,73 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
             name="viewModel"
-            type="com.devrock.beautyappv2.auth.phone.AuthViewModel" />
+            type="com.devrock.beautyappv2.signup.name.NameViewModel" />
     </data>
-
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffffff"
-        >
+        android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/authHeader"
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/segoe_regular"
-            android:text="@string/header_auth"
+            android:text="Регистрация"
             android:textAlignment="center"
             android:textColor="#4E8CC1"
             android:textSize="24sp"
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="30dp"
             />
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="73dp"
+            android:layout_height="73dp"
+            android:id="@+id/signup_set_avatar"
+            android:src="@drawable/pholder"
+            android:layout_gravity="center"
+            android:layout_marginTop="34dp"
+
+            />
         <com.devrock.beautyappv2.ui.ColorTextInput
-            android:id="@+id/authPhone"
+            android:id="@+id/signup_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="53dp"
             app:boxStrokeWidth="0.5dp"
             >
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/authPhoneInput"
+                android:id="@+id/signup_name_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="59dp"
                 android:layout_marginEnd="59dp"
                 android:fontFamily="@font/segoe_regular"
                 android:lines="1"
-                android:maxLength="18"
-                android:inputType="phone"
-                android:hint="@string/auth_input_hint" />
+                android:maxLength="30"
+                android:inputType="textPersonName"
+                android:hint="Ваше имя" />
 
         </com.devrock.beautyappv2.ui.ColorTextInput>
 
-        <TextView
-            android:id="@+id/authInputCaption"
+        <com.devrock.beautyappv2.ui.ColorTextInput
+            android:id="@+id/signup_lastname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="63dp"
-            android:layout_marginEnd="59dp"
-            android:fontFamily="@font/segoe_regular"
-            android:text="@string/authInputCaptionText"
-            android:textSize="12sp" />
+            android:layout_marginTop="39dp"
+            app:boxStrokeWidth="0.5dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signup_lastname_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="59dp"
+                android:layout_marginEnd="59dp"
+                android:fontFamily="@font/segoe_regular"
+                android:lines="1"
+                android:maxLength="30"
+                android:inputType="textPersonName"
+                android:hint="Ваша фамилия" />
+
+        </com.devrock.beautyappv2.ui.ColorTextInput>
 
         <Button
             android:id="@+id/authButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/auth_button_text"
+            android:text="Готово"
             android:textColor="#ffffff"
             android:fontFamily="@font/segoe_regular"
             android:layout_marginStart="59dp"
@@ -75,18 +91,6 @@
             android:layout_marginTop="63dp"
             android:height="52dp"
             android:background="@drawable/auth_button"
-            />
-
-        <TextView
-            android:id="@+id/authBottomCaption"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/auth_bottom_caption_text"
-            android:fontFamily="@font/segoe_regular"
-            android:textSize="12sp"
-            android:layout_marginStart="59dp"
-            android:layout_marginEnd="59dp"
-            android:layout_marginTop="21dp"
             />
 
     </LinearLayout>

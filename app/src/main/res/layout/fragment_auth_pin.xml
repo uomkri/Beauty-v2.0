@@ -8,7 +8,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.devrock.beautyappv2.auth.AuthPinViewModel" />
+            type="com.devrock.beautyappv2.auth.pin.AuthPinViewModel" />
     </data>
 
 
