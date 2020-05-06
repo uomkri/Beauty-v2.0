@@ -20,27 +20,27 @@
             android:name="phone"
             app:argType="string" />
         <action
-            android:id="@+id/action_authPinFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
             android:id="@+id/action_authPinFragment_to_nameFragment"
             app:destination="@id/nameFragment" />
+        <action
+            android:id="@+id/action_authPinFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <deepLink
         android:id="@+id/deepLinkTerms"
         app:uri="https://www.youtube.com/watch?v=dQw4w9WgXcQ" />
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.devrock.beautyappv2.profile.profile.ProfileFragment"
-        android:label="ProfileFragment" >
+        android:id="@+id/nameFragment"
+        android:name="com.devrock.beautyappv2.signup.name.NameFragment"
+        android:label="NameFragment" >
         <argument
             android:name="session"
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/nameFragment"
-        android:name="com.devrock.beautyappv2.signup.name.NameFragment"
-        android:label="NameFragment" >
+        android:id="@+id/mapFragment"
+        android:name="com.devrock.beautyappv2.map.MapFragment"
+        android:label="MapFragment" >
         <argument
             android:name="session"
             app:argType="string" />

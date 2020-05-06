@@ -1,5 +1,6 @@
 package com.devrock.beautyappv2.auth.phone
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -32,6 +34,12 @@ class AuthFragment : Fragment() {
 
     private var phone: String = ""
 
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,6 +51,7 @@ class AuthFragment : Fragment() {
         binding.viewModel = viewModel
         val input: EditText = binding.authPhoneInput
         val button: Button = binding.authButton
+        binding.root.hideKeyboard()
 
         button.isEnabled = false
         button.isClickable = false
@@ -70,11 +79,10 @@ class AuthFragment : Fragment() {
 
         viewModel.status.observe(this, Observer { newStatus ->
             val view : View = binding.authButton
-            if(newStatus == "Ok") view.findNavController().navigate(
-                AuthFragmentDirections.actionAuthFragmentToAuthPinFragment(
-                    phone
-                )
-            )
+            if(newStatus == "Ok") {
+                view.findNavController().navigate(
+                AuthFragmentDirections.actionAuthFragmentToAuthPinFragment(phone)
+            )}
             else Toast.makeText(context, newStatus, Toast.LENGTH_SHORT).show()
          })
 

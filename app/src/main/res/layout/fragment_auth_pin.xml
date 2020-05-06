@@ -16,7 +16,9 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff">
+        android:background="#ffffff"
+        android:fitsSystemWindows="true"
+        >
 
         <TextView
             android:id="@+id/authHeader"
@@ -49,24 +51,26 @@
             android:textAlignment="center"
             android:textSize="12sp" />
 
-        <com.mukesh.OtpView
-            android:id="@+id/otp_view"
+        <in.aabhasjindal.otptextview.OtpTextView
+            android:id="@+id/otpView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:inputType="number"
-            android:itemBackground="@color/colorPrimary"
-            android:textAlignment="center"
             android:textColor="#191919"
-            app:cursorColor="#FFFFFF"
-            app:hideLineWhenFilled="true"
-            app:itemCount="4"
-            app:itemHeight="41dp"
-            app:itemSpacing="15dp"
-            app:itemWidth="28dp"
-            app:lineColor="#858585"
-            app:viewType="line" />
+            app:height="38dp"
+            app:width="40dp"
+            android:layout_gravity="center"
+            app:bar_enabled="true"
+            app:bar_height="1.5dp"
+            app:length="4"
+            app:otp_text_size="14sp"
+            app:text_typeface="@font/segoe_regular"
+            app:bar_margin_right="4dp"
+            app:bar_margin_left="4dp"
+            app:bar_active_color="#20629B"
+            app:bar_inactive_color="#858585"
+            app:bar_error_color="#D52E5F"
+            android:layout_marginTop="25dp"
+            />
 
         <TextView
             android:id="@+id/pinCaption"

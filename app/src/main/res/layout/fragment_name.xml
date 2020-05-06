@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="53dp"
             app:boxStrokeWidth="0.5dp"
+            android:theme="@style/TextInput"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -63,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="39dp"
             app:boxStrokeWidth="0.5dp"
+            android:theme="@style/TextInput"
             >
 
             <com.google.android.material.textfield.TextInputEditText
