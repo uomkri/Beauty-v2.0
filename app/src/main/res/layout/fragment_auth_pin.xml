@@ -69,15 +69,29 @@
             app:viewType="line" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/pinCaption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Получить новый код через 30 с"
+            android:text="@string/pin_caption"
             android:fontFamily="@font/segoe_regular"
             android:textSize="12sp"
             android:textColor="#858585"
             android:layout_marginTop="27dp"
+            android:visibility="visible"
             android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/pinCaptionNew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/new_code"
+            android:textAlignment="center"
+            android:fontFamily="@font/segoe_regular"
+            android:textSize="16sp"
+            android:layout_marginTop="27dp"
+            android:textColor="#4e8cc1"
+            android:visibility="gone"
+            />
 
     </LinearLayout>
 </layout>
