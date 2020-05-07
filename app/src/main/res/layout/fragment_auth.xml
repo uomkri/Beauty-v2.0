@@ -79,17 +79,5 @@
 
             />
 
-        <TextView
-            android:id="@+id/authBottomCaption"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/auth_bottom_caption_text"
-            android:fontFamily="@font/segoe_regular"
-            android:textSize="12sp"
-            android:layout_marginStart="59dp"
-            android:layout_marginEnd="59dp"
-            android:layout_marginTop="21dp"
-            />
-
     </LinearLayout>
 </layout>

@@ -51,13 +51,15 @@ class AuthFragment : Fragment() {
         binding.viewModel = viewModel
         val input: EditText = binding.authPhoneInput
         val button: Button = binding.authButton
-        binding.root.hideKeyboard()
+
+        binding.authPhone.isFocusableInTouchMode = true;
 
         button.isEnabled = false
         button.isClickable = false
         button.setTextColor((resources.getColor(R.color.colorButtonDisabled)))
         val slots = UnderscoreDigitSlotsParser().parseSlots("+7 (___) ___ __ __")
         val formatWatcher = MaskFormatWatcher(MaskImpl.createTerminated(slots))
+
         input.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -77,6 +79,12 @@ class AuthFragment : Fragment() {
         })
         formatWatcher.installOn(input)
 
+        input.setOnFocusChangeListener{v, b ->
+            if(b) input.setText("+7 (")
+        }
+
+
+
         viewModel.status.observe(this, Observer { newStatus ->
             val view : View = binding.authButton
             if(newStatus == "Ok") {
@@ -90,16 +98,12 @@ class AuthFragment : Fragment() {
             viewModel.sendCode(phone)
         }
 
-
-
-        binding.authBottomCaption.setOnClickListener{
-            val url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            startActivity(i)
-        }
-
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.authPhone.clearFocus()
     }
 
 

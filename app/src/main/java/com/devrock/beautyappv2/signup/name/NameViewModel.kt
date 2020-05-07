@@ -68,21 +68,11 @@ class NameViewModel : ViewModel() {
         } else Log.e("AccountCreation", "Error: Null Session")
     }
 
-    fun getPath(applicationContext: Context, uri: Uri): String? {
-        var result: String? = null
-        val proj = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = applicationContext.getContentResolver().query(uri, proj, null, null, null)
-        if (cursor != null) {
-            if (cursor!!.moveToFirst()) {
-                val columnIndex = cursor!!.getColumnIndexOrThrow(proj[0])
-                result = cursor!!.getString(columnIndex)
-            }
-            cursor!!.close()
-        }
-        if (result == null) {
-            result = "Not found"
-        }
-        return result
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun encode(imgPath: String){
+        encodeBase64(imgPath)
     }
+
+
 
 }

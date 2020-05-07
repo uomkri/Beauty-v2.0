@@ -26,20 +26,11 @@
             android:layout_marginTop="30dp"
             />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="73dp"
-            android:layout_height="73dp"
-            android:id="@+id/signup_set_avatar"
-            android:src="@drawable/pholder"
-            android:layout_gravity="center"
-            android:layout_marginTop="34dp"
-
-            />
         <com.devrock.beautyappv2.ui.ColorTextInput
             android:id="@+id/signup_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="53dp"
+            android:layout_marginTop="40dp"
             app:boxStrokeWidth="0.5dp"
             android:theme="@style/TextInput"
             >
@@ -85,7 +76,7 @@
             android:id="@+id/authButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Готово"
+            android:text="Далее"
             android:textColor="#ffffff"
             android:fontFamily="@font/segoe_regular"
             android:layout_marginStart="59dp"

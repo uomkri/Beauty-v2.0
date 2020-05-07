@@ -24,14 +24,15 @@ import com.devrock.beautyappv2.MainActivity
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentNameBinding
 import com.devrock.beautyappv2.ui.ColorTextInput
-import com.devrock.beautyappv2.util.Prefs
 import com.google.android.material.textfield.TextInputEditText
 import java.io.InputStream
 import android.Manifest
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 
-const val RESULT_LOAD_IMAGE: Int = 1
-const val PERMISSION_REQUEST_CODE: Int = 2
 
 class NameFragment : Fragment() {
 
@@ -40,9 +41,6 @@ class NameFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentNameBinding
-    lateinit var prefs: Prefs
-    private var selectedImage: Uri? = null
-    private var path: String? = ""
 
 
 
@@ -71,7 +69,17 @@ class NameFragment : Fragment() {
         button.isEnabled = false
         button.isClickable = false
 
+        viewModel.status.observe( this, Observer { v ->
+            when (v) {
+                "Ok" -> {
+                    binding.authButton.findNavController().navigate(NameFragmentDirections.actionNameFragmentToUserpicFragment(session))
+                }
+            }
+        })
+
         button.setTextColor((resources.getColor(R.color.colorButtonDisabled)))
+
+
 
         inputName.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -109,15 +117,16 @@ class NameFragment : Fragment() {
             }
         })
 
-        binding.signupSetAvatar.setOnClickListener { getImage() }
 
         binding.authButton.setOnClickListener {
 
-            if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            /*if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(arrayOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE), PERMISSION_REQUEST_CODE)
                 if(ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) viewModel.accountCreate(session, name, lastName, path)
                 else Toast.makeText(context, "PERMISSION DENIED", Toast.LENGTH_SHORT)
-            } else viewModel.accountCreate(session, name, lastName, path)
+            } else viewModel.accountCreate(session, name, lastName, path)*/
+            //viewModel.encode(path!!)
+            viewModel.accountCreate(session, name, lastName, null)
 
 
         }
@@ -125,30 +134,9 @@ class NameFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
-            selectedImage = data?.data
-            path = viewModel.getPath(context!!, selectedImage!!)
-            Log.i("PATH", path)
-
-            Glide.with(this)
-                .load(selectedImage)
-                .apply(RequestOptions()
-                .placeholder(R.drawable.pholder))
-                .into(binding.signupSetAvatar)
 
 
-        }
-    }
 
-    fun getImage() {
-
-        val intent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        intent.type = "image/*"
-        startActivityForResult(intent, RESULT_LOAD_IMAGE)
-    }
 
 
 

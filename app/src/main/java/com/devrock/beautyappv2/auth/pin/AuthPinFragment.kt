@@ -5,6 +5,7 @@ import `in`.aabhasjindal.otptextview.OtpTextView
 import android.content.Context
 import android.os.Bundle
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,6 @@ import androidx.navigation.findNavController
 import com.devrock.beautyappv2.auth.pin.AuthPinFragmentArgs
 import com.devrock.beautyappv2.auth.pin.AuthPinViewModel.Companion.DONE
 import com.devrock.beautyappv2.databinding.FragmentAuthPinBinding
-import com.devrock.beautyappv2.util.Prefs
 import kotlinx.android.synthetic.main.fragment_auth_pin.view.*
 
 class AuthPinFragment : Fragment() {
@@ -60,7 +60,28 @@ class AuthPinFragment : Fragment() {
         }
 
 
+        viewModel.status.observe(this, Observer { v ->
+            if(v == "Error"){
+                viewModel.errorText.observe( this, Observer { v ->
+                    when (v) {
+                        "Некорректный код" -> {
+                            otpTextView.showError()
+                            binding.pinError.text = "Введен неверный код. Попробуйте снова"
+                            binding.pinError.visibility = View.VISIBLE
+                        }
+                        "Время до повторой отправки кода еще не прошло" -> {
+                            otpTextView.showError()
+                            binding.pinError.text = "Вы произвели слишком много попыток ввести неправильный код, подождите некоторое время"
+                            binding.pinError.visibility = View.VISIBLE
+                        }
+                    }
 
+                })
+            } else if (v == "Ok"){
+                otpTextView.showSuccess()
+                binding.pinError.visibility = View.GONE
+            }
+        })
 
         viewModel.registered.observe(this, Observer { v ->
             if(!v) {

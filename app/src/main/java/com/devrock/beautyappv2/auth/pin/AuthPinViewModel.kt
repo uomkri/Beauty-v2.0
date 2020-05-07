@@ -63,6 +63,10 @@ class AuthPinViewModel() : ViewModel() {
     val registered: LiveData<Boolean>
         get() = _registered
 
+    private val _errorText = MutableLiveData<String>()
+    val errorText: LiveData<String>
+        get() = _errorText
+
 
 
     fun phoneConfirm(phone: String, code: String) {
@@ -74,9 +78,12 @@ class AuthPinViewModel() : ViewModel() {
         scope.launch() {
             val response = BeautyApi.retrofitService.authPhoneConfirm(body).await()
             _status.value = response.info.status
-            _session.value = response.payload.session
-            _registered.value = response.payload.registered
-            Log.i("Session", _session.value)
+            if(_status.value == "Ok"){
+                _session.value = response.payload.session
+                _registered.value = response.payload.registered
+            } else if (_status.value == "Error"){
+                _errorText.value = response.payload.text
+            }
         }
 
 

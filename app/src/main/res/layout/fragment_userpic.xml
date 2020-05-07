@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.devrock.beautyappv2.signup.userpic.UserpicViewModel" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/segoe_regular"
+            android:text="Регистрация"
+            android:textAlignment="center"
+            android:textColor="#4E8CC1"
+            android:textSize="24sp"
+            android:layout_marginTop="30dp"
+            />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="304dp"
+            android:layout_height="wrap_content"
+            android:text="Это необязательно, но вы можете загрузить свою фотографию, чтобы повысить доверие пользователей к своему профилю"
+            android:fontFamily="@font/segoe_regular"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:id="@+id/signupSetAvatar"
+            android:src="@drawable/userpic_empty_ph"
+            android:layout_gravity="center"
+            android:layout_marginTop="34dp"
+            />
+        <Button
+            android:id="@+id/authButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Далее"
+            android:textColor="#ffffff"
+            android:fontFamily="@font/segoe_regular"
+            android:layout_marginStart="59dp"
+            android:layout_marginEnd="59dp"
+            android:layout_marginTop="63dp"
+            android:height="52dp"
+            android:background="@drawable/auth_button"
+            />
+    </LinearLayout>
+</layout>

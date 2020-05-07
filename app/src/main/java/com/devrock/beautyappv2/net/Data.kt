@@ -17,8 +17,9 @@ data class SessionResponse(
 )
 
 data class SessionPayload(
-    val session: String,
-    val registered: Boolean
+    val text: String?,
+    val session: String?,
+    val registered: Boolean?
 )
 
 data class AuthConfirmBody(

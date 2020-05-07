@@ -70,7 +70,22 @@
             app:bar_inactive_color="#858585"
             app:bar_error_color="#D52E5F"
             android:layout_marginTop="25dp"
-            />
+            >
+
+        </in.aabhasjindal.otptextview.OtpTextView>
+
+        <TextView
+            android:id="@+id/pinError"
+            android:layout_width="158dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/segoe_regular"
+            android:textSize="12sp"
+            android:text="Введен неверный код. Попробуйте снова"
+            android:textAlignment="center"
+            android:textColor="#d25e5f"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/pinCaption"
