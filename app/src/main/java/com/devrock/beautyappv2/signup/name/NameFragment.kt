@@ -1,34 +1,18 @@
 package com.devrock.beautyappv2.signup.name
 
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.app.Activity
-import android.content.Context.MODE_PRIVATE
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.devrock.beautyappv2.MainActivity
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentNameBinding
-import com.devrock.beautyappv2.ui.ColorTextInput
-import com.google.android.material.textfield.TextInputEditText
-import java.io.InputStream
-import android.Manifest
 import android.os.Build
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -45,6 +29,7 @@ class NameFragment : Fragment() {
 
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -120,13 +105,7 @@ class NameFragment : Fragment() {
 
         binding.authButton.setOnClickListener {
 
-            /*if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(arrayOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE), PERMISSION_REQUEST_CODE)
-                if(ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) viewModel.accountCreate(session, name, lastName, path)
-                else Toast.makeText(context, "PERMISSION DENIED", Toast.LENGTH_SHORT)
-            } else viewModel.accountCreate(session, name, lastName, path)*/
-            //viewModel.encode(path!!)
-            viewModel.accountCreate(session, name, lastName, null)
+            viewModel.accountCreate(session, name, lastName)
 
 
         }
