@@ -78,6 +78,5 @@
             android:background="@drawable/auth_button"
 
             />
-
-    </LinearLayout>
+        </LinearLayout>
 </layout>

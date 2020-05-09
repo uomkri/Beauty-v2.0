@@ -3,6 +3,7 @@ package com.devrock.beautyappv2.auth.pin
 import `in`.aabhasjindal.otptextview.OTPListener
 import `in`.aabhasjindal.otptextview.OtpTextView
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.util.Log
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import com.devrock.beautyappv2.AppActivity
 import com.devrock.beautyappv2.auth.pin.AuthPinFragmentArgs
 import com.devrock.beautyappv2.auth.pin.AuthPinViewModel.Companion.DONE
 import com.devrock.beautyappv2.databinding.FragmentAuthPinBinding
@@ -90,7 +92,7 @@ class AuthPinFragment : Fragment() {
             }
             if(v) {
                 binding.root.hideKeyboard()
-                binding.authHeader.findNavController().navigate(AuthPinFragmentDirections.actionAuthPinFragmentToMapFragment(viewModel.session.value.toString()))
+                gotoAppActivity(viewModel.session.value.toString())
             }
         })
 
@@ -109,6 +111,12 @@ class AuthPinFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    fun gotoAppActivity(session: String) {
+        val intent = Intent(context, AppActivity::class.java)
+        intent.putExtra("session", session)
+        startActivity(intent)
     }
 
 

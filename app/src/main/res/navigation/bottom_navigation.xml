@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/bottom_navigation"
+    app:startDestination="@id/mapFragment">
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.devrock.beautyappv2.map.MapFragment"
+        android:label="MapFragment" >
+        <argument
+            android:name="session"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_mapFragment_to_workplacesFragment"
+            app:destination="@id/workplacesFragment"
+            app:enterAnim="@anim/slide_left_in"
+            app:exitAnim="@anim/slide_right_out"
+            app:popEnterAnim="@anim/slide_right_in"
+            app:popExitAnim="@anim/slide_left_out" />
+        <action
+            android:id="@+id/action_mapFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/slide_left_in"
+            app:exitAnim="@anim/slide_right_out"
+            app:popEnterAnim="@anim/slide_right_in"
+            app:popExitAnim="@anim/slide_left_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/workplacesFragment"
+        android:name="com.devrock.beautyappv2.workplaces.WorkplacesFragment"
+        android:label="WorkplacesFragment" >
+        <argument android:name="session"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_workplacesFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/slide_left_in"
+            app:exitAnim="@anim/slide_right_out"
+            app:popEnterAnim="@anim/slide_right_in"
+            app:popExitAnim="@anim/slide_right_out" />
+        <action
+            android:id="@+id/action_workplacesFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.devrock.beautyappv2.profile.profile.ProfileFragment"
+        android:label="ProfileFragment" >
+        <argument
+            android:name="session"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_profileFragment_to_workplacesFragment"
+            app:destination="@id/workplacesFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+</navigation>

@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
+import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
@@ -25,6 +27,20 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
         binding.viewModel = viewModel
+
+
+/*
+        val navBar = binding.bottomNavBar
+
+        navBar.setOnNavigationItemReselectedListener {
+            when (it.itemId) {
+                R.id.action_workplaces -> navBar.findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToWorkplacesFragment(session))
+                R.id.action_search -> navBar.findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToMapFragment(session))
+            }
+        }*/
+
+
+
         return binding.root
     }
 

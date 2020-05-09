@@ -22,9 +22,6 @@
         <action
             android:id="@+id/action_authPinFragment_to_nameFragment"
             app:destination="@id/nameFragment" />
-        <action
-            android:id="@+id/action_authPinFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
     </fragment>
     <deepLink
         android:id="@+id/deepLinkTerms"
@@ -41,20 +38,9 @@
             app:destination="@id/userpicFragment" />
     </fragment>
     <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.devrock.beautyappv2.map.MapFragment"
-        android:label="MapFragment" >
-        <argument
-            android:name="session"
-            app:argType="string" />
-    </fragment>
-    <fragment
         android:id="@+id/userpicFragment"
         android:name="com.devrock.beautyappv2.signup.userpic.UserpicFragment"
         android:label="UserpicFragment" >
-        <action
-            android:id="@+id/action_userpicFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
         <argument
             android:name="imgUri"
             app:argType="string"

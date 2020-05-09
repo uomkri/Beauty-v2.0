@@ -111,6 +111,5 @@
             android:textColor="#4e8cc1"
             android:visibility="gone"
             />
-
     </LinearLayout>
 </layout>

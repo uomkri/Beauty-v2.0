@@ -5,8 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
+import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentMapBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
@@ -33,6 +41,7 @@ class MapFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
         MapKitFactory.setApiKey(MAP_APIKEY)
         MapKitFactory.initialize(context)
         super.onCreateView(inflater, container, savedInstanceState)
@@ -40,6 +49,23 @@ class MapFragment : Fragment() {
         binding = FragmentMapBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
 
+        val session = activity?.intent?.getStringExtra("session")
+
+
+
+        /* val navBar = binding.bottomNavBar
+
+
+         navBar.setOnNavigationItemReselectedListener {
+             when (it.itemId) {
+                 R.id.action_account -> {
+                     navBar.findNavController().navigate(MapFragmentDirections.actionMapFragmentToProfileFragment(session))
+                 }
+                 R.id.action_workplaces -> {
+                     navBar.findNavController().navigate(MapFragmentDirections.actionMapFragmentToWorkplacesFragment(session))
+                 }
+             }
+         }*/
 
         mapview = binding.mapView
         mapview.map.move(

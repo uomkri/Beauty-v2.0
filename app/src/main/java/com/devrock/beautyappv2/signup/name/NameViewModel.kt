@@ -1,9 +1,6 @@
 package com.devrock.beautyappv2.signup.name
 
-
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,7 +22,6 @@ class NameViewModel : ViewModel() {
     private var supervisorJob = SupervisorJob()
 
 
-
     private val _status = MutableLiveData<String>()
     val status: LiveData<String>
         get() = _status
@@ -38,18 +34,16 @@ class NameViewModel : ViewModel() {
 
         val body = AccountBody(firstName, lastName)
 
-        if(session != null) {
+        if (session != null) {
 
-        scope.launch() {
-            val status = BeautyApi.retrofitService.accountUpdate(session, body).await()
-            _status.value = status.info.status
-            Log.i("STATUS", _status.value)
-        }
+            scope.launch() {
+                val status = BeautyApi.retrofitService.accountUpdate(session, body).await()
+                _status.value = status.info.status
+                Log.i("STATUS", _status.value)
+            }
 
         } else Log.e("AccountCreation", "Error: Null Session")
     }
-
-
 
 
 }

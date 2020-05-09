@@ -16,14 +16,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.devrock.beautyappv2.AppActivity
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentUserpicBinding
 import com.theartofdev.edmodo.cropper.CropImage
@@ -78,6 +79,7 @@ class UserpicFragment : Fragment() {
         binding.signupSetAvatar.setOnClickListener { getImage() }
 
         binding.authButton.setOnClickListener {
+            gotoAppActivity(session)
         }
 
         return binding.root
@@ -88,6 +90,12 @@ class UserpicFragment : Fragment() {
             .setGuidelines(CropImageView.Guidelines.ON)
             .start(context!!, this)
 
+    }
+
+    fun gotoAppActivity(session: String) {
+        val intent = Intent(context, AppActivity::class.java)
+        intent.putExtra("session", session)
+        startActivity(intent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
