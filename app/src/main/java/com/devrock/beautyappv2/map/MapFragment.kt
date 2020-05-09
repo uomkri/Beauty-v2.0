@@ -1,9 +1,13 @@
 package com.devrock.beautyappv2.map
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
@@ -14,12 +18,17 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentMapBinding
+import com.devrock.beautyappv2.signup.userpic.PERMISSION_REQUEST_CODE
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.mapview.MapView
+import com.yandex.mapkit.*
+import com.yandex.mapkit.location.Location
+import com.yandex.mapkit.location.LocationListener
+import com.yandex.mapkit.location.LocationStatus
 
 class MapFragment : Fragment() {
 
@@ -41,6 +50,18 @@ class MapFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        if (ContextCompat.checkSelfPermission(
+                context!!,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions(
+                arrayOf<String>(
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ), PERMISSION_REQUEST_CODE
+            )
+        }
+
 
         MapKitFactory.setApiKey(MAP_APIKEY)
         MapKitFactory.initialize(context)
@@ -53,26 +74,31 @@ class MapFragment : Fragment() {
 
 
 
-        /* val navBar = binding.bottomNavBar
-
-
-         navBar.setOnNavigationItemReselectedListener {
-             when (it.itemId) {
-                 R.id.action_account -> {
-                     navBar.findNavController().navigate(MapFragmentDirections.actionMapFragmentToProfileFragment(session))
-                 }
-                 R.id.action_workplaces -> {
-                     navBar.findNavController().navigate(MapFragmentDirections.actionMapFragmentToWorkplacesFragment(session))
-                 }
-             }
-         }*/
-
         mapview = binding.mapView
-        mapview.map.move(
+
+        val mapKit = MapKitFactory.getInstance()
+
+        mapKit.createLocationManager().requestSingleUpdate(object : LocationListener {
+            override fun onLocationStatusUpdated(p0: LocationStatus) {
+            }
+
+            override fun onLocationUpdated(p0: Location) {
+                Log.d("Location", "${p0.position.latitude} ${p0.position.longitude}")
+                mapview.map.move(
+                    CameraPosition(p0.position, 14.0f, 0.0f, 0.0f),
+                    Animation(Animation.Type.SMOOTH, 1f),
+                    null
+                )
+            }
+
+        })
+
+
+        /*mapview.map.move(
             CameraPosition(TARGET, 14.0f, 0.0f, 0.0f),
             Animation(Animation.Type.LINEAR, 1f),
             null
-        )
+        )*/
 
         return binding.root
     }

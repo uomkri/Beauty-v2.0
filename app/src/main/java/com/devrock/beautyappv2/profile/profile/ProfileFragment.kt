@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentProfileBinding
 
@@ -27,6 +29,16 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
         binding.viewModel = viewModel
+
+        val uri = "https://beauty.judoekb.ru/api/account/getPhoto?subject=%2B79121111160"
+
+        Glide.with(this)
+            .load(uri)
+            .apply(
+                RequestOptions()
+                    .placeholder(R.drawable.userpic_empty_ph)
+            )
+            .into(binding.profileAvatar)
 
 
 /*
