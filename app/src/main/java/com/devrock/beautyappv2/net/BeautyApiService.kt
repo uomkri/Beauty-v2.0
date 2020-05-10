@@ -54,6 +54,16 @@ interface BeautyApiService {
         @HeaderMap headers: Map<String, String>,
         @Body body: String
     ): Deferred<Status>
+
+    @GET("salons/list")
+    fun getSalonsList(
+        @Header("Authorization") session: String,
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int,
+        @Query("longitude") longitude: Double,
+        @Query("latitude") latitude: Double,
+        @Query("order") order: String
+    ): Deferred<SalonListResponse>
 }
 
 object BeautyApi {

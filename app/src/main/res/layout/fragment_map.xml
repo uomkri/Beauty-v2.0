@@ -9,7 +9,7 @@
             type="com.devrock.beautyappv2.map.MapViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -40,8 +40,8 @@
                     />
         </com.yandex.mapkit.mapview.MapView>
 
+        <include layout="@layout/modal_test"/>
 
-
-    </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

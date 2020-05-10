@@ -32,3 +32,32 @@ data class AccountBody (
     val surname: String,
     val gender: String = "Female"
 )
+
+data class Geo (
+    val city: String,
+    val address: String,
+    val latitude: Double,
+    val longitude: Double
+)
+
+data class SalonListItem (
+    val id: Int,
+    val name: String,
+    val geo: Geo,
+    val hourRentEnd: String?,
+    val hourRentStart: String?,
+    val rating: Int,
+    val thumbnailPhoto: String,
+    val daysRentStart: String?,
+    val daysType: List<String>?
+)
+
+data class SalonListResponse (
+    val payload: SalonListPayload,
+    val info: Info
+)
+
+data class SalonListPayload (
+        val list: List<SalonListItem>?,
+        val text: String?
+)
