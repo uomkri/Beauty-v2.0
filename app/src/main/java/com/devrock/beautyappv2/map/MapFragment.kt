@@ -287,7 +287,7 @@ class MapFragment : Fragment() {
 
         }
 
-        mapKit.createLocationManager().subscribeForLocationUpdates(3.0, 1000, 0.0, false, FilteringMode.OFF, object: LocationListener {
+        mapKit.createLocationManager().subscribeForLocationUpdates(3.0, 10000, 0.0, false, FilteringMode.OFF, object: LocationListener {
             override fun onLocationStatusUpdated(p0: LocationStatus) {
             }
 

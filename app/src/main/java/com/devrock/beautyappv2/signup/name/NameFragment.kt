@@ -1,5 +1,7 @@
 package com.devrock.beautyappv2.signup.name
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,6 +15,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentNameBinding
 import android.os.Build
+import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -104,17 +108,32 @@ class NameFragment : Fragment() {
 
         binding.authButton.setOnClickListener {
 
-            viewModel.accountCreate(session, name, lastName)
-
-
+            val regex= Regex("\\s")
+            val formName = regex.replace(name, "")
+            val formLastName = regex.replace(lastName, "")
+            val nameReg = Regex("[А-Я][а-я]+")
+            Log.e("REGEX", "${nameReg.matches(formName)} ${nameReg.matches(formLastName)}")
+            if (nameReg.matches(formName) && nameReg.matches(formLastName)) {
+                viewModel.accountCreate(session, name, lastName)
+            } else {
+                if(!nameReg.matches(formName) && nameReg.matches(formLastName)) showAlert("Введено невалидное имя ")
+                if(!nameReg.matches(formLastName) && nameReg.matches(formName)) showAlert("Введена невалидная фамилия ")
+                if(!nameReg.matches(formLastName) && !nameReg.matches(formName)) showAlert("Введены невалидные имя и фамилия")
+                Log.e("REGEX", "called alert")
+            }
         }
 
         return binding.root
     }
 
+    fun showAlert(message: String) {
+        val builder = AlertDialog.Builder(context!!)
+        builder.setMessage(message)
+        builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = alertButtonClick))
+        builder.show()
+    }
 
-
-
+    private val alertButtonClick = { dialog: DialogInterface, which: Int -> }
 
 
 
