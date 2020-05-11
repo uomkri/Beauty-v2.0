@@ -49,7 +49,8 @@ data class SalonListItem (
     val rating: Int,
     val thumbnailPhoto: String,
     val daysRentStart: String?,
-    val daysType: List<String>?
+    val daysType: List<String>?,
+    val distance: Double?
 )
 
 data class SalonListResponse (

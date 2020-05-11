@@ -3,6 +3,7 @@ package com.devrock.beautyappv2.map
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.PointF
 import android.os.Bundle
@@ -35,21 +36,33 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
-import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.mapkit.*
 import com.yandex.mapkit.location.FilteringMode
 import com.yandex.mapkit.location.Location
 import com.yandex.mapkit.location.LocationListener
 import com.yandex.mapkit.location.LocationStatus
-import com.yandex.mapkit.map.IconStyle
-import com.yandex.mapkit.map.Rect
+import com.yandex.mapkit.map.*
+import com.yandex.mapkit.map.Map
 import com.yandex.runtime.image.ImageProvider
 import com.yandex.runtime.ui_view.ViewProvider
 import kotlinx.android.synthetic.main.map_popup.*
 import kotlinx.android.synthetic.main.map_popup.view.*
+import kotlinx.android.synthetic.main.map_popup.view.calendar
+import kotlinx.android.synthetic.main.map_popup.view.clock
 import kotlinx.android.synthetic.main.map_popup.view.map_popup
+import kotlinx.android.synthetic.main.map_popup.view.salonAddress
+import kotlinx.android.synthetic.main.map_popup.view.salonDistance
+import kotlinx.android.synthetic.main.map_popup.view.salonName
+import kotlinx.android.synthetic.main.map_popup.view.star1
+import kotlinx.android.synthetic.main.map_popup.view.star2
+import kotlinx.android.synthetic.main.map_popup.view.star3
+import kotlinx.android.synthetic.main.map_popup.view.star4
+import kotlinx.android.synthetic.main.map_popup.view.star5
+import kotlinx.android.synthetic.main.map_popup.view.startDay
+import kotlinx.android.synthetic.main.map_popup.view.workingHours
 import kotlinx.android.synthetic.main.modal_test.*
+import kotlinx.android.synthetic.main.modal_test.view.*
 import kotlin.properties.Delegates
 
 class MapFragment : Fragment() {
@@ -60,7 +73,7 @@ class MapFragment : Fragment() {
 
     private val MAP_APIKEY = "1b5f933a-6fcb-4d7f-86b3-3ff7b972bdaf"
 
-    private val TARGET : Point = Point(56.838000, 60.601513)
+    private val TARGET: Point = Point(56.838000, 60.601513)
 
     private lateinit var mapview: MapView
 
@@ -69,6 +82,9 @@ class MapFragment : Fragment() {
     private var userLon by Delegates.notNull<Double>()
 
     private var userLat by Delegates.notNull<Double>()
+
+    private lateinit var mapObjectCollection: MapObjectCollection
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -108,115 +124,29 @@ class MapFragment : Fragment() {
 
         val mapKit = MapKitFactory.getInstance()
 
-        /*mapKit.createLocationManager().requestSingleUpdate(object : LocationListener {
-            override fun onLocationStatusUpdated(p0: LocationStatus) {
-            }
 
-            override fun onLocationUpdated(p0: Location) {
-                Log.d("Location", "${p0.position.latitude} ${p0.position.longitude}")
-
-                userLat = p0.position.latitude
-                userLon = p0.position.longitude
-
-                viewModel.getSalonsList(userLon, userLat, limit, offset, order, session!!)
-
-
-                mapview.map.move(
-                    CameraPosition(p0.position, 14.0f, 0.0f, 0.0f),
-                    Animation(Animation.Type.SMOOTH, 1f),
-                    null
-                )
-            }
-
-        })*/
-
-        /*fun openPopup(item: SalonListItem) {
-            val inflater = context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view = inflater.inflate(R.layout.map_popup, null)
-
-            val popupWindow = PopupWindow(
-                view,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-
-            popupWindow.elevation = 10.0f
-
-            val slideIn = Slide()
-            slideIn.slideEdge = Gravity.BOTTOM
-            popupWindow.enterTransition = slideIn
-
-            val slideOut = Slide()
-            slideOut.slideEdge = Gravity.BOTTOM
-            popupWindow.exitTransition = slideOut
-
-            var salonName = view.salonName
-            val salonAddress = view.salonAddress
-            val salonDistance = view.salonDistance
-            val workingHours = view.workingHours
-            val startDay = view.startDay
-            val stars = listOf(view.star1, view.star2, view.star3, view.star4, view.star5)
-
-            salonName.text = item.name
-            salonAddress.text = item.geo.address
-            salonDistance.text =  "0.0"
-
-            if (item.hourRentStart != null) {
-                workingHours.text = "почасовая аренда"
-            } else {
-                workingHours.visibility = View.INVISIBLE
-                view.clock.visibility = View.INVISIBLE
-            }
-
-            if (item.daysRentStart != null) {
-                startDay.text = "помесячная аренда"
-            } else {
-                startDay.visibility = View.INVISIBLE
-                view.calendar.visibility = View.INVISIBLE
-            }
-
-            val r = item.rating
-
-            when {
-                 r in 2 downTo 1 || r == 1 -> {
-                     stars[0].setImageResource(R.drawable.ic_star_active)
-                 }
-                r in 3 downTo 2 || r == 2-> {
-                    stars[0].setImageResource(R.drawable.ic_star_active)
-                    stars[1].setImageResource(R.drawable.ic_star_active)
-                }
-                r in 4 downTo 3 || r == 3-> {
-                    stars[0].setImageResource(R.drawable.ic_star_active)
-                    stars[1].setImageResource(R.drawable.ic_star_active)
-                    stars[3].setImageResource(R.drawable.ic_star_active)
-                }
-                r in 5 downTo 4 || r == 4-> {
-                    stars[0].setImageResource(R.drawable.ic_star_active)
-                    stars[1].setImageResource(R.drawable.ic_star_active)
-                    stars[3].setImageResource(R.drawable.ic_star_active)
-                    stars[4].setImageResource(R.drawable.ic_star_active)
-                }
-                r >= 5 -> {
-                    stars[0].setImageResource(R.drawable.ic_star_active)
-                    stars[1].setImageResource(R.drawable.ic_star_active)
-                    stars[3].setImageResource(R.drawable.ic_star_active)
-                    stars[4].setImageResource(R.drawable.ic_star_active)
-                    stars[5].setImageResource(R.drawable.ic_star_active)
-                }
-            }
-
-            popupWindow.showAtLocation(
-                binding.root,
-                Gravity.BOTTOM,
-                0,
-                150
-                )
-
-
-
-        }*/
 
         fun openPopup(item: SalonListItem) {
+
+            mapview.map.move(
+                CameraPosition(Point(item.geo.latitude, item.geo.longitude), 14.0f, 0.0f, 0.0f),
+                Animation(Animation.Type.SMOOTH, 1f),
+                null
+            )
+
+            var bottomSheetBehavior = BottomSheetBehavior.from(modal_test)
+
+            mapview.map.addInputListener(object : InputListener {
+                override fun onMapLongTap(p0: Map, p1: Point) {
+
+                }
+
+                override fun onMapTap(p0: Map, p1: Point) {
+                    if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) bottomSheetBehavior.state =
+                        BottomSheetBehavior.STATE_COLLAPSED
+                }
+
+            })
 
             val view = activity!!.findViewById<View>(R.id.modal_test)
 
@@ -229,10 +159,12 @@ class MapFragment : Fragment() {
 
             salonName.text = item.name
             salonAddress.text = item.geo.address
-            salonDistance.text =  "0.0"
+            salonDistance.text = "${"%.1f".format(item.distance?.div(1000))} км"
 
             if (item.hourRentStart != null) {
                 workingHours.text = "почасовая аренда"
+                workingHours.visibility = View.VISIBLE
+                view.clock.visibility = View.VISIBLE
             } else {
                 workingHours.visibility = View.INVISIBLE
                 view.clock.visibility = View.INVISIBLE
@@ -240,6 +172,8 @@ class MapFragment : Fragment() {
 
             if (item.daysRentStart != null) {
                 startDay.text = "помесячная аренда"
+                startDay.visibility = View.VISIBLE
+                view.calendar.visibility = View.VISIBLE
             } else {
                 startDay.visibility = View.INVISIBLE
                 view.calendar.visibility = View.INVISIBLE
@@ -248,58 +182,61 @@ class MapFragment : Fragment() {
             val r = item.rating
 
             when {
-                r in 2 downTo 1 || r == 1 -> {
-                    stars[0].setImageResource(R.drawable.ic_star_active)
+                (r > 1.0) -> {
+                    stars[0].setImageResource(R.drawable.ic_star_inactive)
+                    stars[1].setImageResource(R.drawable.ic_star_inactive)
+                    stars[2].setImageResource(R.drawable.ic_star_inactive)
+                    stars[3].setImageResource(R.drawable.ic_star_inactive)
+                    stars[4].setImageResource(R.drawable.ic_star_inactive)
                 }
-                r in 3 downTo 2 || r == 2-> {
+                (r > 1.0 && r < 1.5) || r == 1 -> {
+                    stars[0].setImageResource(R.drawable.ic_star_active)
+                    stars[1].setImageResource(R.drawable.ic_star_inactive)
+                    stars[2].setImageResource(R.drawable.ic_star_inactive)
+                    stars[3].setImageResource(R.drawable.ic_star_inactive)
+                    stars[4].setImageResource(R.drawable.ic_star_inactive)
+                }
+                (r > 1.5 && r < 2.5) || r == 2 -> {
                     stars[0].setImageResource(R.drawable.ic_star_active)
                     stars[1].setImageResource(R.drawable.ic_star_active)
+                    stars[2].setImageResource(R.drawable.ic_star_inactive)
+                    stars[3].setImageResource(R.drawable.ic_star_inactive)
+                    stars[4].setImageResource(R.drawable.ic_star_inactive)
                 }
-                r in 4 downTo 3 || r == 3-> {
+                (r > 2.5 && r < 3.5) || r == 3 -> {
                     stars[0].setImageResource(R.drawable.ic_star_active)
                     stars[1].setImageResource(R.drawable.ic_star_active)
+                    stars[2].setImageResource(R.drawable.ic_star_active)
+                    stars[3].setImageResource(R.drawable.ic_star_inactive)
+                    stars[4].setImageResource(R.drawable.ic_star_inactive)
+                }
+                (r > 3.5 && r < 4.5) || r == 4 -> {
+                    stars[0].setImageResource(R.drawable.ic_star_active)
+                    stars[1].setImageResource(R.drawable.ic_star_active)
+                    stars[2].setImageResource(R.drawable.ic_star_active)
                     stars[3].setImageResource(R.drawable.ic_star_active)
-                }
-                r in 5 downTo 4 || r == 4-> {
-                    stars[0].setImageResource(R.drawable.ic_star_active)
-                    stars[1].setImageResource(R.drawable.ic_star_active)
-                    stars[3].setImageResource(R.drawable.ic_star_active)
-                    stars[4].setImageResource(R.drawable.ic_star_active)
+                    stars[4].setImageResource(R.drawable.ic_star_inactive)
                 }
                 r >= 5 -> {
                     stars[0].setImageResource(R.drawable.ic_star_active)
                     stars[1].setImageResource(R.drawable.ic_star_active)
+                    stars[2].setImageResource(R.drawable.ic_star_active)
                     stars[3].setImageResource(R.drawable.ic_star_active)
                     stars[4].setImageResource(R.drawable.ic_star_active)
-                    stars[5].setImageResource(R.drawable.ic_star_active)
                 }
             }
 
-
-
-            var bottomSheetBehavior = BottomSheetBehavior.from(modal_test)
-
             if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
-            } else {
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED)
             }
 
         }
 
-        mapKit.createLocationManager().subscribeForLocationUpdates(3.0, 10000, 0.0, false, FilteringMode.OFF, object: LocationListener {
+        mapKit.createLocationManager().requestSingleUpdate(object : LocationListener {
             override fun onLocationStatusUpdated(p0: LocationStatus) {
             }
 
             override fun onLocationUpdated(p0: Location) {
-                Log.d("Location", "${p0.position.latitude} ${p0.position.longitude}")
-
-                userLat = p0.position.latitude
-                userLon = p0.position.longitude
-
-                viewModel.getSalonsList(userLon, userLat, limit, offset, order, session!!)
-
-
                 mapview.map.move(
                     CameraPosition(p0.position, 14.0f, 0.0f, 0.0f),
                     Animation(Animation.Type.SMOOTH, 1f),
@@ -308,6 +245,28 @@ class MapFragment : Fragment() {
             }
 
         })
+
+        mapKit.createLocationManager().subscribeForLocationUpdates(
+            3.0,
+            10000,
+            0.0,
+            false,
+            FilteringMode.OFF,
+            object : LocationListener {
+                override fun onLocationStatusUpdated(p0: LocationStatus) {
+                }
+
+                override fun onLocationUpdated(p0: Location) {
+                    Log.d("Location", "${p0.position.latitude} ${p0.position.longitude}")
+
+                    userLat = p0.position.latitude
+                    userLon = p0.position.longitude
+
+                    viewModel.getSalonsList(userLon, userLat, limit, offset, order, session!!)
+
+                }
+
+            })
 
         viewModel.status.observe(this, Observer {
             if (it == "Ok") {
@@ -321,12 +280,15 @@ class MapFragment : Fragment() {
 
                             val tapArea = Rect(PointF(0.0f, 0.0f), PointF(20.0f, 20.0f))
 
-                            mapview.map.mapObjects.addPlacemark(point, ImageProvider.fromBitmap(bm), IconStyle().setAnchor(PointF(0.5f, 1.0f)).setScale(0.7f).setTappableArea(tapArea))
+                            mapview.map.mapObjects.addPlacemark(
+                                point,
+                                ImageProvider.fromBitmap(bm),
+                                IconStyle().setAnchor(PointF(0.5f, 1.0f)).setScale(0.7f)
+                            )
                                 .addTapListener { mapObject, point ->
                                     openPopup(item)
                                     true
                                 }
-
                         }
                     }
                 })
@@ -344,6 +306,7 @@ class MapFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onStop() {
         mapview.onStop()
         MapKitFactory.getInstance().onStop()
@@ -355,6 +318,5 @@ class MapFragment : Fragment() {
         MapKitFactory.getInstance().onStart()
         mapview.onStart()
     }
-
-}
+    }
 

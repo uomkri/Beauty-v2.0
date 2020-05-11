@@ -119,7 +119,6 @@ class NameFragment : Fragment() {
                 if(!nameReg.matches(formName) && nameReg.matches(formLastName)) showAlert("Введено невалидное имя ")
                 if(!nameReg.matches(formLastName) && nameReg.matches(formName)) showAlert("Введена невалидная фамилия ")
                 if(!nameReg.matches(formLastName) && !nameReg.matches(formName)) showAlert("Введены невалидные имя и фамилия")
-                Log.e("REGEX", "called alert")
             }
         }
 
