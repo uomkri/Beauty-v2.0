@@ -3,7 +3,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/modal_test"
+    android:id="@+id/modal_test2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -11,26 +11,24 @@
     app:behavior_peekHeight="0dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <com.devrock.beautyappv2.map.ShadowView
-        android:id="@+id/shadow"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="140dp"
-        android:gravity="top"
-        app:layout_anchor="@id/map_popup"
-        />
-
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/map_popup_bg"
+    app:cardElevation="18dp"
+    android:layout_marginBottom="16dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:clickable="true"
+    card_view:cardCornerRadius="10dp"
+    >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/map_popup"
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:layout_gravity="center"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/map_popup_bg"
         android:orientation="vertical"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         app:layout_constraintEnd_toEndOf="parent"
@@ -188,6 +186,5 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+</com.google.android.material.card.MaterialCardView>
 </FrameLayout>

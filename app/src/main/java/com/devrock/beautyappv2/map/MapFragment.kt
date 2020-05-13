@@ -40,6 +40,7 @@ import kotlinx.android.synthetic.main.map_popup.view.star5
 import kotlinx.android.synthetic.main.map_popup.view.startDay
 import kotlinx.android.synthetic.main.map_popup.view.workingHours
 import kotlinx.android.synthetic.main.modal_test.*
+import kotlinx.android.synthetic.main.modal_test2.*
 import kotlin.properties.Delegates
 
 class MapFragment : Fragment() {
@@ -155,13 +156,13 @@ class MapFragment : Fragment() {
 
     fun openPopup(item: SalonListItem) {
 
-        var bottomSheetBehavior = BottomSheetBehavior.from(modal_test)
+        var bottomSheetBehavior = BottomSheetBehavior.from(modal_test2)
 
         map.setOnMapClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
-        val view = activity!!.findViewById<View>(R.id.modal_test)
+        val view = activity!!.findViewById<View>(R.id.modal_test2)
 
         var salonName = view.salonName
         val salonAddress = view.salonAddress
