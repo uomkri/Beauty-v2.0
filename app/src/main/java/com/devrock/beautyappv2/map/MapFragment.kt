@@ -193,44 +193,46 @@ class MapFragment : Fragment() {
         }
 
         val r = item.rating
-
         when {
-            (r > 1.0) -> {
+            (r.toDouble() < 1.0) -> {
+                Log.e("RATING1", r.toString())
                 stars[0].setImageResource(R.drawable.ic_star_inactive)
                 stars[1].setImageResource(R.drawable.ic_star_inactive)
                 stars[2].setImageResource(R.drawable.ic_star_inactive)
                 stars[3].setImageResource(R.drawable.ic_star_inactive)
                 stars[4].setImageResource(R.drawable.ic_star_inactive)
             }
-            (r > 1.0 && r < 1.5) || r == 1 -> {
+            (r.toDouble() > 1.0 && r < 1.5) || r == 1 -> {
+                Log.e("RATING2", r.toString())
                 stars[0].setImageResource(R.drawable.ic_star_active)
                 stars[1].setImageResource(R.drawable.ic_star_inactive)
                 stars[2].setImageResource(R.drawable.ic_star_inactive)
                 stars[3].setImageResource(R.drawable.ic_star_inactive)
                 stars[4].setImageResource(R.drawable.ic_star_inactive)
             }
-            (r > 1.5 && r < 2.5) || r == 2 -> {
+            (r.toDouble() > 1.5 && r < 2.5) || r == 2 -> {
+                Log.e("RATING3", r.toString())
                 stars[0].setImageResource(R.drawable.ic_star_active)
                 stars[1].setImageResource(R.drawable.ic_star_active)
                 stars[2].setImageResource(R.drawable.ic_star_inactive)
                 stars[3].setImageResource(R.drawable.ic_star_inactive)
                 stars[4].setImageResource(R.drawable.ic_star_inactive)
             }
-            (r > 2.5 && r < 3.5) || r == 3 -> {
+            (r.toDouble() > 2.5 && r < 3.5) || r == 3 -> {
                 stars[0].setImageResource(R.drawable.ic_star_active)
                 stars[1].setImageResource(R.drawable.ic_star_active)
                 stars[2].setImageResource(R.drawable.ic_star_active)
                 stars[3].setImageResource(R.drawable.ic_star_inactive)
                 stars[4].setImageResource(R.drawable.ic_star_inactive)
             }
-            (r > 3.5 && r < 4.5) || r == 4 -> {
+            (r.toDouble() > 3.5 && r < 4.5) || r == 4 -> {
                 stars[0].setImageResource(R.drawable.ic_star_active)
                 stars[1].setImageResource(R.drawable.ic_star_active)
                 stars[2].setImageResource(R.drawable.ic_star_active)
                 stars[3].setImageResource(R.drawable.ic_star_active)
                 stars[4].setImageResource(R.drawable.ic_star_inactive)
             }
-            r >= 5 -> {
+            r.toDouble() >= 5 -> {
                 stars[0].setImageResource(R.drawable.ic_star_active)
                 stars[1].setImageResource(R.drawable.ic_star_active)
                 stars[2].setImageResource(R.drawable.ic_star_active)
