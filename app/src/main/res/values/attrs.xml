@@ -3,4 +3,8 @@
     <declare-styleable name="AvatarEditView">
         <attr name="aev_ititials" format="string"/>
     </declare-styleable>
+    <declare-styleable name="ShadowView">
+        <attr name="android:gravity" />
+    </declare-styleable>
 </resources>
+

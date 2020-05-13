@@ -1,34 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    >
+
+    <com.devrock.beautyappv2.map.ShadowView
+        android:id="@+id/shadow"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="140dp"
+        android:gravity="top"
+        app:layout_anchor="@id/map_popup"
+        />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/map_popup"
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:layout_gravity="center"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="70dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/map_popup_bg"
         android:orientation="vertical"
-        android:elevation="20dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        >
-            <TextView
-                android:id="@+id/salonName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="19dp"
-                android:layout_marginTop="11dp"
-                android:fontFamily="@font/segoe_regular"
-                android:text="TextView"
-                android:textColor="#d52e5f"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/salonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="11dp"
+            android:fontFamily="@font/segoe_regular"
+            android:text="TextView"
+            android:textColor="#d52e5f"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/ratingBar"
@@ -95,10 +112,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="19dp"
             android:layout_marginTop="10dp"
-            android:text="TextView"
             android:fontFamily="@font/segoe_regular"
-            android:textSize="12sp"
+            android:text="TextView"
             android:textColor="#191919"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/salonName" />
 
@@ -120,8 +137,8 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/segoe_regular"
             android:text="TextView"
-            android:textSize="12sp"
             android:textColor="#858585"
+            android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/clock"
             app:layout_constraintTop_toBottomOf="@+id/salonAddress" />
 
@@ -169,4 +186,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+
+
+</FrameLayout>
