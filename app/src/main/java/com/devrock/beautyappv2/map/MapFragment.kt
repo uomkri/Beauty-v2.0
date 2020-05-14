@@ -25,8 +25,6 @@ import com.google.android.gms.maps.model.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.yandex.mapkit.geometry.Point
-import com.yandex.runtime.sensors.internal.LastKnownLocation
 import kotlinx.android.synthetic.main.map_popup.view.calendar
 import kotlinx.android.synthetic.main.map_popup.view.clock
 import kotlinx.android.synthetic.main.map_popup.view.salonAddress
@@ -39,7 +37,6 @@ import kotlinx.android.synthetic.main.map_popup.view.star4
 import kotlinx.android.synthetic.main.map_popup.view.star5
 import kotlinx.android.synthetic.main.map_popup.view.startDay
 import kotlinx.android.synthetic.main.map_popup.view.workingHours
-import kotlinx.android.synthetic.main.modal_test.*
 import kotlinx.android.synthetic.main.modal_test2.*
 import kotlin.properties.Delegates
 
@@ -48,8 +45,6 @@ class MapFragment : Fragment() {
     private val viewModel: MapViewModel by lazy {
         ViewModelProviders.of(this).get(MapViewModel::class.java)
     }
-
-    private val TARGET: Point = Point(56.838000, 60.601513)
 
     private lateinit var mapView: com.google.android.gms.maps.MapView
 
@@ -137,6 +132,7 @@ class MapFragment : Fragment() {
 
                 val markerInfo = it.tag as SalonListItem
                 openPopup(markerInfo)
+                map.moveCamera(CameraUpdateFactory.zoomTo(17.0f))
                 false
             }
 
@@ -196,7 +192,6 @@ class MapFragment : Fragment() {
         val r = item.rating
         when {
             (r.toDouble() < 1.0) -> {
-                Log.e("RATING1", r.toString())
                 stars[0].setImageResource(R.drawable.ic_star_inactive)
                 stars[1].setImageResource(R.drawable.ic_star_inactive)
                 stars[2].setImageResource(R.drawable.ic_star_inactive)
@@ -204,7 +199,6 @@ class MapFragment : Fragment() {
                 stars[4].setImageResource(R.drawable.ic_star_inactive)
             }
             (r.toDouble() > 1.0 && r < 1.5) || r == 1 -> {
-                Log.e("RATING2", r.toString())
                 stars[0].setImageResource(R.drawable.ic_star_active)
                 stars[1].setImageResource(R.drawable.ic_star_inactive)
                 stars[2].setImageResource(R.drawable.ic_star_inactive)
@@ -212,7 +206,6 @@ class MapFragment : Fragment() {
                 stars[4].setImageResource(R.drawable.ic_star_inactive)
             }
             (r.toDouble() > 1.5 && r < 2.5) || r == 2 -> {
-                Log.e("RATING3", r.toString())
                 stars[0].setImageResource(R.drawable.ic_star_active)
                 stars[1].setImageResource(R.drawable.ic_star_active)
                 stars[2].setImageResource(R.drawable.ic_star_inactive)
@@ -290,8 +283,23 @@ class MapFragment : Fragment() {
         super.onStop()
     }
 
+    override fun onPause() {
+        super.onPause()
+        val mgr = MapStateManager(context!!)
+        mgr.saveMapState(map)
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
     override fun onStart() {
         super.onStart()
     }
+
+    fun setupMapIfNeeded() {
+
+    }
+
     }
 

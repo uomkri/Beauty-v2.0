@@ -125,7 +125,7 @@ class NameFragment : Fragment() {
         return binding.root
     }
 
-    fun showAlert(message: String) {
+    private fun showAlert(message: String) {
         val builder = AlertDialog.Builder(context!!)
         builder.setMessage(message)
         builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = alertButtonClick))

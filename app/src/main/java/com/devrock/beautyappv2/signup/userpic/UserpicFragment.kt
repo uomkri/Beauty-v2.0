@@ -79,7 +79,7 @@ class UserpicFragment : Fragment() {
         binding.signupSetAvatar.setOnClickListener { getImage() }
 
         binding.authButton.setOnClickListener {
-            gotoAppActivity(session)
+            it.findNavController().navigate(UserpicFragmentDirections.actionUserpicFragmentToOnboardingFragment(session))
         }
 
         return binding.root
@@ -90,12 +90,6 @@ class UserpicFragment : Fragment() {
             .setGuidelines(CropImageView.Guidelines.ON)
             .start(context!!, this)
 
-    }
-
-    fun gotoAppActivity(session: String) {
-        val intent = Intent(context, AppActivity::class.java)
-        intent.putExtra("session", session)
-        startActivity(intent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

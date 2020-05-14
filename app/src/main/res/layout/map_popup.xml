@@ -8,16 +8,7 @@
     android:layout_marginBottom="16dp"
     >
 
-    <com.devrock.beautyappv2.map.ShadowView
-        android:id="@+id/shadow"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="140dp"
-        android:gravity="top"
-        app:layout_anchor="@id/map_popup"
-        />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/map_popup"

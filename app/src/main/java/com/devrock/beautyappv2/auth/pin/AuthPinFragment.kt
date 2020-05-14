@@ -87,7 +87,6 @@ class AuthPinFragment : Fragment() {
 
         viewModel.registered.observe(this, Observer { v ->
             if(!v) {
-                binding.root.hideKeyboard()
                 binding.authHeader.findNavController().navigate(AuthPinFragmentDirections.actionAuthPinFragmentToNameFragment(viewModel.session.value.toString()))
             }
             if(v) {
@@ -117,6 +116,7 @@ class AuthPinFragment : Fragment() {
         val intent = Intent(context, AppActivity::class.java)
         intent.putExtra("session", session)
         startActivity(intent)
+        activity!!.finish()
     }
 
 
