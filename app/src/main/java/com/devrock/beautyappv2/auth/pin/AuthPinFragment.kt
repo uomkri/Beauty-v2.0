@@ -4,6 +4,7 @@ import `in`.aabhasjindal.otptextview.OTPListener
 import `in`.aabhasjindal.otptextview.OtpTextView
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.util.Log
@@ -61,6 +62,9 @@ class AuthPinFragment : Fragment() {
             }
         }
 
+        val prefs: SharedPreferences = context!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
+        val prefEditor: SharedPreferences.Editor = prefs.edit()
+
 
         viewModel.status.observe(this, Observer { v ->
             if(v == "Error"){
@@ -80,6 +84,9 @@ class AuthPinFragment : Fragment() {
 
                 })
             } else if (v == "Ok"){
+                viewModel.session.observe(this, Observer {
+                    if (it != null) prefEditor.putString("session", it).apply()
+                })
                 otpTextView.showSuccess()
                 binding.pinError.visibility = View.GONE
             }

@@ -24,6 +24,9 @@
             app:exitAnim="@anim/slide_right_out"
             app:popEnterAnim="@anim/slide_right_in"
             app:popExitAnim="@anim/slide_left_out" />
+        <action
+            android:id="@+id/action_mapFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
     </fragment>
     <fragment
         android:id="@+id/workplacesFragment"
@@ -55,5 +58,22 @@
         <action
             android:id="@+id/action_profileFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/salonFragment"
+        android:name="com.devrock.beautyappv2.salon.SalonFragment"
+        android:label="SalonFragment" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="session"
+            app:argType="string" />
+        <argument
+            android:name="longitude"
+            app:argType="java.lang.Double" />
+        <argument
+            android:name="latitude"
+            app:argType="java.lang.Double" />
     </fragment>
 </navigation>

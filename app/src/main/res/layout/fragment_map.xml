@@ -14,8 +14,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/white"
-        android:elevation="25dp"
-        android:outlineProvider="bounds"
         >
 
         <com.google.android.gms.maps.MapView

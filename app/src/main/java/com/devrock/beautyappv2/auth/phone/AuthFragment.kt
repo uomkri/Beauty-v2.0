@@ -2,10 +2,14 @@ package com.devrock.beautyappv2.auth.phone
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.drawable.Animatable
+import android.graphics.drawable.Animatable2
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import com.devrock.beautyappv2.AppActivity
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.auth.phone.AuthFragmentDirections
 import com.devrock.beautyappv2.databinding.FragmentAuthBinding
@@ -52,11 +57,38 @@ class AuthFragment : Fragment() {
         val input: EditText = binding.authPhoneInput
         val button: Button = binding.authButton
 
+        val prefs: SharedPreferences = context!!.getSharedPreferences("Session", 0)
+
+        viewModel.getLocalSession(prefs)
+
+        viewModel.isScopeActive.observe(this, Observer {
+            if(it == true) {
+                binding.authButton.visibility = View.GONE
+            }
+            else {
+                binding.authButton.visibility = View.VISIBLE
+                binding.animView.visibility = View.GONE
+            }
+
+        })
+
+        viewModel.session.observe(this, Observer {
+            if (it != null) {
+                Log.e("SESS", it)
+                viewModel.checkLogin()
+            }
+        })
+
+        viewModel.isLoggedIn.observe(this, Observer {
+            if (it == true) gotoAppActivity(viewModel.session.value!!)
+        })
+
         binding.authPhone.isFocusableInTouchMode = true;
 
         button.isEnabled = false
         button.isClickable = false
-        button.setTextColor((resources.getColor(R.color.colorButtonDisabled)))
+        button.setTextColor((resources.getColor(R.color.primaryDk)))
+        //input mask
         val slots = UnderscoreDigitSlotsParser().parseSlots("+7 (___) ___ __ __")
         val formatWatcher = MaskFormatWatcher(MaskImpl.createTerminated(slots))
 
@@ -72,7 +104,7 @@ class AuthFragment : Fragment() {
                     button.isEnabled = viewModel.setButtonAvailability(s.length)
                     button.isClickable = viewModel.setButtonAvailability(s.length)
                     if(button.isEnabled) button.setTextColor((resources.getColor(R.color.white)))
-                    if(!button.isEnabled) button.setTextColor((resources.getColor(R.color.colorButtonDisabled)))
+                    if(!button.isEnabled) button.setTextColor((resources.getColor(R.color.primaryDk)))
                     phone = s.toString()
                 }
             }
@@ -88,8 +120,7 @@ class AuthFragment : Fragment() {
         viewModel.status.observe(this, Observer { newStatus ->
             val view : View = binding.authButton
             if(newStatus == "Ok") {
-                view.findNavController().navigate(
-                AuthFragmentDirections.actionAuthFragmentToAuthPinFragment(phone)
+                view.findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToAuthPinFragment(phone)
             )}
             else Toast.makeText(context, newStatus, Toast.LENGTH_SHORT).show()
          })
@@ -104,6 +135,12 @@ class AuthFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         binding.authPhone.clearFocus()
+    }
+
+    fun gotoAppActivity(session: String) {
+        val intent = Intent(context, AppActivity::class.java)
+        intent.putExtra("session", session)
+        startActivity(intent)
     }
 
 

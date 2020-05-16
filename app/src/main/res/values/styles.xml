@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:windowLightStatusBar">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -31,6 +31,19 @@
     </style>
 
     <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
+
+    <style name="InfoTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/primaryDk</item>
+        <item name="tabTextAppearance">@style/InfoTabTextAppearance</item>
+        <item name="tabSelectedTextColor">#1a051d</item>
+    </style>
+
+    <style name="InfoTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textColor">#9295b0</item>
+        <item name="textAllCaps">false</item>
+    </style>
 
 
 </resources>

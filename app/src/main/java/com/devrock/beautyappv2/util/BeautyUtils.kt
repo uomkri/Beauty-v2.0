@@ -21,11 +21,11 @@ fun getBitmapFromVectorDrawable (context: Context, drawableId: Int) : Bitmap {
 
     val bitmap : Bitmap = Bitmap.createBitmap(drawable!!.intrinsicWidth, drawable!!.intrinsicHeight, Bitmap.Config.ARGB_8888)
     val scaledBitmap = Bitmap.createScaledBitmap(bitmap, 69,124, false)
-    val canvas : Canvas = Canvas(scaledBitmap)
+    val canvas : Canvas = Canvas(bitmap)
     drawable!!.setBounds(0, 0, canvas.width, canvas.height)
     drawable.draw(canvas)
 
-    return scaledBitmap
+    return bitmap
 }
 
 class BeautyUtils {

@@ -64,6 +64,19 @@ interface BeautyApiService {
         @Query("latitude") latitude: Double,
         @Query("order") order: String
     ): Deferred<SalonListResponse>
+
+    @GET("salons/get")
+    fun getSalonById(
+        @Query("longitude") longitude: Double?,
+        @Query("latitude") latitude: Double?,
+        @Query("id") id: Int
+    ): Deferred<SalonByIdResponse>
+
+    @GET("account/current")
+    fun getCurrentAccount(
+        @Header("Authorization") session: String
+    ): Deferred<CurrentAccountResponse>
+
 }
 
 object BeautyApi {

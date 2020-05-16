@@ -62,3 +62,52 @@ data class SalonListPayload (
         val list: List<SalonListItem>?,
         val text: String?
 )
+
+data class SalonByIdResponse (
+    val payload: SalonByIdPayload,
+    val info: Info
+)
+
+data class SalonByIdPayload (
+    val info: SalonListItem,
+    val description: String?,
+    val mainPhoto: String,
+    val photos: List<String>,
+    val owner: String,
+    val tags: List<String>,
+    val contacts: List<Contact>,
+    val salonSchedule: List<ScheduleItem>,
+    val text: String?
+)
+
+data class Contact (
+    val contactType: String,
+    val value: String
+)
+
+data class ScheduleItem (
+    val weekday: Int,
+    val startTime: String,
+    val endTime: String
+)
+
+data class CurrentAccountResponse (
+    val payload: AccountPayload,
+    val info: Info
+)
+
+data class  AccountPayload (
+    val phone: String?,
+    val name: String?,
+    val surname: String?,
+    val patronymic: String?,
+    val gender: String?,
+    val havePhoto: Boolean?,
+    val birthDate: String?,
+    val email: String?,
+    val inn: String?,
+    val text: String?
+)
+
+
+

@@ -1,5 +1,6 @@
 package com.devrock.beautyappv2.auth.pin
 
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import android.os.CountDownTimer
+import com.devrock.beautyappv2.db.SessionDao
 
 class AuthPinViewModel() : ViewModel() {
 

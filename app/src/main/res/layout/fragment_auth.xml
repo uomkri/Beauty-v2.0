@@ -23,20 +23,19 @@
             android:id="@+id/authHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/segoe_regular"
+            android:layout_marginTop="96dp"
+            android:fontFamily="@font/roboto_bold"
             android:text="@string/header_auth"
             android:textAlignment="center"
-            android:textColor="#4E8CC1"
-            android:textSize="24sp"
-            android:layout_marginTop="110dp"
-            />
+            android:textColor="@color/neutral0"
+            android:textSize="34sp" />
 
         <com.devrock.beautyappv2.ui.ColorTextInput
             android:id="@+id/authPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
-            app:boxStrokeWidth="0.5dp"
+            app:boxStrokeWidth="2dp"
             android:theme="@style/TextInput"
             >
 
@@ -46,11 +45,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="59dp"
                 android:layout_marginEnd="59dp"
-                android:fontFamily="@font/segoe_regular"
-                android:lines="1"
-                android:maxLength="18"
+                android:fontFamily="@font/roboto"
+                android:hint="@string/auth_input_hint"
                 android:inputType="phone"
-                android:hint="@string/auth_input_hint" />
+                android:textColor="@color/neutral0"
+                android:lines="1"
+                android:maxLength="18" />
 
         </com.devrock.beautyappv2.ui.ColorTextInput>
 
@@ -60,9 +60,22 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="63dp"
             android:layout_marginEnd="59dp"
-            android:fontFamily="@font/segoe_regular"
+            android:layout_marginTop="56dp"
+            android:fontFamily="@font/roboto"
             android:text="@string/authInputCaptionText"
+            android:textColor="@color/neutral1"
             android:textSize="12sp" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            app:lottie_rawRes="@raw/loading"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            />
 
         <Button
             android:id="@+id/authButton"
@@ -70,12 +83,15 @@
             android:layout_height="wrap_content"
             android:text="@string/auth_button_text"
             android:textColor="#ffffff"
-            android:fontFamily="@font/segoe_regular"
+            android:textSize="17dp"
+            android:fontFamily="@font/roboto_bold"
             android:layout_marginStart="59dp"
             android:layout_marginEnd="59dp"
             android:layout_marginTop="20dp"
+            android:textAllCaps="false"
             android:height="52dp"
             android:background="@drawable/auth_button"
+            android:visibility="gone"
             />
         </LinearLayout>
 </layout>

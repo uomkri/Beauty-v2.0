@@ -11,18 +11,17 @@
     app:behavior_peekHeight="0dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/popup_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/map_popup_bg"
-    app:cardElevation="18dp"
+    app:cardElevation="5dp"
     android:layout_marginBottom="16dp"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     android:clickable="true"
-    card_view:cardCornerRadius="10dp"
+    app:cardCornerRadius="10dp"
     >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/map_popup"
@@ -42,12 +41,12 @@
             android:id="@+id/salonName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="11dp"
-            android:fontFamily="@font/segoe_regular"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="13dp"
+            android:fontFamily="@font/roboto_bold"
             android:text="TextView"
-            android:textColor="#d52e5f"
-            android:textSize="16sp"
+            android:textColor="@color/neutral0"
+            android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -112,8 +111,8 @@
             android:id="@+id/salonAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/segoe_regular"
             android:text="TextView"
             android:textColor="#191919"
@@ -121,51 +120,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/salonName" />
 
-        <ImageView
-            android:id="@+id/clock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="13dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/salonAddress"
-            app:srcCompat="@drawable/ic_clock" />
-
         <TextView
             android:id="@+id/workingHours"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/segoe_regular"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="11dp"
+            android:fontFamily="@font/roboto"
             android:text="TextView"
-            android:textColor="#858585"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/clock"
-            app:layout_constraintTop_toBottomOf="@+id/salonAddress" />
-
-        <ImageView
-            android:id="@+id/calendar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="6dp"
+            android:textColor="@color/primaryDk"
+            android:textSize="11sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/clock"
-            app:srcCompat="@drawable/ic_calendar" />
+            app:layout_constraintTop_toBottomOf="@+id/salonAddress" />
 
         <TextView
             android:id="@+id/startDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
-            android:layout_marginBottom="18dp"
-            android:fontFamily="@font/segoe_regular"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="7dp"
+            android:fontFamily="@font/roboto"
             android:text="TextView"
-            android:textColor="#858585"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/calendar"
+            android:textColor="@color/primaryDk"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/workingHours" />
 
 
@@ -176,10 +154,10 @@
             android:layout_marginTop="13dp"
             android:layout_marginEnd="18dp"
             android:layout_marginBottom="71dp"
-            android:fontFamily="@font/segoe_regular"
+            android:fontFamily="@font/roboto"
             android:text="TextView"
-            android:textColor="#191919"
-            android:textSize="12sp"
+            android:textColor="#B2372439"
+            android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ratingBar" />

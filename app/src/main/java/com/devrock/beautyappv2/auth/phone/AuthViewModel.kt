@@ -1,5 +1,6 @@
 package com.devrock.beautyappv2.auth.phone
 
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -28,7 +29,17 @@ class AuthViewModel(): ViewModel() {
     val status: LiveData<String>
         get() = _status
 
+    private val _isLoggedIn = MutableLiveData<Boolean>()
+    val isLoggedIn: LiveData<Boolean>
+        get() = _isLoggedIn
 
+    private val _session = MutableLiveData<String>()
+    val session: LiveData<String>
+        get() = _session
+
+    private val _isScopeActive = MutableLiveData<Boolean>()
+    val isScopeActive: LiveData<Boolean>
+        get() = _isScopeActive
 
     fun sendCode(phone: String) {
 
@@ -38,8 +49,31 @@ class AuthViewModel(): ViewModel() {
             val status = BeautyApi.retrofitService.authSendCode(phoneFormatted).await()
             _status.value = status.info.status
             Log.i("STATUS", _status.value)
+           _isScopeActive.value = scope.isActive
         }
 
+    }
+
+    fun getLocalSession(prefs: SharedPreferences) {
+        _session.value = prefs.getString("session", null)
+    }
+
+    fun checkLogin() {
+
+
+        Log.e("SESSION", session.value.toString())
+
+        val session = session.value
+
+        if(session != null) {
+            scope.launch {
+                val response = BeautyApi.retrofitService.getCurrentAccount(session).await()
+                _isLoggedIn.value = response.info.status == "Ok"
+            }
+
+        } else {
+            _isLoggedIn.value = false
+        }
     }
 
     private fun getJobErrorHandler() = CoroutineExceptionHandler { _, e ->

@@ -5,7 +5,7 @@
         android:state_checked="false"
         />
     <item
-        android:color="#187dda"
+        android:color="@color/primaryDk"
         android:state_checked="true"
         />
 </selector>

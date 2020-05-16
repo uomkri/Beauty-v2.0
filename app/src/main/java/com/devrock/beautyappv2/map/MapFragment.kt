@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentMapBinding
 import com.devrock.beautyappv2.net.SalonListItem
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.model.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.map_popup.view.calendar
 import kotlinx.android.synthetic.main.map_popup.view.clock
 import kotlinx.android.synthetic.main.map_popup.view.salonAddress
@@ -68,6 +70,7 @@ class MapFragment : Fragment() {
         val offset = 0
         val order = "distance"
 
+        //request permissions
         if (ContextCompat.checkSelfPermission(
                 context!!,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -86,8 +89,6 @@ class MapFragment : Fragment() {
         binding.setLifecycleOwner(this)
 
         val session = activity?.intent?.getStringExtra("session")
-
-
 
         mapView = binding.mapView
 
@@ -109,9 +110,10 @@ class MapFragment : Fragment() {
 
             getDeviceLocation(limit, offset, order, session!!)
 
+
+            //check if api call was successful and place markers
             viewModel.status.observe(this, Observer {
                 if (it == "Ok") {
-                    Log.i("LS", viewModel.salonList.value.toString())
                     viewModel.salonList.observe(this, Observer { list ->
                         if (list != null) {
                             for (item: SalonListItem in viewModel.salonList.value!!) {
@@ -131,11 +133,10 @@ class MapFragment : Fragment() {
             map.setOnMarkerClickListener {
 
                 val markerInfo = it.tag as SalonListItem
-                openPopup(markerInfo)
+                openPopup(markerInfo, session)
                 map.moveCamera(CameraUpdateFactory.zoomTo(17.0f))
                 false
             }
-
 
 
         }
@@ -150,7 +151,8 @@ class MapFragment : Fragment() {
         return binding.root
     }
 
-    fun openPopup(item: SalonListItem) {
+    fun openPopup(item: SalonListItem, session: String) {
+
 
         var bottomSheetBehavior = BottomSheetBehavior.from(modal_test2)
 
@@ -159,6 +161,13 @@ class MapFragment : Fragment() {
         }
 
         val view = activity!!.findViewById<View>(R.id.modal_test2)
+
+        val popup = binding.root.findViewById<MaterialCardView>(R.id.popup_card)
+
+
+        popup.setOnClickListener {
+            popup.findNavController().navigate(MapFragmentDirections.actionMapFragmentToSalonFragment(item.id, session, item.geo.longitude, item.geo.latitude))
+        }
 
         var salonName = view.salonName
         val salonAddress = view.salonAddress
@@ -174,59 +183,90 @@ class MapFragment : Fragment() {
         if (item.hourRentStart != null) {
             workingHours.text = "почасовая аренда"
             workingHours.visibility = View.VISIBLE
-            view.clock.visibility = View.VISIBLE
         } else {
             workingHours.visibility = View.INVISIBLE
-            view.clock.visibility = View.INVISIBLE
         }
 
         if (item.daysRentStart != null) {
             startDay.text = "помесячная аренда"
             startDay.visibility = View.VISIBLE
-            view.calendar.visibility = View.VISIBLE
         } else {
             startDay.visibility = View.INVISIBLE
-            view.calendar.visibility = View.INVISIBLE
         }
 
         val r = item.rating
         when {
-            (r.toDouble() < 1.0) -> {
+            (r.toDouble() < 0.5) -> {
                 stars[0].setImageResource(R.drawable.ic_star_inactive)
                 stars[1].setImageResource(R.drawable.ic_star_inactive)
                 stars[2].setImageResource(R.drawable.ic_star_inactive)
                 stars[3].setImageResource(R.drawable.ic_star_inactive)
                 stars[4].setImageResource(R.drawable.ic_star_inactive)
             }
-            (r.toDouble() > 1.0 && r < 1.5) || r == 1 -> {
+            (r.toDouble() >= 0.5 && r < 1.0) -> {
+                stars[0].setImageResource(R.drawable.ic_star_half)
+                stars[1].setImageResource(R.drawable.ic_star_inactive)
+                stars[2].setImageResource(R.drawable.ic_star_inactive)
+                stars[3].setImageResource(R.drawable.ic_star_inactive)
+                stars[4].setImageResource(R.drawable.ic_star_inactive)
+            }
+            (r.toDouble() >= 1.0 && r < 1.5) -> {
                 stars[0].setImageResource(R.drawable.ic_star_active)
                 stars[1].setImageResource(R.drawable.ic_star_inactive)
                 stars[2].setImageResource(R.drawable.ic_star_inactive)
                 stars[3].setImageResource(R.drawable.ic_star_inactive)
                 stars[4].setImageResource(R.drawable.ic_star_inactive)
             }
-            (r.toDouble() > 1.5 && r < 2.5) || r == 2 -> {
+            (r.toDouble() >= 1.5 && r < 2.0) -> {
+                stars[0].setImageResource(R.drawable.ic_star_active)
+                stars[1].setImageResource(R.drawable.ic_star_half)
+                stars[2].setImageResource(R.drawable.ic_star_inactive)
+                stars[3].setImageResource(R.drawable.ic_star_inactive)
+                stars[4].setImageResource(R.drawable.ic_star_inactive)
+            }
+            (r.toDouble() >= 2.0 && r < 2.5) -> {
                 stars[0].setImageResource(R.drawable.ic_star_active)
                 stars[1].setImageResource(R.drawable.ic_star_active)
                 stars[2].setImageResource(R.drawable.ic_star_inactive)
                 stars[3].setImageResource(R.drawable.ic_star_inactive)
                 stars[4].setImageResource(R.drawable.ic_star_inactive)
             }
-            (r.toDouble() > 2.5 && r < 3.5) || r == 3 -> {
+            r.toDouble() >= 2.5 && r < 3.0 -> {
+                stars[0].setImageResource(R.drawable.ic_star_active)
+                stars[1].setImageResource(R.drawable.ic_star_active)
+                stars[2].setImageResource(R.drawable.ic_star_half)
+                stars[3].setImageResource(R.drawable.ic_star_inactive)
+                stars[4].setImageResource(R.drawable.ic_star_inactive)
+            }
+            r.toDouble() >= 3.0 && r < 3.5 -> {
                 stars[0].setImageResource(R.drawable.ic_star_active)
                 stars[1].setImageResource(R.drawable.ic_star_active)
                 stars[2].setImageResource(R.drawable.ic_star_active)
                 stars[3].setImageResource(R.drawable.ic_star_inactive)
                 stars[4].setImageResource(R.drawable.ic_star_inactive)
             }
-            (r.toDouble() > 3.5 && r < 4.5) || r == 4 -> {
+            r.toDouble() >= 3.5 && r < 4.0 -> {
+                stars[0].setImageResource(R.drawable.ic_star_active)
+                stars[1].setImageResource(R.drawable.ic_star_active)
+                stars[2].setImageResource(R.drawable.ic_star_active)
+                stars[3].setImageResource(R.drawable.ic_star_half)
+                stars[4].setImageResource(R.drawable.ic_star_inactive)
+            }
+            r.toDouble() >= 4.0 && r < 4.5 -> {
                 stars[0].setImageResource(R.drawable.ic_star_active)
                 stars[1].setImageResource(R.drawable.ic_star_active)
                 stars[2].setImageResource(R.drawable.ic_star_active)
                 stars[3].setImageResource(R.drawable.ic_star_active)
                 stars[4].setImageResource(R.drawable.ic_star_inactive)
             }
-            r.toDouble() >= 5 -> {
+            r.toDouble() >= 4.5 && r < 5.0 -> {
+                stars[0].setImageResource(R.drawable.ic_star_active)
+                stars[1].setImageResource(R.drawable.ic_star_active)
+                stars[2].setImageResource(R.drawable.ic_star_active)
+                stars[3].setImageResource(R.drawable.ic_star_active)
+                stars[4].setImageResource(R.drawable.ic_star_half)
+            }
+            r.toDouble() >= 5.0-> {
                 stars[0].setImageResource(R.drawable.ic_star_active)
                 stars[1].setImageResource(R.drawable.ic_star_active)
                 stars[2].setImageResource(R.drawable.ic_star_active)
