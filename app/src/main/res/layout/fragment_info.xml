@@ -1,18 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:id="@+id/salonInfoContainer"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        >
+        <ScrollView
+            android:id="@+id/infoPage0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+                >
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/salonAddressCaption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Адрес"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="12sp"
+                        android:textColor="#cac9d6"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/salonAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="TextView"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="15sp"
+                        android:textColor="#1a051d"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/salonAddressCaption" />
+
+                    <View
+                        android:id="@+id/divider3"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_weight="1"
+                        android:background="?android:attr/listDivider"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:id="@+id/salonScheduleCaption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Режим работы"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="12sp"
+                        android:textColor="#cac9d6"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/scheduleContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toTopOf="@+id/salonScheduleCaption"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/divider4"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_weight="1"
+                        android:background="?android:attr/listDivider"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/scheduleContainer" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:id="@+id/salonContactsCaption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Контакты"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="12sp"
+                        android:textColor="#cac9d6"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/contactsContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:orientation="vertical" >
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:id="@+id/divider5"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_weight="1"
+                        android:background="?android:attr/listDivider"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </LinearLayout>
+               <androidx.constraintlayout.widget.ConstraintLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   >
+
+                   <TextView
+                       android:id="@+id/includedCaption"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginStart="16dp"
+                       android:layout_marginTop="16dp"
+                       android:fontFamily="@font/roboto"
+                       android:text="Включено"
+                       android:textColor="#cac9d6"
+                       android:textSize="12sp"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toTopOf="parent" />
+
+                   <TextView
+                       android:id="@+id/included"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_marginStart="16dp"
+                       android:layout_marginTop="8dp"
+                       android:layout_marginEnd="11dp"
+                       android:fontFamily="@font/roboto"
+                       android:text="TextView"
+                       android:textColor="#1a051d"
+                       android:textSize="15sp"
+                       app:layout_constraintEnd_toStartOf="@+id/guideline"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/includedCaption" />
+
+                   <androidx.constraintlayout.widget.Guideline
+                       android:id="@+id/guideline"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical"
+                       app:layout_constraintGuide_percent="0.5"
+                       />
+
+                   <TextView
+                       android:id="@+id/paidServicesCaption"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginStart="11dp"
+                       android:layout_marginTop="16dp"
+                       android:fontFamily="@font/roboto"
+                       android:text="За дополнительную плату"
+                       android:textColor="#cac9d6"
+                       android:textSize="12sp"
+                       app:layout_constraintStart_toStartOf="@+id/guideline"
+                       app:layout_constraintTop_toTopOf="parent" />
+
+                   <TextView
+                       android:id="@+id/paidServices"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_marginStart="11dp"
+                       android:layout_marginTop="8dp"
+                       android:layout_marginEnd="16dp"
+                       android:fontFamily="@font/roboto"
+                       android:text="@string/loremipsum_long"
+                       android:textColor="#1a051d"
+                       android:textSize="15sp"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintStart_toStartOf="@+id/guideline"
+                       app:layout_constraintTop_toBottomOf="@+id/paidServicesCaption" />
+
+                   <View
+                       android:id="@+id/divider6"
+                       android:layout_width="1px"
+                       android:layout_height="match_parent"
+                       android:layout_marginTop="16dp"
+                       android:background="?android:attr/listDivider"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintEnd_toStartOf="@+id/guideline"
+                       app:layout_constraintTop_toTopOf="parent" />
+               </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

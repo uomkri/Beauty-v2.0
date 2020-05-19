@@ -1,33 +1,31 @@
 package com.devrock.beautyappv2.salon.pages
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.devrock.beautyappv2.R
+import com.devrock.beautyappv2.databinding.FragmentInfoBinding
+import com.devrock.beautyappv2.salon.SalonViewModel
+import com.devrock.beautyappv2.net.SalonByIdPayload
+import com.devrock.beautyappv2.salon.SalonFragmentArgs
+import kotlinx.android.synthetic.main.contacts_item.view.*
+import kotlinx.android.synthetic.main.schedule_item.view.*
 import kotlin.properties.Delegates
 
-class InfoFragment : Fragment() {
+class InfoFragment() : Fragment() {
 
-    val ARG_PAGE: String = "ARG_PAGE"
-
-    private var mPage by Delegates.notNull<Int>()
-
-    fun newInstance(page: Int): InfoFragment {
-        val args: Bundle = Bundle()
-        args.putInt(ARG_PAGE, page)
-        val fragment: InfoFragment = InfoFragment()
-        fragment.arguments = args
-        return fragment
+    private val viewModel: SalonViewModel by lazy {
+        ViewModelProviders.of(activity!!).get(SalonViewModel::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            mPage = arguments!!.getInt(ARG_PAGE)
-        }
-    }
+    private lateinit var binding: FragmentInfoBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,8 +33,52 @@ class InfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val view: View = inflater.inflate(R.layout.fragment_info, container, false)
-        return view
+        binding = FragmentInfoBinding.inflate(inflater)
+        binding.setLifecycleOwner(this)
+
+        val inflater = context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+
+        viewModel.salonInfo.observe(this, Observer {
+            Log.e("VP", viewModel.salonInfo.value.toString())
+            if (it != null) {
+                binding.salonAddress.text = it.info.geo.address
+                val schedule = viewModel.formatSchedule(it.salonSchedule)
+                for (item in schedule) run {
+                    val insertPoint = binding.scheduleContainer
+                    val scheduleItem = inflater.inflate(R.layout.schedule_item, null)
+                    scheduleItem.scheduleText.text = item
+                    insertPoint.addView(scheduleItem)
+                }
+                val contacts = it.contacts
+                for (item in contacts) {
+                    val contactsItem = inflater.inflate(R.layout.contacts_item, null)
+                    val insertPoint = binding.contactsContainer
+                    contactsItem.contactsValue.text = item.value
+                    when (item.contactType) {
+                        "Telegram" -> {
+                            contactsItem.iconPhone.visibility = View.INVISIBLE
+                            contactsItem.iconWhatsapp.visibility = View.INVISIBLE
+                            contactsItem.iconTelegram.visibility = View.VISIBLE
+                        }
+                        "WhatsApp" -> {
+                            contactsItem.iconPhone.visibility = View.INVISIBLE
+                            contactsItem.iconWhatsapp.visibility = View.VISIBLE
+                            contactsItem.iconTelegram.visibility = View.INVISIBLE
+                        }
+                        "Phone" -> {
+                            contactsItem.iconPhone.visibility = View.VISIBLE
+                            contactsItem.iconWhatsapp.visibility = View.INVISIBLE
+                            contactsItem.iconTelegram.visibility = View.INVISIBLE
+                        }
+                    }
+                    insertPoint.addView(contactsItem)
+                }
+
+            }
+        })
+
+        return binding.root
     }
 
 }

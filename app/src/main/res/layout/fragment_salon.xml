@@ -34,11 +34,11 @@
             <ImageView
                 android:id="@+id/salonThumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="164dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/salon_ph" />
+                />
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -123,6 +123,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
+            style="@style/AppTheme.Button"
             android:id="@+id/rentButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,5 +1,7 @@
 package com.devrock.beautyappv2.net
 
+import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import javax.sql.StatementEvent
 
 data class Status(
@@ -108,6 +110,23 @@ data class  AccountPayload (
     val inn: String?,
     val text: String?
 )
+
+data class FormattedWeekday (
+    val weekday: String,
+    val startTime: String,
+    val endTime: String
+)
+
+data class FormattedWeekday1 (
+    val date: String,
+    val time: String
+)
+
+data class SalonPhoto (
+    val imgUrl: String
+)
+
+
 
 
 

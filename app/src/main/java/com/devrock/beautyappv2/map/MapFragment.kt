@@ -106,7 +106,7 @@ class MapFragment : Fragment() {
             map = GoogleMap
 
             map.isMyLocationEnabled = true
-            map.uiSettings.isMyLocationButtonEnabled = true
+            map.uiSettings.isMyLocationButtonEnabled = false
 
             getDeviceLocation(limit, offset, order, session!!)
 

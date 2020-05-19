@@ -7,4 +7,5 @@
     <string name="auth_bottom_caption_text">Используя это приложение, Вы соглашаетесь с политикой конфиденциальности, с которой Вы можете ознакомиться по этой ссылке</string>
     <string name="pin_caption">Получить новый код через 30 с</string>
     <string name="new_code"><u>Получить новый код</u></string>
+    <string name="loremipsum_long"> non nisi est sit amet facilisis magna etiam tempor orci eu lobortis elementum nibh tellus molestie nunc non blandit massa enim nec duinon nisi est sit amet facilisis magna etiam tempor orci eu lobortis elementum nibh tellus molestie nunc non blandit massa enim nec dui  nunc mattis enim ut tellus elementum sagittis vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam vestibulum morbi blandit cursus risus at ultrices non nisi est sit amet facilisis magna etiam tempor orci eu lobortis elementum nibh tellus molestie nunc non blandit massa enim nec dui nunc mattis enim ut tellus elementum sagittis vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam vestibulum morbi blandit cursus risus at ultrices</string>
 </resources>

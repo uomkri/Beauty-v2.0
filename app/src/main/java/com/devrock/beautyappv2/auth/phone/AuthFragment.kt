@@ -63,10 +63,9 @@ class AuthFragment : Fragment() {
 
         viewModel.isScopeActive.observe(this, Observer {
             if(it == true) {
-                binding.authButton.visibility = View.GONE
+                binding.animView.visibility = View.VISIBLE
             }
             else {
-                binding.authButton.visibility = View.VISIBLE
                 binding.animView.visibility = View.GONE
             }
 
