@@ -14,7 +14,24 @@ class ViewPagerAdapter : RecyclerView.Adapter<PagerVH>() {
     override fun getItemCount(): Int = 3
 
     override fun onBindViewHolder(holder: PagerVH, position: Int) = holder.itemView.run {
-        vptestText.text = "XYN${position}"
+
+        when (position) {
+            0 -> {
+                caption1.text = "Найди студию рядом"
+                caption2.text = "Проще поиска рабочего места поблизости не бывает"
+                imageView.setImageResource(R.drawable.ic_onboarding1)
+            }
+            1 -> {
+                caption1.text = "Получи подтверждение"
+                caption2.text = "Салон подтвердит бронирование за считанные минуты"
+                imageView.setImageResource(R.drawable.ic_onboarding2)
+            }
+            2 -> {
+                caption1.text = "Работай!"
+                caption2.text = "Идеальное рабочее место, когда и где вам удобно"
+                imageView.setImageResource(R.drawable.ic_onboarding3)
+            }
+        }
     }
 
 }

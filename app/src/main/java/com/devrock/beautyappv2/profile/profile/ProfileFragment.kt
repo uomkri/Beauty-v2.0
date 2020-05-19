@@ -1,5 +1,7 @@
 package com.devrock.beautyappv2.profile.profile
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.devrock.beautyappv2.MainActivity
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentProfileBinding
 
@@ -32,6 +35,9 @@ class ProfileFragment : Fragment() {
 
         val uri = "https://beauty.judoekb.ru/api/account/getPhoto?subject=%2B79121111160"
 
+        val prefs: SharedPreferences = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
+        val prefEditor: SharedPreferences.Editor = prefs.edit()
+
         Glide.with(this)
             .load(uri)
             .apply(
@@ -39,6 +45,13 @@ class ProfileFragment : Fragment() {
                     .placeholder(R.drawable.userpic_empty_ph)
             )
             .into(binding.profileAvatar)
+
+        binding.button.setOnClickListener {
+
+            prefEditor.clear().commit()
+            activity!!.finish()
+
+        }
 
 
 /*

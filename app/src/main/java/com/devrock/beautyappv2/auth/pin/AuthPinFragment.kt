@@ -62,7 +62,7 @@ class AuthPinFragment : Fragment() {
             }
         }
 
-        val prefs: SharedPreferences = context!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
+        val prefs: SharedPreferences = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
         val prefEditor: SharedPreferences.Editor = prefs.edit()
 
 
