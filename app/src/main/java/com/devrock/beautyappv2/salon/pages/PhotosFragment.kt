@@ -2,6 +2,7 @@ package com.devrock.beautyappv2.salon.pages
 
 import android.app.ActionBar
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
@@ -9,16 +10,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TableRow
+import android.widget.*
 import androidx.core.net.toUri
 import androidx.core.view.marginTop
+import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
+import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestOptions
@@ -29,6 +28,13 @@ import com.google.android.flexbox.FlexboxLayout
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.photo_item.view.*
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.devrock.beautyappv2.databinding.PhotoItemBinding
+import com.devrock.beautyappv2.net.SalonPhoto
+import com.github.underscore.lodash.U
+import com.squareup.picasso.Picasso
+
 
 class PhotosFragment : Fragment() {
     private val viewModel: SalonViewModel by lazy {
@@ -46,6 +52,9 @@ class PhotosFragment : Fragment() {
         binding = FragmentPhotosBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
+
+
+
         val inflater = context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         val TABLE_COLUMNS = 3
@@ -53,24 +62,39 @@ class PhotosFragment : Fragment() {
         val PHOTOS_ENDPOINT = "https://beauty.judoekb.ru/api/salons/photo"
         val stock =
             "https://www.victoria-salon.ru/wp-content/uploads/2017/04/main_room3-1-1024x683.jpg"
-        val stockList = arrayListOf (
+
+        val stockList = listOf (
             "https://www.victoria-salon.ru/wp-content/uploads/2017/04/main_room3-1-1024x683.jpg",
             "https://www.victoria-salon.ru/wp-content/uploads/2017/04/main_room3-1-1024x683.jpg",
             "https://www.victoria-salon.ru/wp-content/uploads/2017/04/main_room3-1-1024x683.jpg",
             "https://www.victoria-salon.ru/wp-content/uploads/2017/04/main_room3-1-1024x683.jpg",
             "https://www.victoria-salon.ru/wp-content/uploads/2017/04/main_room3-1-1024x683.jpg",
-            "https://www.victoria-salon.ru/wp-content/uploads/2017/04/main_room3-1-1024x683.jpg",
-            "https://www.victoria-salon.ru/wp-content/uploads/2017/04/main_room3-1-1024x683.jpg",
+            "https://s1.stc.all.kpcdn.net/putevoditel/projectid_103889/images/tild3836-3835-4236-b661-393338356563__beauty-salon-4043096.jpg",
             "https://www.victoria-salon.ru/wp-content/uploads/2017/04/main_room3-1-1024x683.jpg",
             "https://www.victoria-salon.ru/wp-content/uploads/2017/04/main_room3-1-1024x683.jpg",
             "https://www.victoria-salon.ru/wp-content/uploads/2017/04/main_room3-1-1024x683.jpg",
             "https://www.victoria-salon.ru/wp-content/uploads/2017/04/main_room3-1-1024x683.jpg"
+
         )
-        binding.photosGrid.adapter = ImageAdapter(context!!, stockList)
+
+        var data = mutableListOf<SalonPhoto>()
+
+        for ((index, item) in stockList.withIndex()) {
+            data.add(SalonPhoto(index, item))
+        }
+
+        //binding.photosGrid.adapter = ImageAdapter(context!!, stockList)
+
+        binding.photosGrid.adapter = ImageGridAdapter()
+
+        val adapter = binding.photosGrid.adapter as ImageGridAdapter
+
 
         viewModel.salonInfo.observe(this, Observer {
             if (it.photos.isNotEmpty()) {
 
+
+                adapter.submitList(data)
 
 
                 //val insertPoint = binding.photosFlex
@@ -158,7 +182,7 @@ class PhotosFragment : Fragment() {
         return binding.root
     }
 
-    class ImageAdapter : BaseAdapter {
+    /*class ImageAdapter : BaseAdapter {
 
         var list = ArrayList<String>()
         var context: Context? = null
@@ -193,6 +217,47 @@ class PhotosFragment : Fragment() {
         override fun getCount(): Int {
             return list.size
         }
+    }*/
+
+    class ImageGridAdapter : ListAdapter<SalonPhoto, ImageGridAdapter.ViewHolder>(DiffCallback) {
+
+        companion object DiffCallback : DiffUtil.ItemCallback<SalonPhoto>() {
+            override fun areItemsTheSame(oldItem: SalonPhoto, newItem: SalonPhoto): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: SalonPhoto, newItem: SalonPhoto): Boolean {
+                return oldItem.imgUrl == newItem.imgUrl
+            }
+        }
+
+        override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int
+        ): ImageGridAdapter.ViewHolder {
+
+            return ViewHolder(PhotoItemBinding.inflate(LayoutInflater.from(parent.context)))
+        }
+
+        override fun onBindViewHolder(holder: ImageGridAdapter.ViewHolder, position: Int) {
+            val image = getItem(position)
+            holder.bind(image.imgUrl)
+            
+        }
+
+        class ViewHolder(private var binding: PhotoItemBinding) : RecyclerView.ViewHolder(binding.root) {
+            fun bind(item: String) {
+                val view = binding.salonPhotoItem
+
+                Picasso.get()
+                    .load(item)
+                    .into(view)
+
+                binding.executePendingBindings()
+
+            }
+        }
+
     }
 
 }

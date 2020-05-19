@@ -123,6 +123,7 @@ data class FormattedWeekday1 (
 )
 
 data class SalonPhoto (
+    val id: Int,
     val imgUrl: String
 )
 

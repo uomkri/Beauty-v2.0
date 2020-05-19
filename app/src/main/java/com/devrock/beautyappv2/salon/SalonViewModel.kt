@@ -35,15 +35,13 @@ class SalonViewModel : ViewModel() {
     val photosList: LiveData<List<String>>
         get() = _photosList
 
-    private val _photosGridList = MutableLiveData<List<SalonPhoto>>()
-    val photosGridList: LiveData<List<SalonPhoto>>
+    private val _photosGridList = MutableLiveData<List<String>>()
+    val photosGridList: LiveData<List<String>>
         get() = _photosGridList
 
     fun mapPhotos(list: List<String>) {
 
-        _photosGridList.value = list.map {
-            return@map SalonPhoto(it)
-        }
+        _photosGridList.value = list
 
     }
 

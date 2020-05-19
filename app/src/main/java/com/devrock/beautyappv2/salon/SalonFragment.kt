@@ -53,6 +53,8 @@ class SalonFragment : Fragment() {
         val PHOTOS_ENDPOINT = "https://beauty.judoekb.ru/api/salons/photo"
 
 
+
+
         pager.adapter = SalonFragmentStateAdapter(activity!!)
 
         TabLayoutMediator(binding.salonTabs, binding.salonViewpager) {tab, position ->
