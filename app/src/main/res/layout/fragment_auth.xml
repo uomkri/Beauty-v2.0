@@ -78,7 +78,7 @@
             app:lottie_autoPlay="true"
             />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/authButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

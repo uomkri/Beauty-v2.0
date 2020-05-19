@@ -45,7 +45,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="34dp"
             />
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/authButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

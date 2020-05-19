@@ -242,7 +242,7 @@ class PhotosFragment : Fragment() {
         override fun onBindViewHolder(holder: ImageGridAdapter.ViewHolder, position: Int) {
             val image = getItem(position)
             holder.bind(image.imgUrl)
-            
+
         }
 
         class ViewHolder(private var binding: PhotoItemBinding) : RecyclerView.ViewHolder(binding.root) {
