@@ -36,6 +36,14 @@ class InfoFragment() : Fragment() {
         binding = FragmentInfoBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
 
+
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val inflater = context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
 
@@ -46,7 +54,13 @@ class InfoFragment() : Fragment() {
                 val schedule = viewModel.formatSchedule(it.salonSchedule)
                 for (item in schedule) run {
                     val insertPoint = binding.scheduleContainer
+
                     val scheduleItem = inflater.inflate(R.layout.schedule_item, null)
+
+                    if (insertPoint.childCount != 0) {
+                        insertPoint.removeAllViews()
+                    }
+
                     scheduleItem.scheduleText.text = item
                     insertPoint.addView(scheduleItem)
                 }
@@ -54,6 +68,11 @@ class InfoFragment() : Fragment() {
                 for (item in contacts) {
                     val contactsItem = inflater.inflate(R.layout.contacts_item, null)
                     val insertPoint = binding.contactsContainer
+
+                    if (insertPoint.childCount != 0) {
+                        insertPoint.removeAllViews()
+                    }
+
                     contactsItem.contactsValue.text = item.value
                     when (item.contactType) {
                         "Telegram" -> {
@@ -77,8 +96,6 @@ class InfoFragment() : Fragment() {
 
             }
         })
-
-        return binding.root
     }
 
 }

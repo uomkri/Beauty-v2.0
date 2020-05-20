@@ -15,6 +15,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentSalonBinding
@@ -53,11 +54,13 @@ class SalonFragment : Fragment() {
         val PHOTOS_ENDPOINT = "https://beauty.judoekb.ru/api/salons/photo"
 
 
-
+        binding.backButton.setOnClickListener {
+            it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToMapFragment(session))
+        }
 
         pager.adapter = SalonFragmentStateAdapter(activity!!)
 
-        TabLayoutMediator(binding.salonTabs, binding.salonViewpager) {tab, position ->
+        TabLayoutMediator(binding.salonTabs, binding.salonViewpager) { tab, position ->
             when (position) {
                 0 -> tab.text = "Инфо"
                 1 -> tab.text = "Цены"
@@ -80,6 +83,8 @@ class SalonFragment : Fragment() {
 
         return binding.root
     }
+
+
 
 
 }

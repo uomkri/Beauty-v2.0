@@ -17,8 +17,10 @@
         <LinearLayout
             android:id="@+id/ob_page_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:orientation="vertical"
+            android:layout_marginBottom="60dp"
+            app:layout_constraintBottom_toTopOf="@+id/startButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -50,9 +52,8 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/startButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginStart="34dp"
-            android:layout_marginTop="15dp"
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="16dp"
             android:height="52dp"
@@ -62,7 +63,6 @@
             android:textColor="#ffffff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ob_page_container" />
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -17,6 +17,7 @@ import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule
@@ -32,6 +33,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.devrock.beautyappv2.databinding.PhotoItemBinding
 import com.devrock.beautyappv2.net.SalonPhoto
+import com.devrock.beautyappv2.salon.SalonFragmentDirections
 import com.github.underscore.lodash.U
 import com.squareup.picasso.Picasso
 
@@ -82,6 +84,8 @@ class PhotosFragment : Fragment() {
         for ((index, item) in stockList.withIndex()) {
             data.add(SalonPhoto(index, item))
         }
+
+        viewModel.photosGridList.value = data
 
         //binding.photosGrid.adapter = ImageAdapter(context!!, stockList)
 
@@ -241,16 +245,20 @@ class PhotosFragment : Fragment() {
 
         override fun onBindViewHolder(holder: ImageGridAdapter.ViewHolder, position: Int) {
             val image = getItem(position)
-            holder.bind(image.imgUrl)
+            holder.bind(image)
+
+            holder.itemView.setOnClickListener {
+                it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToImageViewFragment(image.id))
+            }
 
         }
 
         class ViewHolder(private var binding: PhotoItemBinding) : RecyclerView.ViewHolder(binding.root) {
-            fun bind(item: String) {
+            fun bind(item: SalonPhoto) {
                 val view = binding.salonPhotoItem
 
                 Picasso.get()
-                    .load(item)
+                    .load(item.imgUrl)
                     .into(view)
 
                 binding.executePendingBindings()

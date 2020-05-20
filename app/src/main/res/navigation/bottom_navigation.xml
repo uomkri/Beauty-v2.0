@@ -75,5 +75,22 @@
         <argument
             android:name="latitude"
             app:argType="java.lang.Double" />
+        <action
+            android:id="@+id/action_salonFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_salonFragment_to_imageViewFragment"
+            app:destination="@id/imageViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageViewFragment"
+        android:name="com.devrock.beautyappv2.salon.image.ImageViewFragment"
+        android:label="ImageViewFragment" >
+        <action
+            android:id="@+id/action_imageViewFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
     </fragment>
 </navigation>

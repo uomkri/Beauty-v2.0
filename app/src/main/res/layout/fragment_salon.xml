@@ -31,20 +31,38 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="-83dp">
 
-            <ImageView
-                android:id="@+id/salonThumbnail"
+            <FrameLayout
+                android:id="@+id/salonThumbnailContainer"
                 android:layout_width="match_parent"
-                android:layout_height="164dp"
-                android:scaleType="centerCrop"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/salonThumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="164dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/backButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginLeft="11dp"
+                    app:srcCompat="@drawable/ic_back" />
+
+            </FrameLayout>
 
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="match_parent"
                 android:layout_height="6dp"
-                app:layout_constraintBottom_toBottomOf="@id/salonThumbnail"
+                app:layout_constraintBottom_toBottomOf="@id/salonThumbnailContainer"
                 app:srcCompat="@drawable/salon_rounded_header" />
 
             <TextView
@@ -111,6 +129,8 @@
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/salonTabs" />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
