@@ -71,7 +71,8 @@ class UserpicFragment : Fragment() {
             requestPermissions(
                 arrayOf<String>(
                     Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_FINE_LOCATION
                 ), PERMISSION_REQUEST_CODE
             )
         }

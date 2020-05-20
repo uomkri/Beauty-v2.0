@@ -70,19 +70,6 @@ class MapFragment : Fragment() {
         val offset = 0
         val order = "distance"
 
-        //request permissions
-        if (ContextCompat.checkSelfPermission(
-                context!!,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            requestPermissions(
-                arrayOf<String>(
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ), PERMISSION_REQUEST_CODE
-            )
-        }
-
         super.onCreateView(inflater, container, savedInstanceState)
 
         binding = FragmentMapBinding.inflate(inflater)
