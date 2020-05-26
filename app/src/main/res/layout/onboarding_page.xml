@@ -13,7 +13,7 @@
         android:layout_marginTop="36dp"
         android:text="Найти студию рядом"
         android:fontFamily="@font/roboto_bold"
-        android:textSize="17sp"
+        android:textSize="20sp"
         android:textColor="#6979f8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,14 +21,14 @@
 
     <TextView
         android:id="@+id/caption2"
-        android:layout_width="190dp"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/roboto"
         android:text="Проще поиска рабочего места поблизости не бывает"
         android:textAlignment="center"
         android:textColor="#9295b0"
-        android:textSize="13sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/caption1" />

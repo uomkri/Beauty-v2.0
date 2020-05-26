@@ -4,10 +4,12 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,6 +18,7 @@ import androidx.navigation.findNavController
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentMapBinding
 import com.devrock.beautyappv2.net.SalonListItem
+import com.devrock.beautyappv2.salon.SalonFragment
 import com.devrock.beautyappv2.signup.userpic.PERMISSION_REQUEST_CODE
 import com.devrock.beautyappv2.util.getBitmapFromVectorDrawable
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -27,6 +30,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.card.MaterialCardView
+import kotlinx.android.synthetic.main.activity_app.*
 import kotlinx.android.synthetic.main.map_popup.view.calendar
 import kotlinx.android.synthetic.main.map_popup.view.clock
 import kotlinx.android.synthetic.main.map_popup.view.salonAddress
@@ -50,7 +54,7 @@ class MapFragment : Fragment() {
 
     private lateinit var mapView: com.google.android.gms.maps.MapView
 
-    private lateinit var map: GoogleMap
+    private var map: GoogleMap? = null
 
     private lateinit var binding: FragmentMapBinding
 
@@ -66,16 +70,12 @@ class MapFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val limit = 15
-        val offset = 0
-        val order = "distance"
-
         super.onCreateView(inflater, container, savedInstanceState)
 
         binding = FragmentMapBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
 
-        val session = activity?.intent?.getStringExtra("session")
+
 
         mapView = binding.mapView
 
@@ -83,52 +83,19 @@ class MapFragment : Fragment() {
 
         mapView.onResume()
 
-        try {
-            MapsInitializer.initialize(context)
-        } catch (e: Exception) {
-            e.printStackTrace()
+        if (ContextCompat.checkSelfPermission(
+                context!!,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions(
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                PERMISSION_REQUEST_CODE
+            )
+
+        } else {
+            mapSetup()
         }
-
-        mapView.getMapAsync {GoogleMap ->
-            map = GoogleMap
-
-            map.isMyLocationEnabled = true
-            map.uiSettings.isMyLocationButtonEnabled = false
-
-            getDeviceLocation(limit, offset, order, session!!)
-
-
-            //check if api call was successful and place markers
-            viewModel.status.observe(this, Observer {
-                if (it == "Ok") {
-                    viewModel.salonList.observe(this, Observer { list ->
-                        if (list != null) {
-                            for (item: SalonListItem in viewModel.salonList.value!!) {
-                                val point = LatLng(item.geo.latitude, item.geo.longitude)
-
-                                val bm = getBitmapFromVectorDrawable(context!!, R.drawable.ic_marker)
-
-                                val marker = map.addMarker( MarkerOptions().position(point).title(item.name).icon(BitmapDescriptorFactory.fromBitmap(bm)))
-                                marker.tag = item
-                            }
-                        }
-                    })
-
-                }
-            })
-
-            map.setOnMarkerClickListener {
-
-                val markerInfo = it.tag as SalonListItem
-                openPopup(markerInfo, session)
-                map.moveCamera(CameraUpdateFactory.zoomTo(17.0f))
-                false
-            }
-
-
-        }
-
-
 
 
 
@@ -138,19 +105,29 @@ class MapFragment : Fragment() {
         return binding.root
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            mapSetup()
+        } else Toast.makeText(context, "Приложению необходим доступ к вашему местоположению", Toast.LENGTH_SHORT)
+    }
+
+
     fun openPopup(item: SalonListItem, session: String) {
 
 
         var bottomSheetBehavior = BottomSheetBehavior.from(modal_test2)
 
-        map.setOnMapClickListener {
+        map!!.setOnMapClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
         val view = activity!!.findViewById<View>(R.id.modal_test2)
 
         val popup = binding.root.findViewById<MaterialCardView>(R.id.popup_card)
-
 
         popup.setOnClickListener {
             popup.findNavController().navigate(MapFragmentDirections.actionMapFragmentToSalonFragment(item.id, session, item.geo.longitude, item.geo.latitude))
@@ -282,7 +259,7 @@ class MapFragment : Fragment() {
                     userLat = mLastKnownLocation!!.latitude
                     viewModel.getSalonsList(userLon, userLat, limit, offset, order, session)
 
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(userLat, userLon), 14f))
+                    map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(userLat, userLon), 14f))
                 }
             }
         } catch(e: SecurityException)  {
@@ -295,8 +272,8 @@ class MapFragment : Fragment() {
             return
         }
         try {
-            map.isMyLocationEnabled = true
-            map.uiSettings.isMyLocationButtonEnabled = true
+            map!!.isMyLocationEnabled = true
+            map!!.uiSettings.isMyLocationButtonEnabled = true
         } catch (e: SecurityException) {
             Log.e("MAP", e.message)
         }
@@ -312,20 +289,68 @@ class MapFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        val mgr = MapStateManager(context!!)
-        mgr.saveMapState(map)
     }
 
     override fun onResume() {
         super.onResume()
+        activity!!.bottomNavBar.visibility = View.VISIBLE
     }
 
     override fun onStart() {
         super.onStart()
     }
 
-    fun setupMapIfNeeded() {
+    fun mapSetup() {
 
+        val limit = 15
+        val offset = 0
+        val order = "distance"
+        val session = activity?.intent?.getStringExtra("session")
+
+        try {
+            MapsInitializer.initialize(context)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        mapView.getMapAsync {GoogleMap ->
+            map = GoogleMap
+
+            map!!.isMyLocationEnabled = true
+            map!!.uiSettings.isMyLocationButtonEnabled = false
+
+            getDeviceLocation(limit, offset, order, session!!)
+
+
+            //check if api call was successful and place markers
+            viewModel.status.observe(this, Observer {
+                if (it == "Ok") {
+                    viewModel.salonList.observe(this, Observer { list ->
+                        if (list != null) {
+                            for (item: SalonListItem in viewModel.salonList.value!!) {
+                                val point = LatLng(item.geo.latitude, item.geo.longitude)
+
+                                val bm = getBitmapFromVectorDrawable(context!!, R.drawable.ic_marker)
+
+                                val marker = map!!.addMarker( MarkerOptions().position(point).title(item.name).icon(BitmapDescriptorFactory.fromBitmap(bm)))
+                                marker.tag = item
+                            }
+                        }
+                    })
+
+                }
+            })
+
+            map!!.setOnMarkerClickListener {
+
+                val markerInfo = it.tag as SalonListItem
+                openPopup(markerInfo, session)
+                map!!.moveCamera(CameraUpdateFactory.zoomTo(17.0f))
+                false
+            }
+
+
+        }
     }
 
     }

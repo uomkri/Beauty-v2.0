@@ -1,5 +1,6 @@
 package com.devrock.beautyappv2.salon
 
+import android.graphics.Point
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -35,7 +36,11 @@ class SalonViewModel : ViewModel() {
     val photosList: LiveData<List<String>>
         get() = _photosList
 
+    val screenSize = MutableLiveData<Point>()
+
     val photosGridList = MutableLiveData<MutableList<SalonPhoto>>()
+
+    val session = MutableLiveData<String>()
 
     fun getSalonById(id: Int, lon: Double, lat: Double) {
 

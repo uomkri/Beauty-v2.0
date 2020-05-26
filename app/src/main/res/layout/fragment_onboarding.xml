@@ -14,12 +14,17 @@
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ob_page_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/onboarding_bg"
+            android:elevation="3dp"
             android:orientation="vertical"
-            android:layout_marginBottom="60dp"
             app:layout_constraintBottom_toTopOf="@+id/startButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,41 +33,48 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/ob_viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="73dp"
+                app:layout_constraintBottom_toTopOf="@id/dots_indicator"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.4"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
 
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/animView"
+            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                android:id="@+id/dots_indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                app:lottie_autoPlay="false"
-                app:lottie_loop="false"
-                app:lottie_rawRes="@raw/page_1to2" />
-        </LinearLayout>
+                android:layout_marginBottom="16dp"
+                app:dotsColor="#A5AFFB"
+                app:dotsCornerRadius="4dp"
+                app:dotsSize="8dp"
+                app:dotsSpacing="8dp"
+                app:dotsWidthFactor="2.5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:progressMode="true"
+                app:selectedDotColor="#6979F8" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <TextView
             android:id="@+id/startButton"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="34dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="16dp"
-            android:height="52dp"
-            android:background="@drawable/auth_button"
-            android:fontFamily="@font/segoe_regular"
-            android:text="Начать"
-            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            android:padding="4dp"
+            android:text="Пропустить"
+            android:fontFamily="@font/roboto"
+            android:textSize="14sp"
+            android:textColor="#d0c9d6"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

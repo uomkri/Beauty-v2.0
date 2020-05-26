@@ -76,7 +76,6 @@ data class SalonByIdPayload (
     val mainPhoto: String,
     val photos: List<String>,
     val owner: String,
-    val tags: List<String>,
     val contacts: List<Contact>,
     val salonSchedule: List<ScheduleItem>,
     val text: String?

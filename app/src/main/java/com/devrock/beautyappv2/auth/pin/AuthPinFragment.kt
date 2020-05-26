@@ -37,6 +37,11 @@ class AuthPinFragment : Fragment() {
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
+    fun View.showKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(view, 0)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,6 +57,8 @@ class AuthPinFragment : Fragment() {
         val phone = args.phone
 
         otpTextView = binding.otpView
+
+        binding.root.showKeyboard()
 
         otpTextView.otpListener = object : OTPListener {
             override fun onOTPComplete(otp: String) {

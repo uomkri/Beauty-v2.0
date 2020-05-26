@@ -13,7 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import android.os.CountDownTimer
-import com.devrock.beautyappv2.db.SessionDao
 
 class AuthPinViewModel() : ViewModel() {
 

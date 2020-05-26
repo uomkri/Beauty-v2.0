@@ -54,9 +54,6 @@ class PhotosFragment : Fragment() {
         binding = FragmentPhotosBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
-
-
-
         val inflater = context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         val TABLE_COLUMNS = 3
@@ -89,7 +86,7 @@ class PhotosFragment : Fragment() {
 
         //binding.photosGrid.adapter = ImageAdapter(context!!, stockList)
 
-        binding.photosGrid.adapter = ImageGridAdapter()
+        binding.photosGrid.adapter = ImageGridAdapter(viewModel)
 
         val adapter = binding.photosGrid.adapter as ImageGridAdapter
 
@@ -100,84 +97,6 @@ class PhotosFragment : Fragment() {
 
                 adapter.submitList(data)
 
-
-                //val insertPoint = binding.photosFlex
-
-                //val TABLE_ROWS: Int
-
-
-
-                //if (it.photos.size / TABLE_COLUMNS > 1) TABLE_ROWS =
-                    //(it.photos.size / TABLE_COLUMNS) + 1
-                //else TABLE_ROWS = 1
-
-                //val photoCalc = inflater.inflate(R.layout.photo_item, null)
-
-                /*for (i in 0..6) {
-                    val photo = inflater.inflate(R.layout.photo_item, null)
-                    photo.salon_photo_item.setImageResource(R.drawable.pholder)
-
-                    val IMG_REL = 0.2875f
-
-                    var viewWidth: Int
-
-                    val display = activity!!.windowManager.defaultDisplay
-                    val metrics = DisplayMetrics()
-                    display.getMetrics(metrics)
-
-                    val density = metrics.density
-
-                    val displayWidth = metrics.widthPixels
-
-                    Log.e("DISPLAY", displayWidth.toString())
-
-                    var curRel: Float
-
-                    var newWidth: Float
-
-                    photo.post {
-                        viewWidth = photo.width
-                        Log.e("WIDTH", viewWidth.toString())
-
-
-                        curRel = viewWidth.toFloat() / displayWidth.toFloat()
-
-                        Log.e("REL", curRel.toString())
-
-                        if (curRel > IMG_REL) {
-                        while (curRel > IMG_REL) {
-                                viewWidth -= 1
-                                Log.e("NEWW", viewWidth.toString())
-                                curRel = viewWidth.toFloat() / displayWidth.toFloat()
-
-                                Log.i("REL1", curRel.toString())
-                                Log.i("WID1", viewWidth.toString())
-
-                            }
-                        }
-                        if (curRel < IMG_REL) {
-                            while (curRel < IMG_REL) {
-                                viewWidth += 1
-                                Log.e("NEWW", viewWidth.toString())
-                                curRel = viewWidth.toFloat() / displayWidth.toFloat()
-
-                                Log.i("REL1", curRel.toString())
-                                Log.i("WID1", viewWidth.toString())
-                            }
-                        }
-                        Log.e("FINALW", viewWidth.toString())
-                        Log.e("FINALR", curRel.toString())
-
-                        photo.layoutParams = FlexboxLayout.LayoutParams(viewWidth, viewWidth)
-                    }
-
-
-                }*/
-
-
-
-
-
             }
         })
 
@@ -186,44 +105,9 @@ class PhotosFragment : Fragment() {
         return binding.root
     }
 
-    /*class ImageAdapter : BaseAdapter {
 
-        var list = ArrayList<String>()
-        var context: Context? = null
 
-        constructor(context: Context, list: ArrayList<String>) : super() {
-            this.context = context
-            this.list = list
-        }
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val item = this.list[position]
-
-            var inflater = context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
-            var view = inflater.inflate(R.layout.photo_item, null)
-
-            GlideApp.with(context!!).load(item)
-                .apply(RequestOptions.bitmapTransform(RoundedCornersTransformation(6, 0)))
-                .into(view.salon_photo_item)
-
-            return view
-        }
-
-        override fun getItem(position: Int): Any {
-            return list[position]
-        }
-
-        override fun getItemId(position: Int): Long {
-            return position.toLong()
-        }
-
-        override fun getCount(): Int {
-            return list.size
-        }
-    }*/
-
-    class ImageGridAdapter : ListAdapter<SalonPhoto, ImageGridAdapter.ViewHolder>(DiffCallback) {
+    class ImageGridAdapter(val viewModel: SalonViewModel) : ListAdapter<SalonPhoto, ImageGridAdapter.ViewHolder>(DiffCallback) {
 
         companion object DiffCallback : DiffUtil.ItemCallback<SalonPhoto>() {
             override fun areItemsTheSame(oldItem: SalonPhoto, newItem: SalonPhoto): Boolean {
@@ -248,7 +132,7 @@ class PhotosFragment : Fragment() {
             holder.bind(image)
 
             holder.itemView.setOnClickListener {
-                it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToImageViewFragment(image.id))
+                it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToImageViewFragment(image.id, viewModel.salonInfo.value!!.info.id, viewModel.session.value!!, viewModel.salonInfo.value!!.info.geo.longitude, viewModel.salonInfo.value!!.info.geo.latitude))
             }
 
         }
@@ -257,8 +141,13 @@ class PhotosFragment : Fragment() {
             fun bind(item: SalonPhoto) {
                 val view = binding.salonPhotoItem
 
+                val transformation = jp.wasabeef.picasso.transformations.RoundedCornersTransformation(6, 0)
+
                 Picasso.get()
                     .load(item.imgUrl)
+                    .centerCrop()
+                    .resize(104, 104)
+                    .transform(transformation)
                     .into(view)
 
                 binding.executePendingBindings()
@@ -267,10 +156,5 @@ class PhotosFragment : Fragment() {
         }
 
     }
-
-}
-
-@GlideModule
-class GlideApp1 : AppGlideModule() {
 
 }

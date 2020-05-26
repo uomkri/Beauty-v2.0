@@ -29,13 +29,18 @@ class ImageViewFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
 
         val position = ImageViewFragmentArgs.fromBundle(arguments!!).position
+        val session = ImageViewFragmentArgs.fromBundle(arguments!!).session
+        val salonId = ImageViewFragmentArgs.fromBundle(arguments!!).id
+        val longitude = ImageViewFragmentArgs.fromBundle(arguments!!).longitude
+        val latitude = ImageViewFragmentArgs.fromBundle(arguments!!).latitude
+
         Log.e("POS", position.toString())
 
         binding = FragmentImageviewBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
 
         binding.buttonClose.setOnClickListener {
-            fragmentManager!!.popBackStack()
+            it.findNavController().navigate(ImageViewFragmentDirections.actionImageViewFragmentToSalonFragment(salonId, session, longitude, latitude))
             Log.e("BT", "CLOSE")
         }
 
@@ -46,6 +51,9 @@ class ImageViewFragment : Fragment() {
                 binding.imageviewVp.adapter = ImageViewPagerAdapter(it)
 
                 binding.imageviewVp.currentItem = position
+
+                binding.salonName.text = viewModel.salonInfo.value!!.info.name
+                binding.salonAddress.text = viewModel.salonInfo.value!!.info.geo.address
 
                 binding.imageviewVp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {

@@ -73,6 +73,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:visibility="gone"
+
             app:lottie_rawRes="@raw/loading"
             app:lottie_loop="true"
             app:lottie_autoPlay="true"

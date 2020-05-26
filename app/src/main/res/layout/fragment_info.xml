@@ -11,10 +11,11 @@
         <ScrollView
             android:id="@+id/infoPage0"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:visibility="visible"
             >
             <LinearLayout
+                android:id="@+id/salon1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -22,12 +23,13 @@
                 >
 
                 <View
-                    android:id="@+id/divider2"
+                    android:id="@+id/divider2828"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_weight="1"
                     android:background="?android:attr/listDivider" />
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/salon2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
@@ -61,7 +63,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/salonAddressCaption" />
 
                     <View
-                        android:id="@+id/divider3"
+                        android:id="@+id/divider458684"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_weight="1"
@@ -73,6 +75,7 @@
                         app:layout_constraintStart_toStartOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <LinearLayout
+                    android:id="@+id/salon3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -107,7 +110,7 @@
                     </LinearLayout>
 
                     <View
-                        android:id="@+id/divider4"
+                        android:id="@+id/divider4568453"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_marginLeft="16dp"
@@ -120,6 +123,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/scheduleContainer" />
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/salon4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -151,7 +155,7 @@
 
 
                     <View
-                        android:id="@+id/divider5"
+                        android:id="@+id/divider486453643"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_weight="1"
@@ -163,6 +167,7 @@
                         app:layout_constraintStart_toStartOf="parent" />
                 </LinearLayout>
                <androidx.constraintlayout.widget.ConstraintLayout
+                   android:id="@+id/salon5"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:orientation="horizontal"
@@ -233,7 +238,7 @@
                        app:layout_constraintTop_toBottomOf="@+id/paidServicesCaption" />
 
                    <View
-                       android:id="@+id/divider6"
+                       android:id="@+id/divider4548334"
                        android:layout_width="1px"
                        android:layout_height="match_parent"
                        android:layout_marginTop="16dp"
