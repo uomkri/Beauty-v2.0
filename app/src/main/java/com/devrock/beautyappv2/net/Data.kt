@@ -126,6 +126,31 @@ data class SalonPhoto (
     val imgUrl: String
 )
 
+data class TimeslotsResponse (
+    val payload: List<TimeSlot>,
+    val info: Info
+)
+
+data class TimeSlot (
+    val id: Int,
+    val workplaceId: Int?,
+    val start: String?,
+    val end: String?,
+    val status: String?,
+    val date: String?,
+    val text: String?
+)
+
+data class HourPricesResponse (
+        val payload: List<HourPrice>,
+        val info: Info
+)
+
+data class HourPrice (
+    val hours: Int,
+    val price: Int
+)
+
 
 
 

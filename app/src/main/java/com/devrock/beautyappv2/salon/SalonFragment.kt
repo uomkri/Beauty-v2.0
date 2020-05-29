@@ -1,6 +1,7 @@
 package com.devrock.beautyappv2.salon
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Point
 import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
@@ -74,12 +75,22 @@ class SalonFragment : Fragment() {
 
         viewModel.getSalonById(salonId, longitude, latitude)
 
+        val prefs: SharedPreferences = activity!!.getSharedPreferences("SalonInfo", Context.MODE_PRIVATE)
+        val prefEditor: SharedPreferences.Editor = prefs.edit()
+
         val pager = binding.salonViewpager
 
         val PHOTOS_ENDPOINT = "https://beauty.judoekb.ru/api/salons/photo"
 
         binding.backButton.setOnClickListener {
+            prefEditor
+                .clear()
+                .apply()
             it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToMapFragment(session))
+        }
+
+        binding.rentButton.setOnClickListener {
+            it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToRentVariantsFragment(salonId))
         }
 
         pager.adapter = SalonFragmentStateAdapter(activity!!)
@@ -100,6 +111,12 @@ class SalonFragment : Fragment() {
                 val stock = "https://www.victoria-salon.ru/wp-content/uploads/2017/04/main_room3-1-1024x683.jpg"
 
                 mapSetup(it.info.geo.latitude, it.info.geo.longitude)
+
+                prefEditor
+                    .putInt("salonId", it.info.id)
+                    .putFloat("longitude", it.info.geo.longitude.toFloat())
+                    .putFloat("latitude", it.info.geo.latitude.toFloat())
+                    .apply()
 
                 binding.salonPageRating.text = "${"%.1f".format(it.info.rating.toFloat())}"
             }

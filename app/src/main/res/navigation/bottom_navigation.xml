@@ -81,6 +81,9 @@
         <action
             android:id="@+id/action_salonFragment_to_imageViewFragment"
             app:destination="@id/imageViewFragment" />
+        <action
+            android:id="@+id/action_salonFragment_to_rentVariantsFragment"
+            app:destination="@id/rentVariantsFragment" />
     </fragment>
     <fragment
         android:id="@+id/imageViewFragment"
@@ -104,5 +107,55 @@
         <action
             android:id="@+id/action_imageViewFragment_to_salonFragment"
             app:destination="@id/salonFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rentVariantsFragment"
+        android:name="com.devrock.beautyappv2.salon.RentVariantsFragment"
+        android:label="RentVariantsFragment" >
+        <argument
+            android:name="salonId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_rentVariantsFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
+        <action
+            android:id="@+id/action_rentVariantsFragment_to_hourlyCalendarFragment"
+            app:destination="@id/hourlyCalendarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hourlyCalendarFragment"
+        android:name="com.devrock.beautyappv2.rent.hourly.HourlyCalendarFragment"
+        android:label="HourlyCalendarFragment" >
+        <action
+            android:id="@+id/action_hourlyCalendarFragment_to_rentVariantsFragment"
+            app:destination="@id/rentVariantsFragment" />
+        <action
+            android:id="@+id/action_hourlyCalendarFragment_to_hourlyTimeslotsFragment"
+            app:destination="@id/hourlyTimeslotsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hourlyTimeslotsFragment"
+        android:name="com.devrock.beautyappv2.rent.hourly.HourlyTimeslotsFragment"
+        android:label="HourlyTimeslotsFragment" >
+        <action
+            android:id="@+id/action_hourlyTimeslotsFragment_to_hourlyConfirmFragment"
+            app:destination="@id/hourlyConfirmFragment" />
+        <action
+            android:id="@+id/action_hourlyTimeslotsFragment_to_hourlyCalendarFragment"
+            app:destination="@id/hourlyCalendarFragment" />
+        <argument
+            android:name="selectedDate"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/hourlyConfirmFragment"
+        android:name="com.devrock.beautyappv2.rent.hourly.HourlyConfirmFragment"
+        android:label="HourlyConfirmFragment" >
+        <action
+            android:id="@+id/action_hourlyConfirmFragment_to_hourlyTimeslotsFragment"
+            app:destination="@id/hourlyTimeslotsFragment" />
+        <action
+            android:id="@+id/action_hourlyConfirmFragment_to_hourlyCalendarFragment"
+            app:destination="@id/hourlyCalendarFragment" />
     </fragment>
 </navigation>

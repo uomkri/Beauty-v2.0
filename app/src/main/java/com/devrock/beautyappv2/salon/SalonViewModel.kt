@@ -1,5 +1,7 @@
 package com.devrock.beautyappv2.salon
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Point
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -41,6 +43,8 @@ class SalonViewModel : ViewModel() {
     val photosGridList = MutableLiveData<MutableList<SalonPhoto>>()
 
     val session = MutableLiveData<String>()
+
+
 
     fun getSalonById(id: Int, lon: Double, lat: Double) {
 
