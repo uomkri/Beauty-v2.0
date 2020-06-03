@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.devrock.beautyappv2.net.BeautyApi
-import com.devrock.beautyappv2.net.HourPrice
-import com.devrock.beautyappv2.net.TimeSlot
+import com.devrock.beautyappv2.net.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -47,9 +45,13 @@ class HourlyViewModel : ViewModel() {
     val errorText: LiveData<String>
         get() = _errorText
 
+    private val _addStatus = MutableLiveData<String>()
+    val addStatus: LiveData<String>
+        get() = _addStatus
+
     fun getTimeslots(workplaceId: Int, date: String) {
 
-        _selectedTimeslots.value = mutableListOf(null)
+        _selectedTimeslots.value = mutableListOf(TimeSlot(0,0, "0", "0", "0", "0", "0"))
 
         scope.launch {
 
@@ -58,6 +60,28 @@ class HourlyViewModel : ViewModel() {
             if (response.info.status == "Ok") {
                 _timeslotsRaw.value = response.payload
             }
+        }
+
+    }
+
+    fun addHourEntry(session: String, price: Int, slots: List<TimeSlot>) {
+
+        val idArray = slots.map {
+            return@map it.id
+        }
+
+        val body = AddHourEntryBody(
+            workplaceId = 1,
+            price = price,
+            slots = idArray,
+            comment = ""
+        )
+
+        scope.launch {
+
+            val response = BeautyApi.retrofitService.addHourEntry(session, body).await()
+
+            _addStatus.value = response.info.status
         }
 
     }

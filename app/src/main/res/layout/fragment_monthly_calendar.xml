@@ -20,18 +20,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
+                android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_close" />
 
             <TextView
-                android:id="@+id/headerText"
+                android:id="@+id/hdrCaption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Выберите день"
+                android:text="Выберите начало аренды"
                 android:textColor="#1a051d"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -50,6 +51,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
+            <ImageView
+                android:id="@+id/buttonBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_back" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -67,11 +79,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="71dp"
                 android:layout_marginBottom="71dp"
+                app:previousButtonSrc="@drawable/ic_left"
+                app:forwardButtonSrc="@drawable/ic_right"
                 app:type="one_day_picker"
                 app:headerColor="@color/white"
                 app:headerLabelColor="#000"
-                app:previousButtonSrc="@drawable/ic_left"
-                app:forwardButtonSrc="@drawable/ic_right"
                 app:highlightedDaysLabelsColor="@color/primaryDk"
                 app:todayLabelColor="@color/primaryDk"
                 app:layout_constraintBottom_toBottomOf="parent"

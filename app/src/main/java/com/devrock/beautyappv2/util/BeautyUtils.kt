@@ -28,11 +28,29 @@ fun getBitmapFromVectorDrawable (context: Context, drawableId: Int) : Bitmap {
     return bitmap
 }
 
-class BeautyUtils {
 
 
+    fun getFormattedMonth(month: String): String {
 
-}
+        var format: String = ""
+
+        when (month) {
+            "01" -> format = "января"
+            "02" -> format = "февраля"
+            "03" -> format = "марта"
+            "04" -> format = "апреля"
+            "05" -> format = "мая"
+            "06" -> format = "июня"
+            "07" -> format = "июля"
+            "08" -> format = "августа"
+            "09" -> format = "сентября"
+            "10" -> format = "октября"
+            "11" -> format = "ноября"
+            "12" -> format = "декабря"
+        }
+
+        return format
+    }
 
 
 

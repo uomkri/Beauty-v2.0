@@ -151,6 +151,41 @@ data class HourPrice (
     val price: Int
 )
 
+data class AddHourEntryBody (
+    val workplaceId: Int,
+    val price: Int,
+    val slots: List<Int>,
+    val comment: String
+)
+
+data class Offer (
+    val id: Int?,
+    val salonId: Int?,
+    val workplaceId: Int?,
+    val daysType: String?,
+    val price: Int?,
+    val description: String?,
+    val workdays: List<String>?,
+    val fromTime: String?,
+    val toTime: String?,
+    val startAfter: String?
+)
+
+data class OffersResponse (
+    val payload: List<Offer>,
+    val info: Info
+)
+
+data class OfferDaysResponse (
+    val payload: List<String>,
+    val info: Info
+)
+
+data class OfferDays (
+    val offerId: Int,
+    val days: List<String>
+)
+
 
 
 

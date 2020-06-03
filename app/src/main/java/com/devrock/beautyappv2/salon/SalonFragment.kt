@@ -71,6 +71,8 @@ class SalonFragment : Fragment() {
         val longitude = SalonFragmentArgs.fromBundle(arguments!!).longitude
         val latitude = SalonFragmentArgs.fromBundle(arguments!!).latitude
 
+        var rentType: String? = null
+
         viewModel.session.value = session
 
         viewModel.getSalonById(salonId, longitude, latitude)
@@ -86,11 +88,21 @@ class SalonFragment : Fragment() {
             prefEditor
                 .clear()
                 .apply()
-            it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToMapFragment(session))
+            it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToMapFragment())
         }
 
         binding.rentButton.setOnClickListener {
-            it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToRentVariantsFragment(salonId))
+
+            if (rentType != null) {
+
+                when (rentType) {
+                    "Both" -> it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToRentVariantsFragment(salonId))
+                    "Hourly" -> it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToHourlyCalendarFragment())
+                    "Monthly" -> it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToMonthlyOffersFragment())
+                }
+
+            }
+
         }
 
         pager.adapter = SalonFragmentStateAdapter(activity!!)
@@ -116,7 +128,16 @@ class SalonFragment : Fragment() {
                     .putInt("salonId", it.info.id)
                     .putFloat("longitude", it.info.geo.longitude.toFloat())
                     .putFloat("latitude", it.info.geo.latitude.toFloat())
+                    .putString("name", it.info.name)
+                    .putString("address", it.info.geo.address)
+                    .putString("rating", it.info.rating.toString())
                     .apply()
+
+                when {
+                    it.info.daysRentStart != null && it.info.hourRentStart == null -> rentType = "Monthly"
+                    it.info.daysRentStart == null && it.info.hourRentStart != null -> rentType = "Hourly"
+                    it.info.daysRentStart != null && it.info.hourRentStart != null -> rentType = "Both"
+                }
 
                 binding.salonPageRating.text = "${"%.1f".format(it.info.rating.toFloat())}"
             }

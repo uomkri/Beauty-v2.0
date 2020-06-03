@@ -1,6 +1,7 @@
 package com.devrock.beautyappv2.map
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -58,8 +59,6 @@ class MapFragment : Fragment() {
 
     private lateinit var binding: FragmentMapBinding
 
-    private lateinit var markers: List<Marker>
-
     private var userLon by Delegates.notNull<Double>()
 
     private var userLat by Delegates.notNull<Double>()
@@ -75,7 +74,8 @@ class MapFragment : Fragment() {
         binding = FragmentMapBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
 
-
+        val sessionPrefs = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
+        val session = sessionPrefs.getString("session", "")
 
         mapView = binding.mapView
 
@@ -302,10 +302,12 @@ class MapFragment : Fragment() {
 
     fun mapSetup() {
 
+        val sessionPrefs = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
+        val session = sessionPrefs.getString("session", "")
+
         val limit = 15
         val offset = 0
         val order = "distance"
-        val session = activity?.intent?.getStringExtra("session")
 
         try {
             MapsInitializer.initialize(context)

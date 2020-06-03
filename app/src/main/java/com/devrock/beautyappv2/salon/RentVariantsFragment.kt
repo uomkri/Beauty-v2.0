@@ -44,6 +44,10 @@ class RentVariantsFragment : Fragment() {
             it.findNavController().navigate(RentVariantsFragmentDirections.actionRentVariantsFragmentToHourlyCalendarFragment())
         }
 
+        binding.buttonMonthly.setOnClickListener {
+           it.findNavController().navigate(RentVariantsFragmentDirections.actionRentVariantsFragmentToMonthlyOffersFragment())
+        }
+
         return binding.root
     }
 

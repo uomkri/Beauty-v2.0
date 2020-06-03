@@ -1,5 +1,7 @@
 package com.devrock.beautyappv2.rent.hourly
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +13,7 @@ import androidx.navigation.findNavController
 import com.applandeo.materialcalendarview.EventDay
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import com.devrock.beautyappv2.databinding.FragmentHourlyCalendarBinding
+import com.devrock.beautyappv2.rent.ClosePromptFragment
 import java.util.*
 
 class HourlyCalendarFragment : Fragment() {
@@ -31,19 +34,41 @@ class HourlyCalendarFragment : Fragment() {
         binding = FragmentHourlyCalendarBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
 
+        val closePrompt = ClosePromptFragment().newInstance()
+
+        binding.buttonClose.setOnClickListener {
+
+            closePrompt.show(activity!!.supportFragmentManager, "close_prompt")
+
+        }
+
         binding.calendarView.setOnDayClickListener( object : OnDayClickListener {
             override fun onDayClick(eventDay: EventDay) {
+
                 val calendar = eventDay.calendar
                 val month = calendar.get(GregorianCalendar.MONTH)
                 val year = calendar.get(GregorianCalendar.YEAR)
                 val day = calendar.get(GregorianCalendar.DAY_OF_MONTH)
 
-                if (month < 10) {
-                    viewModel.selectedDate.value = "$year-0${month+1}-$day"
+                var monthFormat = ""
+                var dayFormat = ""
+
+                monthFormat = if (month < 10) {
+                    "0${month+1}"
                 }  else {
-                    viewModel.selectedDate.value = "$year-${month+1}-$day"
+                    "${month+1}"
                 }
+
+                dayFormat = if (day < 10) {
+                    "0${day}"
+                }  else {
+                    "${day}"
+                }
+
+                viewModel.selectedDate.value = "$year-${monthFormat}-$dayFormat"
+
                 Log.i("CD", viewModel.selectedDate.value)
+
 
             }
 

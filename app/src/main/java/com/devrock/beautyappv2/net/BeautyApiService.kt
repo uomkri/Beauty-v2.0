@@ -88,6 +88,30 @@ interface BeautyApiService {
         @Query("workplaceId") workplaceId: Int
     ): Deferred<HourPricesResponse>
 
+    @POST("offers/entry/hours/add")
+    fun addHourEntry(
+        @Header("Authorization") session: String,
+        @Body body: AddHourEntryBody
+    ): Deferred<Status>
+
+    @GET("offers/workplaceOffers")
+    fun getWorkplaceOffers(
+        @Query("workplaceId") workplaceId: Int
+    ): Deferred<OffersResponse>
+
+    @GET("offers/offerDays")
+    fun getOfferDays(
+        @Query("offerId") offerId: Int,
+        @Query("startDate") startDate: String
+    ): Deferred<OfferDaysResponse>
+
+    @POST("offers/entry/add")
+    fun addMonthEntry(
+        @Header("Authorization") session: String,
+        @Query("startDate") startDate: String,
+        @Query("offerId") offerId: Int
+    ): Deferred<Status>
+
 }
 
 object BeautyApi {

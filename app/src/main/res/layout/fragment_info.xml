@@ -60,7 +60,7 @@
                         android:textColor="#1a051d"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/salonAddressCaption" />
+                        app:layout_constraintTop_toBottomOf="@id/salonAddressCaption" />
 
                     <View
                         android:id="@+id/divider458684"
@@ -102,7 +102,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginBottom="16dp"
                         android:orientation="vertical"
-                        app:layout_constraintBottom_toTopOf="@+id/salonScheduleCaption"
+                        app:layout_constraintBottom_toTopOf="@id/salonScheduleCaption"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -120,7 +120,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/scheduleContainer" />
+                        app:layout_constraintTop_toBottomOf="@id/scheduleContainer" />
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/salon4"
@@ -197,9 +197,9 @@
                        android:text="TextView"
                        android:textColor="#1a051d"
                        android:textSize="15sp"
-                       app:layout_constraintEnd_toStartOf="@+id/guideline"
+                       app:layout_constraintEnd_toStartOf="@id/guideline"
                        app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintTop_toBottomOf="@+id/includedCaption" />
+                       app:layout_constraintTop_toBottomOf="@id/includedCaption" />
 
                    <androidx.constraintlayout.widget.Guideline
                        android:id="@+id/guideline"
@@ -219,7 +219,7 @@
                        android:text="За дополнительную плату"
                        android:textColor="#cac9d6"
                        android:textSize="12sp"
-                       app:layout_constraintStart_toStartOf="@+id/guideline"
+                       app:layout_constraintStart_toStartOf="@id/guideline"
                        app:layout_constraintTop_toTopOf="parent" />
 
                    <TextView
@@ -234,8 +234,8 @@
                        android:textColor="#1a051d"
                        android:textSize="15sp"
                        app:layout_constraintEnd_toEndOf="parent"
-                       app:layout_constraintStart_toStartOf="@+id/guideline"
-                       app:layout_constraintTop_toBottomOf="@+id/paidServicesCaption" />
+                       app:layout_constraintStart_toStartOf="@id/guideline"
+                       app:layout_constraintTop_toBottomOf="@id/paidServicesCaption" />
 
                    <View
                        android:id="@+id/divider4548334"
@@ -244,7 +244,7 @@
                        android:layout_marginTop="16dp"
                        android:background="?android:attr/listDivider"
                        app:layout_constraintBottom_toBottomOf="parent"
-                       app:layout_constraintEnd_toStartOf="@+id/guideline"
+                       app:layout_constraintEnd_toStartOf="@id/guideline"
                        app:layout_constraintTop_toTopOf="parent" />
                </androidx.constraintlayout.widget.ConstraintLayout>
 

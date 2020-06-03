@@ -50,5 +50,9 @@
         <item name="singleLine">true</item>
     </style>
 
+    <style name="DialogTheme_transparent" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
 
 </resources>

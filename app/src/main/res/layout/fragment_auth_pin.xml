@@ -110,7 +110,7 @@
             android:textSize="12sp"
             android:layout_marginTop="27dp"
             android:textColor="@color/primaryDk"
-            android:visibility="visible"
+            android:visibility="gone"
             />
     </LinearLayout>
 </layout>

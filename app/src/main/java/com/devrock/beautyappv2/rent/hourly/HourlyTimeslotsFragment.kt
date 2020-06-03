@@ -1,6 +1,7 @@
 package com.devrock.beautyappv2.rent.hourly
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,9 +12,12 @@ import android.widget.BaseAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentHourlyTimeslotsBinding
 import com.devrock.beautyappv2.net.TimeSlot
+import com.devrock.beautyappv2.rent.ClosePromptFragment
+import com.devrock.beautyappv2.util.getFormattedMonth
 import kotlinx.android.synthetic.main.timeslot_grid_item.view.*
 import kotlin.properties.Delegates
 
@@ -25,6 +29,7 @@ class HourlyTimeslotsFragment : Fragment() {
     private lateinit var dayAdapter: TimeslotsAdapter
     private lateinit var eveningAdapter: TimeslotsAdapter
     private var hourPrice = 0
+    private var resultPrice = 0
 
 
     private val viewModel: HourlyViewModel by lazy {
@@ -45,9 +50,25 @@ class HourlyTimeslotsFragment : Fragment() {
         viewModel.getTimeslots(1, date)
         viewModel.getHourPrices(1)
 
-        binding.selectedDate.text = date
+        val selectedMonth = getFormattedMonth(date.substring(5, 7))
+        val formattedDate = "${date.substring(8, 10)} $selectedMonth ${date.substring(0, 4)}"
 
+        binding.selectedDate.text = formattedDate
 
+        val prefs: SharedPreferences = activity!!.getSharedPreferences("SalonInfo", Context.MODE_PRIVATE)
+        val prefEditor: SharedPreferences.Editor = prefs.edit()
+
+        binding.buttonBack.setOnClickListener {
+            activity!!.supportFragmentManager.popBackStackImmediate()
+        }
+
+        val closePrompt = ClosePromptFragment().newInstance()
+
+        binding.buttonClose.setOnClickListener {
+
+            closePrompt.show(activity!!.supportFragmentManager, "close_prompt")
+
+        }
 
         viewModel.timeslotsRaw.observe(this, Observer {
 
@@ -133,8 +154,6 @@ class HourlyTimeslotsFragment : Fragment() {
 
         viewModel.selectedTimeslots.observe(this, Observer {
 
-            Log.i("selected", it.toString())
-
             viewModel.hourPrices.observe(this, Observer { list ->
 
                 if (list != null) {
@@ -148,7 +167,13 @@ class HourlyTimeslotsFragment : Fragment() {
 
                     }
 
-                    Log.i("Prices", "hour ${hourPrice}  result ${it.size * hourPrice}")
+                    resultPrice = it.size * hourPrice
+
+                    prefEditor
+                        .putInt("resultPrice", resultPrice)
+                        .putInt("hourPrice", hourPrice)
+                        .apply()
+
                     binding.resultPrice.text = "Итого: ${it.size * hourPrice} ₽"
                 }
 
@@ -158,6 +183,10 @@ class HourlyTimeslotsFragment : Fragment() {
 
 
         })
+
+        binding.nextButton.setOnClickListener {
+            it.findNavController().navigate(HourlyTimeslotsFragmentDirections.actionHourlyTimeslotsFragmentToHourlyConfirmFragment(date))
+        }
 
 
 

@@ -22,7 +22,7 @@ open class BottomDialogFragment  : BottomSheetDialogFragment() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    fun newInstance(): BottomDialogFragment {
+    open fun newInstance(): BottomDialogFragment {
         return BottomDialogFragment()
     }
 }

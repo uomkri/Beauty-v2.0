@@ -7,9 +7,6 @@
         android:id="@+id/mapFragment"
         android:name="com.devrock.beautyappv2.map.MapFragment"
         android:label="MapFragment" >
-        <argument
-            android:name="session"
-            app:argType="string" />
         <action
             android:id="@+id/action_mapFragment_to_workplacesFragment"
             app:destination="@id/workplacesFragment"
@@ -84,6 +81,12 @@
         <action
             android:id="@+id/action_salonFragment_to_rentVariantsFragment"
             app:destination="@id/rentVariantsFragment" />
+        <action
+            android:id="@+id/action_salonFragment_to_monthlyOffersFragment"
+            app:destination="@id/monthlyOffersFragment" />
+        <action
+            android:id="@+id/action_salonFragment_to_hourlyCalendarFragment"
+            app:destination="@id/hourlyCalendarFragment" />
     </fragment>
     <fragment
         android:id="@+id/imageViewFragment"
@@ -121,6 +124,9 @@
         <action
             android:id="@+id/action_rentVariantsFragment_to_hourlyCalendarFragment"
             app:destination="@id/hourlyCalendarFragment" />
+        <action
+            android:id="@+id/action_rentVariantsFragment_to_monthlyOffersFragment"
+            app:destination="@id/monthlyOffersFragment" />
     </fragment>
     <fragment
         android:id="@+id/hourlyCalendarFragment"
@@ -132,6 +138,9 @@
         <action
             android:id="@+id/action_hourlyCalendarFragment_to_hourlyTimeslotsFragment"
             app:destination="@id/hourlyTimeslotsFragment" />
+        <action
+            android:id="@+id/action_hourlyCalendarFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
     </fragment>
     <fragment
         android:id="@+id/hourlyTimeslotsFragment"
@@ -146,6 +155,9 @@
         <argument
             android:name="selectedDate"
             app:argType="string" />
+        <action
+            android:id="@+id/action_hourlyTimeslotsFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
     </fragment>
     <fragment
         android:id="@+id/hourlyConfirmFragment"
@@ -157,5 +169,74 @@
         <action
             android:id="@+id/action_hourlyConfirmFragment_to_hourlyCalendarFragment"
             app:destination="@id/hourlyCalendarFragment" />
+        <argument
+            android:name="selectedDate"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_hourlyConfirmFragment_to_rentSuccessFragment"
+            app:destination="@id/rentSuccessFragment" />
+        <action
+            android:id="@+id/action_hourlyConfirmFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/rentSuccessFragment"
+        android:name="com.devrock.beautyappv2.rent.RentSuccessFragment"
+        android:label="RentSuccessFragment" >
+        <action
+            android:id="@+id/action_rentSuccessFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/monthlyOffersFragment"
+        android:name="com.devrock.beautyappv2.rent.monthly.MonthlyOffersFragment"
+        android:label="MonthlyOffersFragment" >
+        <action
+            android:id="@+id/action_monthlyOffersFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
+        <action
+            android:id="@+id/action_monthlyOffersFragment_to_monthlyCalendarFragment"
+            app:destination="@id/monthlyCalendarFragment" />
+        <action
+            android:id="@+id/action_monthlyOffersFragment_to_salonFragment2"
+            app:destination="@id/salonFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/monthlyCalendarFragment"
+        android:name="com.devrock.beautyappv2.rent.monthly.MonthlyCalendarFragment"
+        android:label="MonthlyCalendarFragment" >
+        <action
+            android:id="@+id/action_monthlyCalendarFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
+        <action
+            android:id="@+id/action_monthlyCalendarFragment_to_monthlyOffersFragment"
+            app:destination="@id/monthlyOffersFragment" />
+        <action
+            android:id="@+id/action_monthlyCalendarFragment_to_monthlyConfirmFragment"
+            app:destination="@id/monthlyConfirmFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/monthlyConfirmFragment"
+        android:name="com.devrock.beautyappv2.rent.monthly.MonthlyConfirmFragment"
+        android:label="MonthlyConfirmFragment" >
+        <action
+            android:id="@+id/action_monthlyConfirmFragment_to_monthlyCalendarFragment"
+            app:destination="@id/monthlyCalendarFragment" />
+        <action
+            android:id="@+id/action_monthlyConfirmFragment_to_monthlyOffersFragment"
+            app:destination="@id/monthlyOffersFragment" />
+        <action
+            android:id="@+id/action_monthlyConfirmFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
+        <action
+            android:id="@+id/action_monthlyConfirmFragment_to_rentSuccessFragment"
+            app:destination="@id/rentSuccessFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/closePromptFragment"
+        android:name="com.devrock.beautyappv2.rent.ClosePromptFragment"
+        android:label="ClosePromptFragment" />
+    <action
+        android:id="@+id/action_global_closePromptFragment"
+        app:destination="@id/mapFragment" />
 </navigation>
