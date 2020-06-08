@@ -31,7 +31,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
+            android:layout_marginStart="59dp"
+            android:layout_marginEnd="59dp"
             app:boxStrokeWidth="0.5dp"
+            app:errorEnabled="true"
             android:theme="@style/TextInput"
             >
 
@@ -39,8 +42,6 @@
                 android:id="@+id/signup_name_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="59dp"
-                android:layout_marginEnd="59dp"
                 android:fontFamily="@font/roboto"
                 android:lines="1"
                 android:maxLength="30"
@@ -54,7 +55,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="39dp"
+            android:layout_marginStart="59dp"
+            android:layout_marginEnd="59dp"
             app:boxStrokeWidth="0.5dp"
+            app:errorEnabled="true"
             android:theme="@style/TextInput"
             >
 
@@ -62,8 +66,6 @@
                 android:id="@+id/signup_lastname_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="59dp"
-                android:layout_marginEnd="59dp"
                 android:fontFamily="@font/roboto"
                 android:lines="1"
                 android:maxLength="30"

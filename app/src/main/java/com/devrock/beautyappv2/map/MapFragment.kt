@@ -151,12 +151,12 @@ class MapFragment : Fragment() {
             workingHours.visibility = View.INVISIBLE
         }
 
-        if (item.daysRentStart != null) {
+        /*if (item.daysRentStart != null) {
             startDay.text = "помесячная аренда"
             startDay.visibility = View.VISIBLE
         } else {
             startDay.visibility = View.INVISIBLE
-        }
+        }*/
 
         val r = item.rating
         when {

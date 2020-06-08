@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager2.widget.ViewPager2
 import com.devrock.beautyappv2.AppActivity
 import com.devrock.beautyappv2.databinding.FragmentOnboardingBinding
+import com.devrock.beautyappv2.ui.DepthPageTransformer
 
 class OnboardingFragment : Fragment() {
 
@@ -31,6 +32,7 @@ class OnboardingFragment : Fragment() {
         binding.viewModel = viewModel
 
         binding.obViewpager.adapter = ViewPagerAdapter()
+        binding.obViewpager.setPageTransformer(DepthPageTransformer() as ViewPager2.PageTransformer)
 
         binding.dotsIndicator.setViewPager2(binding.obViewpager)
 

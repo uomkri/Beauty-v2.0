@@ -186,20 +186,19 @@
                        app:layout_constraintStart_toStartOf="parent"
                        app:layout_constraintTop_toTopOf="parent" />
 
-                   <TextView
-                       android:id="@+id/included"
+                   <LinearLayout
+                       android:id="@+id/includedServices"
                        android:layout_width="0dp"
                        android:layout_height="wrap_content"
                        android:layout_marginStart="16dp"
                        android:layout_marginTop="8dp"
-                       android:layout_marginEnd="11dp"
-                       android:fontFamily="@font/roboto"
-                       android:text="TextView"
-                       android:textColor="#1a051d"
-                       android:textSize="15sp"
-                       app:layout_constraintEnd_toStartOf="@id/guideline"
+                       android:layout_marginEnd="16dp"
+                       android:orientation="vertical"
+                       app:layout_constraintEnd_toStartOf="@+id/guideline"
                        app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintTop_toBottomOf="@id/includedCaption" />
+                       app:layout_constraintTop_toBottomOf="@+id/includedCaption">
+
+                   </LinearLayout>
 
                    <androidx.constraintlayout.widget.Guideline
                        android:id="@+id/guideline"
@@ -222,20 +221,17 @@
                        app:layout_constraintStart_toStartOf="@id/guideline"
                        app:layout_constraintTop_toTopOf="parent" />
 
-                   <TextView
+                   <LinearLayout
                        android:id="@+id/paidServices"
                        android:layout_width="0dp"
                        android:layout_height="wrap_content"
-                       android:layout_marginStart="11dp"
+                       android:layout_marginStart="16dp"
                        android:layout_marginTop="8dp"
                        android:layout_marginEnd="16dp"
-                       android:fontFamily="@font/roboto"
-                       android:text="@string/loremipsum_long"
-                       android:textColor="#1a051d"
-                       android:textSize="15sp"
+                       android:orientation="vertical"
                        app:layout_constraintEnd_toEndOf="parent"
-                       app:layout_constraintStart_toStartOf="@id/guideline"
-                       app:layout_constraintTop_toBottomOf="@id/paidServicesCaption" />
+                       app:layout_constraintStart_toStartOf="@+id/guideline"
+                       app:layout_constraintTop_toBottomOf="@+id/paidServicesCaption" />
 
                    <View
                        android:id="@+id/divider4548334"

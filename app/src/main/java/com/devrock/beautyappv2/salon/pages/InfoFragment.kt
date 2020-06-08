@@ -17,6 +17,7 @@ import com.devrock.beautyappv2.net.SalonByIdPayload
 import com.devrock.beautyappv2.salon.SalonFragmentArgs
 import kotlinx.android.synthetic.main.contacts_item.view.*
 import kotlinx.android.synthetic.main.schedule_item.view.*
+import kotlinx.android.synthetic.main.services_item.view.*
 import kotlin.properties.Delegates
 
 class InfoFragment() : Fragment() {
@@ -92,6 +93,23 @@ class InfoFragment() : Fragment() {
                         }
                     }
                     insertPoint.addView(contactsItem)
+                }
+
+                val services = it.additionalServices
+
+                for (item in services!!) {
+
+                    val view = inflater.inflate(R.layout.services_item, null)
+
+                    view.serviceText.text = "- ${item.title}"
+
+                    when (item.serviceType) {
+
+                        "Free" -> binding.includedServices.addView(view)
+                        "Paid" -> binding.paidServices.addView(view)
+
+                    }
+
                 }
 
             }

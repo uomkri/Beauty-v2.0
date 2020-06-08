@@ -21,8 +21,8 @@
     </style>
 
     <style name="TextInput" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">#858585</item>
-        <item name="colorControlActivated">#20629B</item>
+        <item name="colorControlNormal">#EBEBED</item>
+        <item name="colorControlActivated">#6979F8</item>
     </style>
 
     <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">

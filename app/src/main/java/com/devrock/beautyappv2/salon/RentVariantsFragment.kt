@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
@@ -45,7 +46,8 @@ class RentVariantsFragment : Fragment() {
         }
 
         binding.buttonMonthly.setOnClickListener {
-           it.findNavController().navigate(RentVariantsFragmentDirections.actionRentVariantsFragmentToMonthlyOffersFragment())
+           //it.findNavController().navigate(RentVariantsFragmentDirections.actionRentVariantsFragmentToMonthlyOffersFragment())
+            Toast.makeText(context!!, "CЯITICAL SYSTEM EЯЯOЯ", Toast.LENGTH_SHORT).show()
         }
 
         return binding.root

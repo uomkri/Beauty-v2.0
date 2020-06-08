@@ -78,6 +78,7 @@ data class SalonByIdPayload (
     val owner: String,
     val contacts: List<Contact>,
     val salonSchedule: List<ScheduleItem>,
+    val additionalServices: List<Service>?,
     val text: String?
 )
 
@@ -184,6 +185,12 @@ data class OfferDaysResponse (
 data class OfferDays (
     val offerId: Int,
     val days: List<String>
+)
+
+data class Service (
+    val id: Int,
+    val serviceType: String,
+    val title: String
 )
 
 

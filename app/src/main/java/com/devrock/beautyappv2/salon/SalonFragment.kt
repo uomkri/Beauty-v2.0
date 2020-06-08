@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
@@ -96,9 +97,9 @@ class SalonFragment : Fragment() {
             if (rentType != null) {
 
                 when (rentType) {
-                    "Both" -> it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToRentVariantsFragment(salonId))
+                    "Both" -> it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToHourlyCalendarFragment())
                     "Hourly" -> it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToHourlyCalendarFragment())
-                    "Monthly" -> it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToMonthlyOffersFragment())
+                    "Monthly" -> Toast.makeText(context!!, "CЯITICAL SYSTEM EЯЯOЯ", Toast.LENGTH_SHORT).show()//it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToMonthlyOffersFragment())
                 }
 
             }

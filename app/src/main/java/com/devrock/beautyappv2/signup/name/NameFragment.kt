@@ -2,6 +2,7 @@ package com.devrock.beautyappv2.signup.name
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -83,9 +84,22 @@ class NameFragment : Fragment() {
                     if(button.isEnabled) button.setTextColor((resources.getColor(R.color.white)))
                     if(!button.isEnabled) button.setTextColor((resources.getColor(R.color.colorButtonDisabled)))
                     name = s.toString()
+
+                    if (shouldShowError(s.toString())) binding.signupName.error = "Неверно введены данные"
+                    else binding.signupName.error = null
                 }
             }
         })
+
+        binding.signupName.setOnFocusChangeListener { v, hasFocus ->
+
+            if (hasFocus) {
+                v.background.setColorFilter(resources.getColor(R.color.primaryDk), PorterDuff.Mode.SRC_ATOP);
+            } else {
+               // v.background.clearColorFilter()
+            }
+
+        }
 
         inputLastname.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -101,6 +115,9 @@ class NameFragment : Fragment() {
                     if(button.isEnabled) button.setTextColor((resources.getColor(R.color.white)))
                     if(!button.isEnabled) button.setTextColor((resources.getColor(R.color.colorButtonDisabled)))
                     lastName = s.toString()
+
+                    if (shouldShowError(s.toString())) binding.signupLastname.error = "Неверно введены данные"
+                        else binding.signupLastname.error = null
                 }
             }
         })
@@ -115,14 +132,18 @@ class NameFragment : Fragment() {
             Log.e("REGEX", "${nameReg.matches(formName)} ${nameReg.matches(formLastName)}")
             if (nameReg.matches(formName) && nameReg.matches(formLastName)) {
                 viewModel.accountCreate(session, name, lastName)
-            } else {
-                if(!nameReg.matches(formName) && nameReg.matches(formLastName)) showAlert("Введено невалидное имя ")
-                if(!nameReg.matches(formLastName) && nameReg.matches(formName)) showAlert("Введена невалидная фамилия ")
-                if(!nameReg.matches(formLastName) && !nameReg.matches(formName)) showAlert("Введены невалидные имя и фамилия")
             }
         }
 
         return binding.root
+    }
+
+    private fun shouldShowError(text: String) : Boolean {
+
+        val nameReg = Regex("[А-Я][а-я]+")
+
+        return !nameReg.matches(text)
+
     }
 
     private fun showAlert(message: String) {
