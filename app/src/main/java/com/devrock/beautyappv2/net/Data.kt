@@ -193,6 +193,29 @@ data class Service (
     val title: String
 )
 
+data class Workplace (
+    val id: Int,
+    val name: String,
+    val havePhoto: Boolean?,
+    val rentType: String
+)
+
+data class WorkplacesResponse (
+    val payload: List<Workplace>,
+    val info: Info
+)
+
+data class OfferTimeslot (
+    val timeSlot: TimeSlot,
+    val price: Int
+)
+
+data class HourOfferResponse (
+    val payload: List<OfferTimeslot>,
+    val info: Info
+)
+
+
 
 
 

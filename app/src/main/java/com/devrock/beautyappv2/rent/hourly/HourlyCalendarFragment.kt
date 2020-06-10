@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
@@ -41,6 +42,27 @@ class HourlyCalendarFragment : Fragment() {
             closePrompt.show(activity!!.supportFragmentManager, "close_prompt")
 
         }
+
+        val salonPrefs: SharedPreferences = activity!!.getSharedPreferences("SalonInfo", Context.MODE_PRIVATE)
+        val sessionPrefs: SharedPreferences = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
+
+        val salonId = salonPrefs.getInt("salonId", 0)
+        val lon = salonPrefs.getFloat("longitude", 0f)
+        val lat = salonPrefs.getFloat("latitude", 0f)
+        val session = sessionPrefs.getString("session", null)
+
+
+
+        activity!!.onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                /*binding.root.findNavController().navigate(HourlyCalendarFragmentDirections.actionHourlyCalendarFragmentToSalonFragment(
+                    salonId, session!!, lon.toDouble(), lat.toDouble()
+                ))*/
+
+                closePrompt.show(activity!!.supportFragmentManager, "close_prompt")
+
+            }
+        })
 
         binding.calendarView.setOnDayClickListener( object : OnDayClickListener {
             override fun onDayClick(eventDay: EventDay) {

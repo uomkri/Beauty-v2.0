@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.devrock.beautyappv2.net.BeautyApi
-import com.devrock.beautyappv2.net.SalonListItem
-import com.devrock.beautyappv2.net.SalonListResponse
+import com.devrock.beautyappv2.net.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -29,6 +27,43 @@ class MapViewModel : ViewModel() {
     private val _errorText = MutableLiveData<String>()
     val errorText: LiveData<String>
         get() = _errorText
+
+    private val _hourPrices = MutableLiveData<List<OfferTimeslot>>()
+    val hourPrices: LiveData<List<OfferTimeslot>>
+        get() = _hourPrices
+
+    private val _salonWorkplaces = MutableLiveData<List<Workplace>>()
+    val salonWorkplaces: LiveData<List<Workplace>>
+        get() = _salonWorkplaces
+
+    fun getSalonWorkplaces(session: String, salonId: Int) {
+
+        scope.launch {
+
+            val response = BeautyApi.retrofitService.getSalonWorkplaces(session, salonId).await()
+
+            if (response.info.status == "Ok") {
+                _salonWorkplaces.value = response.payload
+            }
+
+        }
+
+    }
+
+    fun getHourPrices(salonId: Int) {
+
+        scope.launch {
+
+            val date = "2020-06-10"
+
+           val response = BeautyApi.retrofitService.getHourOffers(salonId, date).await()
+
+            if (response.info.status == "Ok") {
+                _hourPrices.value = response.payload
+            }
+        }
+
+    }
 
     fun getSalonsList(lon: Double, lat: Double, limit: Int, offset: Int, order: String, session: String) {
 

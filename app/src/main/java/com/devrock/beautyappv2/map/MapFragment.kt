@@ -47,6 +47,7 @@ import kotlinx.android.synthetic.main.map_popup.view.star5
 import kotlinx.android.synthetic.main.map_popup.view.startDay
 import kotlinx.android.synthetic.main.map_popup.view.workingHours
 import kotlinx.android.synthetic.main.modal_test2.*
+import kotlinx.android.synthetic.main.modal_test2.view.*
 import kotlin.properties.Delegates
 
 class MapFragment : Fragment() {
@@ -143,6 +144,17 @@ class MapFragment : Fragment() {
         popup.setOnClickListener {
             popup.findNavController().navigate(MapFragmentDirections.actionMapFragmentToSalonFragment(item.id, session, item.geo.longitude, item.geo.latitude))
         }
+
+        viewModel.getHourPrices(item.id)
+
+        viewModel.hourPrices.observe(this, Observer { list ->
+
+            if (list != null) {
+                view.workingHours.text = "${list[0].price} ₽ / час"
+            }
+
+        })
+
 
         var salonName = view.salonName
         val salonAddress = view.salonAddress

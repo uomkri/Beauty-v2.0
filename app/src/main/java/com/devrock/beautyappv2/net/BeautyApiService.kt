@@ -112,6 +112,18 @@ interface BeautyApiService {
         @Query("offerId") offerId: Int
     ): Deferred<Status>
 
+    @GET("workplaces/list")
+    fun getSalonWorkplaces(
+        @Header("Authorization") session: String,
+        @Query("salonId") salonId: Int
+    ): Deferred<WorkplacesResponse>
+
+    @GET("offers/hourOffers")
+    fun getHourOffers(
+        @Query("salonId") salonId: Int,
+        @Query("date") date: String
+    ): Deferred<HourOfferResponse>
+
 }
 
 object BeautyApi {
