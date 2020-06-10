@@ -18,6 +18,7 @@ import com.devrock.beautyappv2.databinding.FragmentNameBinding
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -52,8 +53,11 @@ class NameFragment : Fragment() {
         val session = args.session
 
 
-
-
+        activity!!.onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                binding.root.findNavController().navigate(NameFragmentDirections.actionNameFragmentToAuthFragment())
+            }
+        })
 
         button.isEnabled = false
         button.isClickable = false

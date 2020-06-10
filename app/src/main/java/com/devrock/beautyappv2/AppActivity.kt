@@ -26,9 +26,7 @@ class AppActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        //super.onBackPressed()
-    }
+
 
     private fun setUpNavigation(){
         val navBar = findViewById<BottomNavigationView>(R.id.bottomNavBar)

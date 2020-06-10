@@ -2,23 +2,14 @@ package com.devrock.beautyappv2.salon
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.Point
-import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.getSystemService
-import androidx.core.graphics.drawable.toBitmap
-import androidx.core.net.toUri
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
-import com.bumptech.glide.Glide
-import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialogFragment
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentSalonBinding
 import com.devrock.beautyappv2.salon.pages.SalonFragmentStateAdapter
@@ -29,12 +20,8 @@ import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_app.*
-import kotlinx.android.synthetic.main.fragment_info.view.*
-import kotlinx.android.synthetic.main.rent_price_item.view.*
 
 class SalonFragment : Fragment() {
 
@@ -92,6 +79,12 @@ class SalonFragment : Fragment() {
             it.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToMapFragment())
         }
 
+        activity!!.onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                binding.root.findNavController().navigate(SalonFragmentDirections.actionSalonFragmentToMapFragment())
+            }
+        })
+
         binding.rentButton.setOnClickListener {
 
             if (rentType != null) {
@@ -146,6 +139,8 @@ class SalonFragment : Fragment() {
 
         return binding.root
     }
+
+
 
     fun mapSetup(latitude: Double, longitude: Double) {
 

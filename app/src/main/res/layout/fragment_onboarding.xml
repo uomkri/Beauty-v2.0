@@ -25,7 +25,7 @@
             android:background="@drawable/onboarding_bg"
             android:elevation="3dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/startButton"
+            app:layout_constraintBottom_toTopOf="@id/startButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -72,6 +72,25 @@
             android:fontFamily="@font/roboto"
             android:textSize="14sp"
             android:textColor="#d0c9d6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/nextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:height="52dp"
+            android:visibility="gone"
+            android:background="@drawable/auth_button"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Далее"
+            android:textAllCaps="false"
+            android:textColor="#ffffff"
+            android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

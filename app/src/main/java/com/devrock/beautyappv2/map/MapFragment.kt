@@ -2,6 +2,7 @@ package com.devrock.beautyappv2.map
 
 import android.Manifest
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -63,6 +65,9 @@ class MapFragment : Fragment() {
 
     private var userLat by Delegates.notNull<Double>()
 
+    private lateinit var mapPrefs: SharedPreferences
+    private lateinit var prefEditor: SharedPreferences.Editor
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -76,6 +81,12 @@ class MapFragment : Fragment() {
 
         val sessionPrefs = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
         val session = sessionPrefs.getString("session", "")
+
+        activity!!.onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+            }
+        })
 
         mapView = binding.mapView
 
@@ -258,8 +269,6 @@ class MapFragment : Fragment() {
                     userLon = mLastKnownLocation!!.longitude
                     userLat = mLastKnownLocation!!.latitude
                     viewModel.getSalonsList(userLon, userLat, limit, offset, order, session)
-
-                    map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(userLat, userLon), 14f))
                 }
             }
         } catch(e: SecurityException)  {
@@ -281,19 +290,36 @@ class MapFragment : Fragment() {
 
 
 
-
-
     override fun onStop() {
         super.onStop()
     }
 
     override fun onPause() {
         super.onPause()
+
+        val pos = map!!.cameraPosition
+
+        val lon = pos!!.target.longitude
+        val lat = pos.target.latitude
+
+        val zoom = pos.zoom
+
+        Log.e("map", "$lon $lat $zoom")
+
+        prefEditor
+            .putFloat("LON", lon.toFloat())
+            .putFloat("LAT", lat.toFloat())
+            .putFloat("ZOOM", zoom)
+            .apply()
     }
 
     override fun onResume() {
         super.onResume()
         activity!!.bottomNavBar.visibility = View.VISIBLE
+
+        mapPrefs = activity!!.getSharedPreferences("MapState", Context.MODE_PRIVATE)
+        prefEditor = mapPrefs.edit()
+
     }
 
     override fun onStart() {
@@ -301,6 +327,8 @@ class MapFragment : Fragment() {
     }
 
     fun mapSetup() {
+
+        Log.e("map", "SETUP CALLED")
 
         val sessionPrefs = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
         val session = sessionPrefs.getString("session", "")
@@ -321,7 +349,23 @@ class MapFragment : Fragment() {
             map!!.isMyLocationEnabled = true
             map!!.uiSettings.isMyLocationButtonEnabled = false
 
+
+            val savedLon = mapPrefs.getFloat("LON", 0f)
+            val savedLat = mapPrefs.getFloat("LAT", 0f)
+            val savedZoom = mapPrefs.getFloat("ZOOM", 0f)
+
             getDeviceLocation(limit, offset, order, session!!)
+
+            if (savedLat == 0f || savedLon == 0f || savedZoom == 0f) {
+                map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(userLat, userLon), 14f))
+            } else {
+                val latLng = LatLng(savedLat.toDouble(), savedLon.toDouble())
+
+                Log.e("mapSvd", "$savedLat $savedLon $savedZoom")
+
+                map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, savedZoom))
+            }
+
 
 
             //check if api call was successful and place markers
@@ -343,16 +387,22 @@ class MapFragment : Fragment() {
                 }
             })
 
+
+
             map!!.setOnMarkerClickListener {
 
                 val markerInfo = it.tag as SalonListItem
-                openPopup(markerInfo, session)
+                openPopup(markerInfo, session!!)
                 map!!.moveCamera(CameraUpdateFactory.zoomTo(17.0f))
                 false
             }
 
 
+
+
         }
+
+
     }
 
     }

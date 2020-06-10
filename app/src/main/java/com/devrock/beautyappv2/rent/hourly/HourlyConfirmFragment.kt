@@ -14,6 +14,7 @@ import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentHourlyConfirmBinding
 import com.devrock.beautyappv2.net.TimeSlot
 import com.devrock.beautyappv2.rent.ClosePromptFragment
+import com.devrock.beautyappv2.util.getFormattedMonth
 import kotlinx.android.synthetic.main.confirm_list_item.view.*
 
 class HourlyConfirmFragment : Fragment() {
@@ -46,10 +47,13 @@ class HourlyConfirmFragment : Fragment() {
         val hourPrice = prefs.getInt("hourPrice", 0)
         val session = sessionPrefs.getString("session", null)
 
+        val selectedMonth = getFormattedMonth(date!!.substring(5, 7))
+        val formattedDate = "${date.substring(8, 10)} $selectedMonth ${date.substring(0, 4)}"
+
         binding.salonName.text = salonName
         binding.salonAddress.text = salonAddress
         binding.salonRating.text = salonRating
-        binding.selectedDate.text = date
+        binding.selectedDate.text = formattedDate
         binding.hourPrice.text = "$hourPrice ₽ / час"
         binding.resultPrice.text = "Итого: $resultPrice ₽"
 
@@ -87,16 +91,18 @@ class HourlyConfirmFragment : Fragment() {
 
             if (it != null && it.size > 0) {
 
+                val slots = it
+
                 val inflater = context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
 
-                for (slot in it) {
+                for (slot in slots) {
 
                     val view = inflater.inflate(R.layout.confirm_list_item, null)
 
                     val insertPoint = binding.confirmBody
 
-                    view.itemSelectedTime.text = "${slot!!.start}-${slot.end}"
+                    if (slot!!.start!!.length > 1 && slot!!.end!!.length > 1) view.itemSelectedTime.text = "${slot!!.start!!.substring(0, 5)}-${slot.end!!.substring(0, 5)}"
 
                     insertPoint.addView(view)
 
@@ -109,6 +115,5 @@ class HourlyConfirmFragment : Fragment() {
         return binding.root
 
     }
-
 
 }

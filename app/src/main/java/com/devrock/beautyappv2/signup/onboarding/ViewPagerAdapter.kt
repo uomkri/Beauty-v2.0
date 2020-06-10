@@ -3,11 +3,17 @@ package com.devrock.beautyappv2.signup.onboarding
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
+import com.devrock.beautyappv2.AppActivity
+import com.devrock.beautyappv2.MainActivity
 import com.devrock.beautyappv2.R
 import kotlinx.android.synthetic.main.onboarding_page.view.*
 
-class ViewPagerAdapter : RecyclerView.Adapter<PagerVH>() {
+class ViewPagerAdapter() : RecyclerView.Adapter<PagerVH>() {
+
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerVH = PagerVH(LayoutInflater.from(parent.context).inflate(R.layout.onboarding_page, parent, false))
 
 

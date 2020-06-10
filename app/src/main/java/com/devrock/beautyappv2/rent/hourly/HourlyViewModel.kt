@@ -64,6 +64,11 @@ class HourlyViewModel : ViewModel() {
 
     }
 
+    fun clearTimeslots() {
+        _selectedTimeslots.value?.clear()
+        Log.e("ts", "${_selectedTimeslots.value?.size}")
+    }
+
     fun addHourEntry(session: String, price: Int, slots: List<TimeSlot>) {
 
         val idArray = slots.map {

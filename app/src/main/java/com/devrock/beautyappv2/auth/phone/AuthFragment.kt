@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -56,6 +57,13 @@ class AuthFragment : Fragment() {
         binding.viewModel = viewModel
         val input: EditText = binding.authPhoneInput
         val button: Button = binding.authButton
+
+        activity!!.onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+            }
+        })
+
 
         val prefs: SharedPreferences = context!!.getSharedPreferences("Session", 0)
 

@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -68,6 +69,12 @@ class AuthPinFragment : Fragment() {
             override fun onInteractionListener() {
             }
         }
+
+        activity!!.onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                binding.root.findNavController().navigate(AuthPinFragmentDirections.actionAuthPinFragmentToAuthFragment())
+            }
+        })
 
         val prefs: SharedPreferences = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
         val prefEditor: SharedPreferences.Editor = prefs.edit()
