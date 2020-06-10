@@ -58,6 +58,10 @@ class HourlyTimeslotsFragment : Fragment() {
         val prefs: SharedPreferences = activity!!.getSharedPreferences("SalonInfo", Context.MODE_PRIVATE)
         val prefEditor: SharedPreferences.Editor = prefs.edit()
 
+        binding.popup.setOnClickListener { v ->
+            v.visibility = View.GONE
+        }
+
         binding.buttonBack.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
@@ -82,6 +86,7 @@ class HourlyTimeslotsFragment : Fragment() {
                 binding.evnTimeslotsGrid.adapter = eveningAdapter
 
                 viewModel.selectedTimeslots.value!!.clear()
+
 
                 binding.morningTimeslotsGrid.setOnItemClickListener( object : AdapterView.OnItemClickListener {
                     override fun onItemClick(
@@ -163,6 +168,11 @@ class HourlyTimeslotsFragment : Fragment() {
                         if (it.size >= price.hours) {
                             binding.hourPrice.text = "${price.price} ₽ / час"
                             hourPrice = price.price
+                        }
+
+                        if (it.size == price.hours - 1) {
+                            binding.popupPrice.text = "от ${price.hours} часов - ${price.price} ₽ / час"
+                            binding.popup.visibility = View.VISIBLE
                         }
 
                     }
