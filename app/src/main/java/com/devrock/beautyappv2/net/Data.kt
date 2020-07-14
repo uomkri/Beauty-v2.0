@@ -79,6 +79,7 @@ data class SalonByIdPayload (
     val contacts: List<Contact>,
     val salonSchedule: List<ScheduleItem>,
     val additionalServices: List<Service>?,
+    val hourPrices: List<HourPrice>,
     val text: String?
 )
 
@@ -214,6 +215,37 @@ data class HourOfferResponse (
     val payload: List<OfferTimeslot>,
     val info: Info
 )
+
+data class MasterEntry (
+    val id: Int,
+    val rentType: String,
+    val price: Int,
+    val salon: EntrySalon,
+    val startDate: String,
+    val status: String,
+    val timeSlots: List<TimeSlot>?
+
+)
+
+
+
+data class EntrySalon (
+    val id: Int,
+    val name: String,
+    val geo: Geo,
+    val rating: Int,
+    val thumbnailPhoto: String,
+    val daysRentStart: String,
+    val hourRentStart: String,
+    val daysType: List<String>
+)
+
+data class MasterEntriesResponse (
+    val payload: List<MasterEntry>,
+    val info: Info
+)
+
+
 
 
 

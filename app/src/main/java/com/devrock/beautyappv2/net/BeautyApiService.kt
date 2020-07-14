@@ -124,6 +124,12 @@ interface BeautyApiService {
         @Query("date") date: String
     ): Deferred<HourOfferResponse>
 
+    @GET("offers/masterEntries")
+    fun getMasterEntries(
+        @Header("Authorization") session: String,
+        @Query("statuses") statuses: List<String>
+    ): Deferred<MasterEntriesResponse>
+
 }
 
 object BeautyApi {

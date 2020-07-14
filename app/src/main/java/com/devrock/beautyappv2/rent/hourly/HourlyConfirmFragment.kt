@@ -83,6 +83,7 @@ class HourlyConfirmFragment : Fragment() {
 
             if (it == "Ok") {
                 binding.root.findNavController().navigate(HourlyConfirmFragmentDirections.actionHourlyConfirmFragmentToRentSuccessFragment())
+                viewModel.clearStatus()
             }
 
         })

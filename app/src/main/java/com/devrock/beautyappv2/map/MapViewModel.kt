@@ -36,6 +36,27 @@ class MapViewModel : ViewModel() {
     val salonWorkplaces: LiveData<List<Workplace>>
         get() = _salonWorkplaces
 
+    private val _salonInfo = MutableLiveData<SalonByIdPayload>()
+    val salonInfo: LiveData<SalonByIdPayload>
+        get() = _salonInfo
+
+    private val _userLon = MutableLiveData<Double>()
+    val userLon: LiveData<Double>
+        get() = _userLon
+
+    private val _userLat = MutableLiveData<Double>()
+    val userLat: LiveData<Double>
+        get() = _userLat
+
+    fun updateDeviceLocation(lon: Double, lat: Double) {
+
+        _userLon.value = lon
+        _userLat.value = lat
+
+    }
+
+
+
     fun getSalonWorkplaces(session: String, salonId: Int) {
 
         scope.launch {
@@ -50,20 +71,26 @@ class MapViewModel : ViewModel() {
 
     }
 
-    fun getHourPrices(salonId: Int) {
+    fun getSalonById(id: Int, lon: Double, lat: Double) {
 
         scope.launch {
 
-            val date = "2020-06-10"
+            val response = BeautyApi.retrofitService.getSalonById(lon, lat, id).await()
 
-           val response = BeautyApi.retrofitService.getHourOffers(salonId, date).await()
+            _status.value = response.info.status
 
-            if (response.info.status == "Ok") {
-                _hourPrices.value = response.payload
+            if(_status.value == "Ok"){
+                _salonInfo.value = response.payload
+
+            } else if (_status.value == "Error"){
+                _errorText.value = response.payload.text
             }
+
         }
 
     }
+
+
 
     fun getSalonsList(lon: Double, lat: Double, limit: Int, offset: Int, order: String, session: String) {
 

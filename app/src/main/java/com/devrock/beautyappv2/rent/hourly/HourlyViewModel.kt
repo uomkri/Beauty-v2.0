@@ -116,6 +116,10 @@ class HourlyViewModel : ViewModel() {
 
     }
 
+    fun clearStatus() {
+        _addStatus.value = ""
+    }
+
     fun sortTimeslots(list: List<TimeSlot>) {
 
         timeslotsMorning.clear()

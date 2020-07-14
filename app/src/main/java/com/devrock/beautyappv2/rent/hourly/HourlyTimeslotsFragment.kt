@@ -170,10 +170,10 @@ class HourlyTimeslotsFragment : Fragment() {
                             hourPrice = price.price
                         }
 
-                        if (it.size == price.hours - 1) {
+                        if (it.isNotEmpty() && it.size == price.hours - 1) {
                             binding.popupPrice.text = "от ${price.hours} часов - ${price.price} ₽ / час"
                             binding.popup.visibility = View.VISIBLE
-                        }
+                        } //else binding.popup.visibility = View.GONE
 
                     }
 

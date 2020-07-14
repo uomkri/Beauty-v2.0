@@ -131,6 +131,7 @@ class SalonFragment : Fragment() {
                     it.info.daysRentStart != null && it.info.hourRentStart == null -> rentType = "Monthly"
                     it.info.daysRentStart == null && it.info.hourRentStart != null -> rentType = "Hourly"
                     it.info.daysRentStart != null && it.info.hourRentStart != null -> rentType = "Both"
+                    it.info.daysRentStart == null -> binding.rentButton.visibility = View.GONE
                 }
 
                 binding.salonPageRating.text = "${"%.1f".format(it.info.rating.toFloat())}"

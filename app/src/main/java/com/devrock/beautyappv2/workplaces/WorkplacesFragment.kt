@@ -9,11 +9,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentWorkplacesBinding
+import com.devrock.beautyappv2.workplaces.pages.WorkplacesFragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 
 class WorkplacesFragment : Fragment() {
 
     private val viewModel: WorkplacesViewModel by lazy {
-        ViewModelProviders.of(this).get(WorkplacesViewModel::class.java)
+        ViewModelProviders.of(activity!!).get(WorkplacesViewModel::class.java)
     }
 
     private lateinit var binding: FragmentWorkplacesBinding
@@ -28,20 +30,15 @@ class WorkplacesFragment : Fragment() {
         binding.setLifecycleOwner(this)
         binding.viewModel = viewModel
 
-        //val args = WorkplacesFragmentArgs.fromBundle(arguments!!)
-        //val session = args.session
+        binding.wpViewpager.adapter = WorkplacesFragmentStateAdapter(activity!!)
 
-/*
-        val navBar = binding.bottomNavBar
-
-        navBar.setOnNavigationItemReselectedListener {
-            when (it.itemId) {
-                R.id.action_account -> navBar.findNavController().navigate(WorkplacesFragmentDirections.actionWorkplacesFragmentToProfileFragment(session))
-                R.id.action_search -> navBar.findNavController().navigate(WorkplacesFragmentDirections.actionWorkplacesFragmentToMapFragment(session))
+        TabLayoutMediator(binding.wpTabs, binding.wpViewpager) {tab, position ->
+            when (position) {
+                0 -> tab.text = "Текущие"
+                1 -> tab.text = "Ожидает подтверждения"
+                2 -> tab.text = "Заявки"
             }
-        }*/
-
-
+        }.attach()
 
         return binding.root
     }

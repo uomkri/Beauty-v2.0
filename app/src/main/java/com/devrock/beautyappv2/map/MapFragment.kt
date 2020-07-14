@@ -145,16 +145,21 @@ class MapFragment : Fragment() {
             popup.findNavController().navigate(MapFragmentDirections.actionMapFragmentToSalonFragment(item.id, session, item.geo.longitude, item.geo.latitude))
         }
 
-        viewModel.getHourPrices(item.id)
+        viewModel.getSalonById(item.id, 0.toDouble(), 0.toDouble())
 
-        viewModel.hourPrices.observe(this, Observer { list ->
+        viewModel.salonInfo.observe(this, Observer {
 
-            if (list != null) {
-                view.workingHours.text = "${list[0].price} ₽ / час"
+            if(it != null){
+
+                if (it.hourPrices.isNotEmpty()) {
+                    view.workingHours.text = "${it.hourPrices[0].price} ₽ / час"
+                } else {
+                    view.workingHours.text = "Цены не установлены"
+                }
+
             }
 
         })
-
 
         var salonName = view.salonName
         val salonAddress = view.salonAddress
@@ -280,7 +285,16 @@ class MapFragment : Fragment() {
                     val mLastKnownLocation = p0.result
                     userLon = mLastKnownLocation!!.longitude
                     userLat = mLastKnownLocation!!.latitude
-                    viewModel.getSalonsList(userLon, userLat, limit, offset, order, session)
+                    viewModel.updateDeviceLocation(mLastKnownLocation!!.longitude, mLastKnownLocation!!.latitude)
+
+                    viewModel.userLat.observe(this, Observer {
+
+                        if (it != null) {
+                            viewModel.getSalonsList(viewModel.userLon.value!!, viewModel.userLat.value!!, limit, offset, order, session)
+                        }
+
+                    })
+
                 }
             }
         } catch(e: SecurityException)  {
@@ -369,7 +383,14 @@ class MapFragment : Fragment() {
             getDeviceLocation(limit, offset, order, session!!)
 
             if (savedLat == 0f || savedLon == 0f || savedZoom == 0f) {
-                map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(userLat, userLon), 14f))
+
+                viewModel.userLat.observe(this, Observer {
+                    if (it != null) {
+                        map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(viewModel.userLat.value!!, viewModel.userLon.value!!), 14f))
+                    }
+                })
+
+
             } else {
                 val latLng = LatLng(savedLat.toDouble(), savedLon.toDouble())
 
