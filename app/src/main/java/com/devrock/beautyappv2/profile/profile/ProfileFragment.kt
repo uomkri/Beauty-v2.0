@@ -66,6 +66,19 @@ class ProfileFragment : Fragment() {
 
         }
 
+        binding.profileUserpic.setOnClickListener {
+
+            val uri = "https://beauty.judoekb.ru/api/account/getPhoto?subject=%2B${viewModel.accountInfo.value!!.phone!!.drop(1)}&kek=${Math.random()}"
+            Log.e("URI", uri)
+
+            Picasso.get()
+                .load(uri)
+                .placeholder(R.drawable.ic_userpic_placeholder)
+                .fit()
+                .into(binding.profileUserpic)
+
+        }
+
         binding.buttonEditPhone.setOnClickListener {
 
             binding.editTextPhone.isEnabled = true
@@ -97,7 +110,7 @@ class ProfileFragment : Fragment() {
                 binding.editTextName.text = SpannableStringBuilder("${it.name} ${it.surname}")
                 binding.editTextPhone.text = SpannableStringBuilder("${it.phone}")
 
-                val uri = "https://beauty.judoekb.ru/api/account/getPhoto?subject=%2B${viewModel.accountInfo.value!!.phone!!.drop(1)}"
+                val uri = "https://beauty.judoekb.ru/api/account/getPhoto?subject=%2B${viewModel.accountInfo.value!!.phone!!.drop(1)}&kek=${Math.random()}"
                 Log.e("URI", uri)
 
                 Picasso.get()

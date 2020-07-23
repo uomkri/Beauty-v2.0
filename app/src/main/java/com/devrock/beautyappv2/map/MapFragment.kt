@@ -348,6 +348,18 @@ class MapFragment : Fragment() {
 
     }
 
+    private fun moveToMyLocation() {
+
+        Log.e("MOVE", "CALLED")
+
+        val locationPrefs = activity!!.getSharedPreferences("Location", Context.MODE_PRIVATE)
+
+        val latLng = LatLng(locationPrefs.getFloat("lat", 0f).toDouble(), locationPrefs.getFloat("lon", 0f).toDouble())
+
+        map!!.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17f))
+
+    }
+
     override fun onStart() {
         super.onStart()
     }
@@ -371,6 +383,11 @@ class MapFragment : Fragment() {
 
         mapView.getMapAsync {GoogleMap ->
             map = GoogleMap
+
+            binding.toMyLocation.setOnClickListener {
+                Log.e("LISTENER", "WORKS")
+                moveToMyLocation()
+            }
 
             map!!.isMyLocationEnabled = true
             map!!.uiSettings.isMyLocationButtonEnabled = false
