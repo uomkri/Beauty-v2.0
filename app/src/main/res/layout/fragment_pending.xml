@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="56dp"
-                android:text="Нет подтверждений от саллонов"
+                android:text="Нет подтверждений от салонов"
                 android:textColor="#000"
                 android:fontFamily="@font/roboto_bold"
                 android:textSize="22sp"
