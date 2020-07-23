@@ -32,6 +32,7 @@ import ru.tinkoff.decoro.MaskImpl
 import ru.tinkoff.decoro.parser.UnderscoreDigitSlotsParser
 import ru.tinkoff.decoro.watchers.MaskFormatWatcher
 import java.io.File
+import java.lang.RuntimeException
 
 class ProfileFragment : Fragment() {
 
@@ -53,6 +54,12 @@ class ProfileFragment : Fragment() {
 
         binding.editTextName.isEnabled = false
         binding.editTextPhone.isEnabled = false
+
+        binding.buttonTestCrash.setOnClickListener {
+
+            throw RuntimeException("TEST NAYOB PRODA")
+
+        }
 
         binding.buttonEditName.setOnClickListener {
 
