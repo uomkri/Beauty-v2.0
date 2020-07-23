@@ -1,5 +1,7 @@
 package com.devrock.beautyappv2.profile.profile
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,10 +10,13 @@ import com.devrock.beautyappv2.net.AccountBody
 import com.devrock.beautyappv2.net.AccountPayload
 import com.devrock.beautyappv2.net.BeautyApi
 import com.devrock.beautyappv2.net.Status
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.format
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.io.File
 
 class ProfileViewModel : ViewModel() {
 
@@ -31,6 +36,12 @@ class ProfileViewModel : ViewModel() {
     val status: LiveData<String>
         get() = _status
 
+    private val _img = MutableLiveData<File>()
+    val img: LiveData<File>
+        get() = _img
+
+
+
     fun getCurrentAccount(session: String) {
 
         scope.launch {
@@ -49,6 +60,27 @@ class ProfileViewModel : ViewModel() {
 
         }
 
+    }
+
+    fun accountSetPhoto(data: String?, session: String) {
+        val headers = HashMap<String, String>()
+        headers["Authorization"] = session
+        headers["Content-Type"] = "image/png"
+
+        scope.launch {
+            val status = BeautyApi.retrofitService.accountSetPhoto(headers, data!!).await()
+            _status.value = status.info.status
+        }
+    }
+
+    fun getCompressedImageAsync(image: File, context: Context) {
+
+        scope.launch {
+            val compressedImage = Compressor.compress(context, image) {
+                format(Bitmap.CompressFormat.JPEG)
+            }
+            _img.value = compressedImage
+        }
     }
 
     fun accountEdit(session: String?, name: String) {

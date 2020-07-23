@@ -3,9 +3,8 @@ package com.devrock.beautyappv2.util
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.os.Build
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
+import com.devrock.beautyappv2.net.TimeSlot
 
 fun phoneFormat(phone: String) : String {
     var re = Regex("[^0-9 ]")
@@ -26,6 +25,16 @@ fun getBitmapFromVectorDrawable (context: Context, drawableId: Int) : Bitmap {
     drawable.draw(canvas)
 
     return bitmap
+}
+
+fun formatTimeslots(slots: List<TimeSlot>): String {
+
+    val formatted = slots.map {
+        return@map "${it.start?.dropLast(3)}-${it.end?.dropLast(3)}"
+    }
+
+    return formatted.toString().drop(1).dropLast(1)
+
 }
 
 
@@ -50,6 +59,33 @@ fun getBitmapFromVectorDrawable (context: Context, drawableId: Int) : Bitmap {
         }
 
         return format
+    }
+
+    fun getFormattedDate(date: String): String {
+
+        var formattedMonth: String = ""
+
+        val day = date.substring(8, 10)
+        val month = date.substring(5, 7)
+        val year = date.substring(0, 4)
+
+        when (month) {
+            "01" -> formattedMonth = "января"
+            "02" -> formattedMonth = "февраля"
+            "03" -> formattedMonth = "марта"
+            "04" -> formattedMonth = "апреля"
+            "05" -> formattedMonth = "мая"
+            "06" -> formattedMonth = "июня"
+            "07" -> formattedMonth = "июля"
+            "08" -> formattedMonth = "августа"
+            "09" -> formattedMonth = "сентября"
+            "10" -> formattedMonth = "октября"
+            "11" -> formattedMonth = "ноября"
+            "12" -> formattedMonth = "декабря"
+        }
+
+        return "$day $formattedMonth $year"
+
     }
 
 

@@ -1,13 +1,19 @@
 package com.devrock.beautyappv2.profile.profile
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableStringBuilder
+import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,9 +23,15 @@ import com.bumptech.glide.request.RequestOptions
 import com.devrock.beautyappv2.MainActivity
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentProfileBinding
+import com.devrock.beautyappv2.signup.userpic.UserpicFragmentArgs
+import com.devrock.beautyappv2.signup.userpic.Utils
+import com.squareup.picasso.Picasso
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import ru.tinkoff.decoro.MaskImpl
 import ru.tinkoff.decoro.parser.UnderscoreDigitSlotsParser
 import ru.tinkoff.decoro.watchers.MaskFormatWatcher
+import java.io.File
 
 class ProfileFragment : Fragment() {
 
@@ -66,8 +78,6 @@ class ProfileFragment : Fragment() {
 
         }
 
-        val uri = "https://beauty.judoekb.ru/api/account/getPhoto?subject=%2B79121111160"
-
         val prefs: SharedPreferences = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
         val prefEditor: SharedPreferences.Editor = prefs.edit()
 
@@ -87,6 +97,15 @@ class ProfileFragment : Fragment() {
                 binding.editTextName.text = SpannableStringBuilder("${it.name} ${it.surname}")
                 binding.editTextPhone.text = SpannableStringBuilder("${it.phone}")
 
+                val uri = "https://beauty.judoekb.ru/api/account/getPhoto?subject=%2B${viewModel.accountInfo.value!!.phone!!.drop(1)}"
+                Log.e("URI", uri)
+
+                Picasso.get()
+                    .load(uri)
+                    .placeholder(R.drawable.ic_userpic_placeholder)
+                    .fit()
+                    .into(binding.profileUserpic)
+
             }
 
         })
@@ -97,22 +116,22 @@ class ProfileFragment : Fragment() {
 
         }
 
-
-
-        Glide.with(this)
-            .load(uri)
-            .apply(
-                RequestOptions()
-                    .placeholder(R.drawable.userpic_empty_ph)
-            )
-            .into(binding.profileUserpic)
-
         binding.buttonLogout.setOnClickListener {
 
             prefEditor.clear().commit()
-            activity!!.finish()
+
+            val intent = Intent(activity!!, MainActivity::class.java)
+            activity!!.startActivity(intent)
 
         }
+
+        binding.buttonSetPhoto.setOnClickListener {
+
+            this.getImage()
+
+        }
+
+
 
 
 /*
@@ -140,6 +159,63 @@ class ProfileFragment : Fragment() {
         val imm = context!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
         imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+    private fun getImage() {
+        CropImage.activity()
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .start(context!!, this)
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result: CropImage.ActivityResult = CropImage.getActivityResult(data)
+            if (resultCode == Activity.RESULT_OK) {
+
+                val resultUri: Uri = result.uri
+
+                val path = File(resultUri.path!!).absolutePath
+                Log.i("path", File(path).exists().toString())
+
+                viewModel.getCompressedImageAsync(File(path), context!!)
+
+                viewModel.img.observe(this, Observer {
+
+                    Log.i("COMP", it.toString())
+
+                    if (it != null) {
+                        val bytes = Utils.read(it)
+
+                        Log.i("bytes", String(bytes))
+                        val photo = Base64.encode(bytes, Base64.NO_WRAP)
+                        Log.i("BASE64", String(photo))
+
+                        val sessionPrefs = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
+                        val session = sessionPrefs.getString("session", "")
+
+                        viewModel.accountSetPhoto(
+                            String(photo),
+                            session!!
+                        )
+                    } else {
+                        Toast.makeText(context!!, "NULL COMP", Toast.LENGTH_SHORT).show()
+                    }
+                })
+
+                Picasso.get()
+                    .load(resultUri)
+                    .fit()
+                    .into(binding.profileUserpic)
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                val error: Exception = result.error
+                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 
 }

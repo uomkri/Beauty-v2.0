@@ -58,9 +58,7 @@ class PhotosFragment : Fragment() {
 
         val TABLE_COLUMNS = 3
 
-        val PHOTOS_ENDPOINT = "https://beauty.judoekb.ru/api/salons/photo"
-        val stock =
-            "https://www.victoria-salon.ru/wp-content/uploads/2017/04/main_room3-1-1024x683.jpg"
+
 
         val stockList = listOf (
             "https://www.victoria-salon.ru/wp-content/uploads/2017/04/main_room3-1-1024x683.jpg",
@@ -76,24 +74,29 @@ class PhotosFragment : Fragment() {
 
         )
 
-        var data = mutableListOf<SalonPhoto>()
 
-        for ((index, item) in stockList.withIndex()) {
-            data.add(SalonPhoto(index, item))
-        }
 
-        viewModel.photosGridList.value = data
+        //viewModel.photosGridList.value = data
 
         //binding.photosGrid.adapter = ImageAdapter(context!!, stockList)
 
-        binding.photosGrid.adapter = ImageGridAdapter(viewModel)
 
-        val adapter = binding.photosGrid.adapter as ImageGridAdapter
 
 
         viewModel.salonInfo.observe(this, Observer {
             if (it.photos.isNotEmpty()) {
 
+                var data = mutableListOf<SalonPhoto>()
+
+                for ((index, item) in viewModel.salonInfo.value!!.photos.withIndex()) {
+                    data.add(SalonPhoto(index, item))
+                }
+
+                viewModel.updateGridList(data)
+
+                binding.photosGrid.adapter = ImageGridAdapter(viewModel)
+
+                val adapter = binding.photosGrid.adapter as ImageGridAdapter
 
                 adapter.submitList(data)
 

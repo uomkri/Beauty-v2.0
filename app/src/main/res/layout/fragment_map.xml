@@ -23,7 +23,7 @@
 
 
 
-        <include layout="@layout/modal_test2"/>
+        <include layout="@layout/map_popup"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

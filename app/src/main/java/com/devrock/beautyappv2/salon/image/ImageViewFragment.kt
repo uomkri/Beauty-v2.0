@@ -44,6 +44,10 @@ class ImageViewFragment : Fragment() {
             Log.e("BT", "CLOSE")
         }
 
+        binding.rentButton.setOnClickListener {
+            it.findNavController().navigate(ImageViewFragmentDirections.actionImageViewFragmentToHourlyCalendarFragment())
+        }
+
         viewModel.photosGridList.observe(this, Observer {
             if (it != null) {
                 binding.itemCounter.text = "${position + 1} из ${it.size}"

@@ -40,11 +40,19 @@ class SalonViewModel : ViewModel() {
 
     val screenSize = MutableLiveData<Point>()
 
-    val photosGridList = MutableLiveData<MutableList<SalonPhoto>>()
+    private val _photosGridList = MutableLiveData<MutableList<SalonPhoto>>()
+    val photosGridList: LiveData<MutableList<SalonPhoto>>
+        get() = _photosGridList
+
+
 
     val session = MutableLiveData<String>()
 
+    fun updateGridList(list: MutableList<SalonPhoto>) {
 
+        _photosGridList.value = list
+
+    }
 
     fun getSalonById(id: Int, lon: Double, lat: Double) {
 

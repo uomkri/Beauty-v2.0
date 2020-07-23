@@ -15,6 +15,8 @@ import androidx.navigation.findNavController
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentEntriesBinding
 import com.devrock.beautyappv2.net.MasterEntry
+import com.devrock.beautyappv2.util.formatTimeslots
+import com.devrock.beautyappv2.util.getFormattedDate
 import com.devrock.beautyappv2.workplaces.WorkplacesFragmentDirections
 import com.devrock.beautyappv2.workplaces.WorkplacesViewModel
 import com.github.underscore.U
@@ -41,6 +43,7 @@ class EntriesFragment : Fragment() {
         val prefs: SharedPreferences = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
         val session = prefs.getString("session", null)
 
+
         viewModel.getCreatedMasterEntries(session!!)
 
         binding.findButton.setOnClickListener {
@@ -60,6 +63,7 @@ class EntriesFragment : Fragment() {
                 }
 
                 Log.e("itemm", sortedByDate.toString())
+                Log.i("size", sortedByDate.size.toString())
 
                 for (item in sortedByDate) {
 
@@ -67,9 +71,9 @@ class EntriesFragment : Fragment() {
 
                     val insertPoint = binding.scrollViewInsertPoint
 
-                    containerView.dateClusterDate.text = item.key
+                    containerView.dateClusterDate.text = getFormattedDate(item.key)
 
-                    containerView.dateClusterInsertPoint.adapter = EntriesAdapter(context!!, viewModel.createdMasterEntries.value!!)
+                    containerView.dateClusterInsertPoint.adapter = EntriesAdapter(context!!, item.value, viewModel)
 
                     insertPoint.addView(containerView)
 
@@ -101,7 +105,7 @@ class EntriesFragment : Fragment() {
     }
 }
 
-class EntriesAdapter(var context: Context, list: List<MasterEntry>) : BaseAdapter() {
+class EntriesAdapter(var context: Context, list: List<MasterEntry>, val viewModel: WorkplacesViewModel) : BaseAdapter() {
 
     lateinit var inflater: LayoutInflater
     var data: List<MasterEntry> = list
@@ -112,11 +116,25 @@ class EntriesAdapter(var context: Context, list: List<MasterEntry>) : BaseAdapte
         val item = this.data[position]
 
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.entry_default, parent, false)
+        var view = View(context!!)
+        when (item.status) {
+            "Created" -> view = inflater.inflate(R.layout.entry_default, parent, false)
+            "Declined" -> view = inflater.inflate(R.layout.entry_canceled, parent, false)
+        }
 
-        view.slots.text = item.timeSlots.toString()
+        view.setOnClickListener {
+            view.findNavController().navigate(WorkplacesFragmentDirections.actionWorkplacesFragmentToEntryInfoFragment(item.id))
+        }
+
+        /*val formattedSlots = item.timeSlots?.map {
+            return@map "${it.start?.dropLast(3)}-${it.end?.dropLast(3)}"
+        }*/
+
+        val formattedSlots = formatTimeslots(item.timeSlots!!)
+
+        view.slots.text = formattedSlots
         view.salonName.text = item.salon.name
-        view.salonAddress.text = item.status
+        view.salonAddress.text = viewModel.getFormattedEntryStatus(item.status)
 
         return view
     }

@@ -11,6 +11,7 @@ import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentWorkplacesBinding
 import com.devrock.beautyappv2.workplaces.pages.WorkplacesFragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_app.*
 
 class WorkplacesFragment : Fragment() {
 
@@ -39,6 +40,8 @@ class WorkplacesFragment : Fragment() {
                 2 -> tab.text = "Заявки"
             }
         }.attach()
+
+        activity!!.bottomNavBar.visibility = View.VISIBLE
 
         return binding.root
     }

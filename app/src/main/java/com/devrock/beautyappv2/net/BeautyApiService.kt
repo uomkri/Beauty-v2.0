@@ -130,6 +130,18 @@ interface BeautyApiService {
         @Query("statuses") statuses: List<String>
     ): Deferred<MasterEntriesResponse>
 
+    @POST("offers/entry/confirm")
+    fun entryConfirm(
+        @Header("Authorization") session: String,
+        @Query("entryId") entryId: Int
+    ): Deferred<Status>
+
+    @POST("offers/entry/cancel")
+    fun entryCancel(
+        @Header("Authorization") session: String,
+        @Query("entryId") entryId: Int
+    ): Deferred<Status>
+
 }
 
 object BeautyApi {

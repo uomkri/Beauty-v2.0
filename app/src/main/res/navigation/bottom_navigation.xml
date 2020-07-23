@@ -41,6 +41,9 @@
         <action
             android:id="@+id/action_workplacesFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_workplacesFragment_to_entryInfoFragment"
+            app:destination="@id/entryInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -113,6 +116,9 @@
         <action
             android:id="@+id/action_imageViewFragment_to_salonFragment"
             app:destination="@id/salonFragment" />
+        <action
+            android:id="@+id/action_imageViewFragment_to_hourlyCalendarFragment"
+            app:destination="@id/hourlyCalendarFragment" />
     </fragment>
     <fragment
         android:id="@+id/rentVariantsFragment"
@@ -189,6 +195,9 @@
         <action
             android:id="@+id/action_rentSuccessFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_rentSuccessFragment_to_entryInfoFragment"
+            app:destination="@id/entryInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/monthlyOffersFragment"
@@ -249,5 +258,19 @@
         <action
             android:id="@+id/action_helpFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/entryInfoFragment"
+        android:name="com.devrock.beautyappv2.workplaces.entryInfo.EntryInfoFragment"
+        android:label="EntryInfoFragment" >
+        <action
+            android:id="@+id/action_entryInfoFragment_to_workplacesFragment"
+            app:destination="@id/workplacesFragment" />
+        <argument
+            android:name="entryId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_entryInfoFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
     </fragment>
 </navigation>

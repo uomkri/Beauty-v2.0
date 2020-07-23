@@ -48,14 +48,14 @@
                 app:srcCompat="@drawable/ic_logout" />
 
             <TextView
-                android:id="@+id/textView22"
+                android:id="@+id/buttonSetPhoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Изменить фото"
                 android:fontFamily="@font/roboto_medium"
-                android:textSize="12sp"
+                android:padding="10dp"
+                android:text="Изменить фото"
                 android:textColor="#9295B0"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/profileUserpic" />
@@ -71,7 +71,7 @@
                 android:fontFamily="@font/roboto_medium"
                 android:text="Имя"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView22" />
+                app:layout_constraintTop_toBottomOf="@+id/buttonSetPhoto" />
 
             <EditText
                 android:id="@+id/editTextName"

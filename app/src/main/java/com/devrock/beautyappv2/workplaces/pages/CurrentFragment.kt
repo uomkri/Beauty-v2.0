@@ -7,15 +7,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentCurrentBinding
+import com.devrock.beautyappv2.net.MasterEntry
+import com.devrock.beautyappv2.util.formatTimeslots
+import com.devrock.beautyappv2.util.getFormattedDate
 import com.devrock.beautyappv2.workplaces.WorkplacesFragmentDirections
 import com.devrock.beautyappv2.workplaces.WorkplacesViewModel
 import com.github.underscore.U
+import kotlinx.android.synthetic.main.entry_default.view.*
 import kotlinx.android.synthetic.main.workplaces_date_cluster.view.*
 
 class CurrentFragment : Fragment() {
@@ -38,7 +43,8 @@ class CurrentFragment : Fragment() {
         val prefs: SharedPreferences = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
         val session = prefs.getString("session", null)
 
-        viewModel.getMasterCurrentEntries(session!!)
+
+        viewModel.getCurrentMasterEntries(session!!)
 
         binding.findButton.setOnClickListener {
 
@@ -46,24 +52,45 @@ class CurrentFragment : Fragment() {
 
         }
 
-        viewModel.createdMasterEntries.observe(this, Observer {
+        viewModel.currentMasterEntries.observe(this, Observer {
 
             if (it != null && it.isNotEmpty()) {
                 binding.screenEmpty.visibility = View.GONE
+                binding.scrollView.visibility = View.VISIBLE
 
                 val sortedByDate = U.groupBy(it) { entry ->
                     return@groupBy entry.startDate
                 }
 
                 Log.e("itemm", sortedByDate.toString())
+                Log.i("size", sortedByDate.size.toString())
 
                 for (item in sortedByDate) {
 
                     val containerView = inflater.inflate(R.layout.workplaces_date_cluster, null)
 
-                    val insertPoint = containerView.dateClusterInsertPoint
+                    val insertPoint = binding.scrollViewInsertPoint
+
+                    containerView.dateClusterDate.text = getFormattedDate(item.key)
+
+                    containerView.dateClusterInsertPoint.adapter = EntriesAdapter(context!!, item.value, viewModel)
+
+                    insertPoint.addView(containerView)
 
                     Log.e("item", item.toString())
+
+                    /*for (slot in item.value) {
+
+                        val view = inflater.inflate(R.layout.entry_default, null)
+                        view.slots.text = slot.timeSlots.toString()
+                        view.salonName.text = slot.salon.name
+                        view.salonAddress.text = slot.status
+
+                        val containerInsertPoint = containerView.dateClusterInsertPoint
+
+                        containerInsertPoint.addView(view)
+
+                    }*/
 
                 }
 
@@ -73,7 +100,6 @@ class CurrentFragment : Fragment() {
             }
 
         })
-
 
         return binding.root
     }

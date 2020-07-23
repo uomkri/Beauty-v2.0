@@ -34,20 +34,9 @@ import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.activity_app.*
-import kotlinx.android.synthetic.main.map_popup.view.calendar
-import kotlinx.android.synthetic.main.map_popup.view.clock
-import kotlinx.android.synthetic.main.map_popup.view.salonAddress
-import kotlinx.android.synthetic.main.map_popup.view.salonDistance
-import kotlinx.android.synthetic.main.map_popup.view.salonName
-import kotlinx.android.synthetic.main.map_popup.view.star1
-import kotlinx.android.synthetic.main.map_popup.view.star2
-import kotlinx.android.synthetic.main.map_popup.view.star3
-import kotlinx.android.synthetic.main.map_popup.view.star4
-import kotlinx.android.synthetic.main.map_popup.view.star5
-import kotlinx.android.synthetic.main.map_popup.view.startDay
-import kotlinx.android.synthetic.main.map_popup.view.workingHours
-import kotlinx.android.synthetic.main.modal_test2.*
-import kotlinx.android.synthetic.main.modal_test2.view.*
+
+import kotlinx.android.synthetic.main.map_popup.*
+import kotlinx.android.synthetic.main.map_popup.view.*
 import kotlin.properties.Delegates
 
 class MapFragment : Fragment() {
@@ -82,6 +71,7 @@ class MapFragment : Fragment() {
 
         val sessionPrefs = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
         val session = sessionPrefs.getString("session", "")
+
 
         activity!!.onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -282,10 +272,19 @@ class MapFragment : Fragment() {
             mFusedLocationProviderClient.lastLocation?.addOnCompleteListener(activity!!
             ) { p0 ->
                 if (p0.isSuccessful) {
+
+                    Log.e("p0", p0.result.toString())
+
                     val mLastKnownLocation = p0.result
                     userLon = mLastKnownLocation!!.longitude
                     userLat = mLastKnownLocation!!.latitude
                     viewModel.updateDeviceLocation(mLastKnownLocation!!.longitude, mLastKnownLocation!!.latitude)
+
+                    val locationPrefs = activity!!.getSharedPreferences("Location", Context.MODE_PRIVATE)
+                    locationPrefs.edit()
+                        .putFloat("lon", mLastKnownLocation.longitude.toFloat())
+                        .putFloat("lat", mLastKnownLocation.latitude.toFloat())
+                        .apply()
 
                     viewModel.userLat.observe(this, Observer {
 
@@ -321,22 +320,23 @@ class MapFragment : Fragment() {
     }
 
     override fun onPause() {
+        if (map != null) {
+            val pos = map?.cameraPosition
+
+            val lon = pos!!.target.longitude
+            val lat = pos.target.latitude
+
+            val zoom = pos.zoom
+
+            Log.e("map", "$lon $lat $zoom")
+
+            prefEditor
+                .putFloat("LON", lon.toFloat())
+                .putFloat("LAT", lat.toFloat())
+                .putFloat("ZOOM", zoom)
+                .apply()
+        }
         super.onPause()
-
-        val pos = map!!.cameraPosition
-
-        val lon = pos!!.target.longitude
-        val lat = pos.target.latitude
-
-        val zoom = pos.zoom
-
-        Log.e("map", "$lon $lat $zoom")
-
-        prefEditor
-            .putFloat("LON", lon.toFloat())
-            .putFloat("LAT", lat.toFloat())
-            .putFloat("ZOOM", zoom)
-            .apply()
     }
 
     override fun onResume() {

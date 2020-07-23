@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import okhttp3.internal.format
 
 class WorkplacesViewModel : ViewModel() {
 
@@ -21,19 +22,57 @@ class WorkplacesViewModel : ViewModel() {
     val createdMasterEntries: LiveData<List<MasterEntry>>
         get() = _createdMasterEntries
 
-    fun getMasterCurrentEntries(session: String) {
+    private val _currentMasterEntries = MutableLiveData<List<MasterEntry>>()
+    val currentMasterEntries: LiveData<List<MasterEntry>>
+        get() = _currentMasterEntries
+
+    private val _pendingMasterEntries = MutableLiveData<List<MasterEntry>>()
+    val pendingMasterEntries: LiveData<List<MasterEntry>>
+        get() = _pendingMasterEntries
+
+    private val _postStatus = MutableLiveData<String>()
+    val postStatus: LiveData<String>
+        get() = _postStatus
+
+    fun getCurrentMasterEntries(session: String) {
+
+        _currentMasterEntries.value = null
 
         val statuses = listOf("ConfirmedByMaster")
 
         scope.launch {
 
-            val res = BeautyApi.retrofitService.getMasterEntries(session, statuses)
+            val res = BeautyApi.retrofitService.getMasterEntries(session, statuses).await()
+
+            _currentMasterEntries.value = res.payload.filter { it.rentType == "ByHours" }
+
+        }
+
+    }
+
+    fun statusClear() {
+        _postStatus.value = null
+    }
+
+    fun getPendingMasterEntries(session: String) {
+
+        _pendingMasterEntries.value = null
+
+        val statuses = listOf("ConfirmedBySalon")
+
+        scope.launch {
+
+            val res = BeautyApi.retrofitService.getMasterEntries(session, statuses).await()
+
+            _pendingMasterEntries.value = res.payload.filter { it.rentType == "ByHours"}
 
         }
 
     }
 
     fun getCreatedMasterEntries(session: String) {
+
+        _createdMasterEntries.value = null
 
         val statuses = listOf("Created", "Declined")
 
@@ -46,6 +85,42 @@ class WorkplacesViewModel : ViewModel() {
             }
 
             Log.i("res", _createdMasterEntries.value.toString())
+        }
+
+    }
+
+    fun getFormattedEntryStatus(st: String) : String {
+
+        var formatSt = ""
+
+        when(st) {
+            "Created" -> formatSt = "Ожидается подтверждение салоном"
+            "Declined" -> formatSt = "Отказ"
+        }
+
+        return formatSt
+    }
+
+    fun entryConfirm(session: String, entryId: Int) {
+
+        scope.launch {
+
+            val res = BeautyApi.retrofitService.entryConfirm(session, entryId).await()
+
+            _postStatus.value = res.info.status
+
+        }
+
+    }
+
+    fun entryCancel(session: String, entryId: Int) {
+
+        scope.launch {
+
+            val res = BeautyApi.retrofitService.entryCancel(session, entryId).await()
+
+            _postStatus.value = res.info.status
+
         }
 
     }
