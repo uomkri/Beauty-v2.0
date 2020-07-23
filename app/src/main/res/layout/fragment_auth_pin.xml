@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.devrock.beautyappv2.auth.pin.AuthPinViewModel" />
+    </data>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:fitsSystemWindows="true"
+        >
+
+        <TextView
+            android:id="@+id/authHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/header_auth"
+            android:textAlignment="center"
+            android:textColor="@color/neutral0"
+            android:textSize="34sp"
+            android:layout_marginTop="110dp"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/authPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="67dp"
+            app:boxStrokeWidth="0.5dp"
+            />
+
+        <TextView
+            android:id="@+id/authPinInputCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="63dp"
+            android:layout_marginEnd="59dp"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/neutral0"
+            android:text="Код из SMS-сообщения"
+            android:textAlignment="center"
+            android:textSize="12sp" />
+
+        <in.aabhasjindal.otptextview.OtpTextView
+            android:id="@+id/otpView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#191919"
+            app:height="39dp"
+            app:width="40dp"
+            android:layout_gravity="center"
+            app:bar_enabled="true"
+            app:bar_height="2dp"
+            app:length="4"
+            app:otp_text_size="14sp"
+            app:text_typeface="@font/roboto"
+            app:bar_margin_right="4dp"
+            app:bar_margin_left="4dp"
+            app:bar_active_color="#7c8af9"
+            app:bar_inactive_color="@color/neutral2"
+            app:bar_error_color="@color/accentDk"
+            android:layout_marginTop="25dp"
+            >
+
+        </in.aabhasjindal.otptextview.OtpTextView>
+
+        <TextView
+            android:id="@+id/pinError"
+            android:layout_width="246dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto"
+            android:textSize="12sp"
+            android:text="Введен неверный код. Попробуйте снова"
+            android:textAlignment="center"
+            android:textColor="#ff647c"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/pinCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pin_caption"
+            android:fontFamily="@font/roboto"
+            android:textSize="12sp"
+            android:textColor="@color/neutral1"
+            android:layout_marginTop="27dp"
+            android:visibility="visible"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/pinCaptionNew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/new_code"
+            android:textAlignment="center"
+            android:fontFamily="@font/roboto"
+            android:textSize="12sp"
+            android:layout_marginTop="27dp"
+            android:textColor="@color/primaryDk"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+</layout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mapFragment"
+        android:icon="@drawable/ic_search_inactive"
+        android:title="Поиск"
+        />
+    <item
+        android:id="@+id/workplacesFragment"
+        android:icon="@drawable/ic_workplaces_inactive"
+        android:title="Места работы"
+        />
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_account_inactive"
+        android:title="Профиль"
+        />
+</menu>

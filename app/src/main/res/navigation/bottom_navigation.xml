@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/bottom_navigation"
+    app:startDestination="@id/mapFragment">
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.devrock.beautyappv2.map.MapFragment"
+        android:label="MapFragment" >
+        <action
+            android:id="@+id/action_mapFragment_to_workplacesFragment"
+            app:destination="@id/workplacesFragment"
+            app:enterAnim="@anim/slide_left_in"
+            app:exitAnim="@anim/slide_right_out"
+            app:popEnterAnim="@anim/slide_right_in"
+            app:popExitAnim="@anim/slide_left_out" />
+        <action
+            android:id="@+id/action_mapFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/slide_left_in"
+            app:exitAnim="@anim/slide_right_out"
+            app:popEnterAnim="@anim/slide_right_in"
+            app:popExitAnim="@anim/slide_left_out" />
+        <action
+            android:id="@+id/action_mapFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/workplacesFragment"
+        android:name="com.devrock.beautyappv2.workplaces.WorkplacesFragment"
+        android:label="WorkplacesFragment" >
+        <argument android:name="session"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_workplacesFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/slide_left_in"
+            app:exitAnim="@anim/slide_right_out"
+            app:popEnterAnim="@anim/slide_right_in"
+            app:popExitAnim="@anim/slide_right_out" />
+        <action
+            android:id="@+id/action_workplacesFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_workplacesFragment_to_entryInfoFragment"
+            app:destination="@id/entryInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.devrock.beautyappv2.profile.profile.ProfileFragment"
+        android:label="ProfileFragment" >
+        <argument
+            android:name="session"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_profileFragment_to_workplacesFragment"
+            app:destination="@id/workplacesFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/salonFragment"
+        android:name="com.devrock.beautyappv2.salon.SalonFragment"
+        android:label="SalonFragment" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="session"
+            app:argType="string" />
+        <argument
+            android:name="longitude"
+            app:argType="java.lang.Double" />
+        <argument
+            android:name="latitude"
+            app:argType="java.lang.Double" />
+        <action
+            android:id="@+id/action_salonFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_salonFragment_to_imageViewFragment"
+            app:destination="@id/imageViewFragment" />
+        <action
+            android:id="@+id/action_salonFragment_to_rentVariantsFragment"
+            app:destination="@id/rentVariantsFragment" />
+        <action
+            android:id="@+id/action_salonFragment_to_monthlyOffersFragment"
+            app:destination="@id/monthlyOffersFragment" />
+        <action
+            android:id="@+id/action_salonFragment_to_hourlyCalendarFragment"
+            app:destination="@id/hourlyCalendarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageViewFragment"
+        android:name="com.devrock.beautyappv2.salon.image.ImageViewFragment"
+        android:label="ImageViewFragment" >
+        <argument
+            android:name="position"
+            app:argType="integer" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="session"
+            app:argType="string" />
+        <argument
+            android:name="longitude"
+            app:argType="java.lang.Double" />
+        <argument
+            android:name="latitude"
+            app:argType="java.lang.Double" />
+        <action
+            android:id="@+id/action_imageViewFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
+        <action
+            android:id="@+id/action_imageViewFragment_to_hourlyCalendarFragment"
+            app:destination="@id/hourlyCalendarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rentVariantsFragment"
+        android:name="com.devrock.beautyappv2.salon.RentVariantsFragment"
+        android:label="RentVariantsFragment" >
+        <argument
+            android:name="salonId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_rentVariantsFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
+        <action
+            android:id="@+id/action_rentVariantsFragment_to_hourlyCalendarFragment"
+            app:destination="@id/hourlyCalendarFragment" />
+        <action
+            android:id="@+id/action_rentVariantsFragment_to_monthlyOffersFragment"
+            app:destination="@id/monthlyOffersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hourlyCalendarFragment"
+        android:name="com.devrock.beautyappv2.rent.hourly.HourlyCalendarFragment"
+        android:label="HourlyCalendarFragment" >
+        <action
+            android:id="@+id/action_hourlyCalendarFragment_to_rentVariantsFragment"
+            app:destination="@id/rentVariantsFragment" />
+        <action
+            android:id="@+id/action_hourlyCalendarFragment_to_hourlyTimeslotsFragment"
+            app:destination="@id/hourlyTimeslotsFragment" />
+        <action
+            android:id="@+id/action_hourlyCalendarFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hourlyTimeslotsFragment"
+        android:name="com.devrock.beautyappv2.rent.hourly.HourlyTimeslotsFragment"
+        android:label="HourlyTimeslotsFragment" >
+        <action
+            android:id="@+id/action_hourlyTimeslotsFragment_to_hourlyConfirmFragment"
+            app:destination="@id/hourlyConfirmFragment" />
+        <action
+            android:id="@+id/action_hourlyTimeslotsFragment_to_hourlyCalendarFragment"
+            app:destination="@id/hourlyCalendarFragment" />
+        <argument
+            android:name="selectedDate"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_hourlyTimeslotsFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hourlyConfirmFragment"
+        android:name="com.devrock.beautyappv2.rent.hourly.HourlyConfirmFragment"
+        android:label="HourlyConfirmFragment" >
+        <action
+            android:id="@+id/action_hourlyConfirmFragment_to_hourlyTimeslotsFragment"
+            app:destination="@id/hourlyTimeslotsFragment" />
+        <action
+            android:id="@+id/action_hourlyConfirmFragment_to_hourlyCalendarFragment"
+            app:destination="@id/hourlyCalendarFragment" />
+        <argument
+            android:name="selectedDate"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_hourlyConfirmFragment_to_rentSuccessFragment"
+            app:destination="@id/rentSuccessFragment" />
+        <action
+            android:id="@+id/action_hourlyConfirmFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rentSuccessFragment"
+        android:name="com.devrock.beautyappv2.rent.RentSuccessFragment"
+        android:label="RentSuccessFragment" >
+        <action
+            android:id="@+id/action_rentSuccessFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_rentSuccessFragment_to_entryInfoFragment"
+            app:destination="@id/entryInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/monthlyOffersFragment"
+        android:name="com.devrock.beautyappv2.rent.monthly.MonthlyOffersFragment"
+        android:label="MonthlyOffersFragment" >
+        <action
+            android:id="@+id/action_monthlyOffersFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
+        <action
+            android:id="@+id/action_monthlyOffersFragment_to_monthlyCalendarFragment"
+            app:destination="@id/monthlyCalendarFragment" />
+        <action
+            android:id="@+id/action_monthlyOffersFragment_to_salonFragment2"
+            app:destination="@id/salonFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/monthlyCalendarFragment"
+        android:name="com.devrock.beautyappv2.rent.monthly.MonthlyCalendarFragment"
+        android:label="MonthlyCalendarFragment" >
+        <action
+            android:id="@+id/action_monthlyCalendarFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
+        <action
+            android:id="@+id/action_monthlyCalendarFragment_to_monthlyOffersFragment"
+            app:destination="@id/monthlyOffersFragment" />
+        <action
+            android:id="@+id/action_monthlyCalendarFragment_to_monthlyConfirmFragment"
+            app:destination="@id/monthlyConfirmFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/monthlyConfirmFragment"
+        android:name="com.devrock.beautyappv2.rent.monthly.MonthlyConfirmFragment"
+        android:label="MonthlyConfirmFragment" >
+        <action
+            android:id="@+id/action_monthlyConfirmFragment_to_monthlyCalendarFragment"
+            app:destination="@id/monthlyCalendarFragment" />
+        <action
+            android:id="@+id/action_monthlyConfirmFragment_to_monthlyOffersFragment"
+            app:destination="@id/monthlyOffersFragment" />
+        <action
+            android:id="@+id/action_monthlyConfirmFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
+        <action
+            android:id="@+id/action_monthlyConfirmFragment_to_rentSuccessFragment"
+            app:destination="@id/rentSuccessFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/closePromptFragment"
+        android:name="com.devrock.beautyappv2.rent.ClosePromptFragment"
+        android:label="ClosePromptFragment" />
+    <action
+        android:id="@+id/action_global_closePromptFragment"
+        app:destination="@id/mapFragment" />
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.devrock.beautyappv2.profile.help.HelpFragment"
+        android:label="HelpFragment" >
+        <action
+            android:id="@+id/action_helpFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/entryInfoFragment"
+        android:name="com.devrock.beautyappv2.workplaces.entryInfo.EntryInfoFragment"
+        android:label="EntryInfoFragment" >
+        <action
+            android:id="@+id/action_entryInfoFragment_to_workplacesFragment"
+            app:destination="@id/workplacesFragment" />
+        <argument
+            android:name="entryId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_entryInfoFragment_to_salonFragment"
+            app:destination="@id/salonFragment" />
+    </fragment>
+</navigation>

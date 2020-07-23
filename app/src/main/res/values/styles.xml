@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:windowLightStatusBar">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -10,10 +10,49 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/auth_button</item>
+    </style>
+
     <style name="AuthButtonDisabled" parent="Widget.AppCompat.Button.Borderless">
         <item name="cornerRadius">9dp</item>
         <item name="borderWidth">1dp</item>
         <item name="android:textColor">#BDBDBD</item>
     </style>
+
+    <style name="TextInput" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#EBEBED</item>
+        <item name="colorControlActivated">#6979F8</item>
+    </style>
+
+    <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/map_popup_bg</item>
+    </style>
+
+    <style name="BaseBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
+
+    <style name="InfoTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/primaryDk</item>
+        <item name="tabTextAppearance">@style/InfoTabTextAppearance</item>
+        <item name="tabSelectedTextColor">#1a051d</item>
+    </style>
+
+    <style name="InfoTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textColor">#9295b0</item>
+        <item name="textAllCaps">false</item>
+        <item name="singleLine">true</item>
+    </style>
+
+    <style name="DialogTheme_transparent" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
 
 </resources>

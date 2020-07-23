@@ -1,10 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
-    app:startDestination="@id/authFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.devrock.beautyappv2.auth.AuthFragment"
-        android:label="AuthFragment" />
+        android:name="com.devrock.beautyappv2.auth.phone.AuthFragment"
+        android:label="AuthFragment">
+        <action
+            android:id="@+id/action_authFragment_to_authPinFragment"
+            app:destination="@id/authPinFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/authPinFragment"
+        android:name="com.devrock.beautyappv2.auth.pin.AuthPinFragment"
+        android:label="AuthPinFragment" >
+        <argument
+            android:name="phone"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_authPinFragment_to_nameFragment"
+            app:destination="@id/nameFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_authPinFragment_to_authFragment"
+            app:destination="@id/authFragment" />
+    </fragment>
+    <deepLink
+        android:id="@+id/deepLinkTerms"
+        app:uri="https://www.youtube.com/watch?v=dQw4w9WgXcQ" />
+    <fragment
+        android:id="@+id/nameFragment"
+        android:name="com.devrock.beautyappv2.signup.name.NameFragment"
+        android:label="NameFragment" >
+        <argument
+            android:name="session"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_nameFragment_to_userpicFragment"
+            app:destination="@id/userpicFragment"
+            app:enterAnim="@anim/slide_right_in"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_left_in"
+            app:popExitAnim="@anim/slide_right_out" />
+        <action
+            android:id="@+id/action_nameFragment_to_authFragment"
+            app:destination="@id/authFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userpicFragment"
+        android:name="com.devrock.beautyappv2.signup.userpic.UserpicFragment"
+        android:label="UserpicFragment" >
+        <argument
+            android:name="imgUri"
+            app:argType="string"
+            android:defaultValue="none" />
+        <argument
+            android:name="session"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_userpicFragment_to_onboardingFragment"
+            app:destination="@id/onboardingFragment"
+            app:enterAnim="@anim/slide_right_in"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_left_in"
+            app:popExitAnim="@anim/slide_right_out"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_userpicFragment_to_nameFragment"
+            app:destination="@id/nameFragment"
+            app:enterAnim="@anim/slide_left_in"
+            app:exitAnim="@anim/slide_right_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="com.devrock.beautyappv2.signup.onboarding.OnboardingFragment"
+        android:label="OnboardingFragment" >
+        <argument
+            android:name="session"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.devrock.beautyappv2.splash.SplashFragment"
+        android:label="SplashFragment" >
+        <action
+            android:id="@+id/action_splashFragment_to_authFragment"
+            app:destination="@id/authFragment"
+            app:popUpTo="@id/authFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
