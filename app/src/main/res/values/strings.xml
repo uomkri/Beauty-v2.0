@@ -16,6 +16,7 @@
     <string name="material_calendar_friday">Пт</string>
     <string name="material_calendar_saturday">Сб</string>
     <string name="material_calendar_sunday">Вс</string>
+    <string name="amplitude_apikey">2a0aa04769ba1872ab51d87b0626f18a</string>
 
     <array name="material_calendar_months_array">
         <item>Январь</item>

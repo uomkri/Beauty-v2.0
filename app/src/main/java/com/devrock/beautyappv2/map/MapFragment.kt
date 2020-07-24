@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import com.amplitude.api.Amplitude
 import com.devrock.beautyappv2.R
 import com.devrock.beautyappv2.databinding.FragmentMapBinding
 import com.devrock.beautyappv2.net.SalonListItem
@@ -78,6 +79,13 @@ class MapFragment : Fragment() {
 
             }
         })
+
+        val amplitude = Amplitude.getInstance()
+
+        amplitude.initialize(context, getString(R.string.amplitude_apikey))
+        amplitude.enableForegroundTracking(activity!!.application)
+        amplitude.enableCoppaControl()
+        amplitude.logEvent("Map opened")
 
         mapView = binding.mapView
 

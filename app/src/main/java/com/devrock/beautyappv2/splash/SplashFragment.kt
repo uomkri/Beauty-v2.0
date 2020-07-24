@@ -34,6 +34,8 @@ class SplashFragment : Fragment() {
 
         val sessionPrefs = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
 
+        binding.splashAnimation.playAnimation()
+
 
         viewModel.getLocalSession(sessionPrefs)
 

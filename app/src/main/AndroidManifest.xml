@@ -18,7 +18,9 @@
         android:requestLegacyExternalStorage="true">
         <meta-data android:name="com.google.android.geo.API_KEY"
                     android:value="AIzaSyAzrfnwwP_MBW2uMgJvpYvFUiPdfmoTRiQ" />
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.Launcher"
             >
             <nav-graph android:value="@navigation/navigation" />
             <intent-filter>

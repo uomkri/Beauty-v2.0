@@ -96,4 +96,7 @@ dependencies {
     implementation 'com.applandeo:material-calendar-view:1.8.0-rc01'
     implementation 'com.google.firebase:firebase-analytics:17.4.4'
     implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
+    implementation 'com.google.firebase:firebase-messaging:20.2.3'
+    implementation 'com.amplitude:android-sdk:2.25.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.2.2'
 }
