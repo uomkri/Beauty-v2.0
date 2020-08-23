@@ -14,7 +14,6 @@
     android:id="@+id/salonContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="8dp"
     android:background="@drawable/salon_rounded_header"
     app:shapeAppearanceOverlay="@drawable/salon_rounded_header"
     >

@@ -10,8 +10,8 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
     }
 
     defaultConfig {
@@ -99,4 +99,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.2.3'
     implementation 'com.amplitude:android-sdk:2.25.2'
     implementation 'com.squareup.okhttp3:okhttp:4.2.2'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.11.7'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.7'
 }

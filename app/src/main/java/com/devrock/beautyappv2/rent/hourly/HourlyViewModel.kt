@@ -49,16 +49,18 @@ class HourlyViewModel : ViewModel() {
     val addStatus: LiveData<String>
         get() = _addStatus
 
-    fun getTimeslots(workplaceId: Int, date: String) {
+    fun getTimeslots(salonId: Int, date: String) {
 
         _selectedTimeslots.value = mutableListOf(TimeSlot(0,0, "0", "0", "0", "0", "0"))
 
         scope.launch {
 
-            val response = BeautyApi.retrofitService.getWorkplaceTimeslots(date, workplaceId).await()
+            val response = BeautyApi.retrofitService.getHourOffers(salonId, date).await()
 
             if (response.info.status == "Ok") {
-                _timeslotsRaw.value = response.payload
+                _timeslotsRaw.value = response.payload.map {
+                    return@map it.timeSlot
+                }
             }
         }
 
@@ -108,6 +110,7 @@ class HourlyViewModel : ViewModel() {
         scope.launch {
 
             val response = BeautyApi.retrofitService.getWorkplaceHourPrices(workplaceId).await()
+            // TODO: Replace workplace-based timeslot getting
 
             if (response.info.status == "Ok") {
                 _hourPrices.value = response.payload

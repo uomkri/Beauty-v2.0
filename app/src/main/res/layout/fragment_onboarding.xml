@@ -12,88 +12,42 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/primaryDk"
+        >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ob_page_container"
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/videoView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginRight="32dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/onboarding_bg"
-            android:elevation="3dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@id/startButton"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/ob_viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="73dp"
-                app:layout_constraintBottom_toTopOf="@id/dots_indicator"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.4"
-                app:layout_constraintStart_toStartOf="parent"
-
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
-                android:id="@+id/dots_indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="16dp"
-                app:dotsColor="#A5AFFB"
-                app:dotsCornerRadius="4dp"
-                app:dotsSize="8dp"
-                app:dotsSpacing="8dp"
-                app:dotsWidthFactor="2.5"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:progressMode="true"
-                app:selectedDotColor="#6979F8" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/startButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="28dp"
-            android:padding="4dp"
-            android:text="Пропустить"
-            android:fontFamily="@font/roboto"
-            android:textSize="14sp"
-            android:textColor="#d0c9d6"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/nextButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:use_controller="false"
+            android:background="@color/primaryDk"
+            app:shutter_background_color="@color/primaryDk"
+            />
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            android:height="52dp"
-            android:visibility="gone"
-            android:background="@drawable/auth_button"
-            android:fontFamily="@font/roboto_bold"
-            android:text="Далее"
-            android:textAllCaps="false"
-            android:textColor="#ffffff"
-            android:textSize="17sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+            <LinearLayout
+                android:id="@+id/left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal" />
+            <LinearLayout
+                android:id="@+id/right"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
+        </LinearLayout>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

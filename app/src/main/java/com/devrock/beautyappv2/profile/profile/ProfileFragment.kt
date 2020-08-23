@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableStringBuilder
@@ -47,6 +48,14 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        activity!!.window.apply {
+
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            statusBarColor = Color.WHITE
+
+        }
+
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentProfileBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
@@ -55,9 +64,12 @@ class ProfileFragment : Fragment() {
         binding.editTextName.isEnabled = false
         binding.editTextPhone.isEnabled = false
 
+        val sessionPrefs = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
+        val session = sessionPrefs.getString("session", "")
+
         binding.buttonTestCrash.setOnClickListener {
 
-            throw RuntimeException("TEST NAYOB PRODA")
+           it.findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToOnboardingFragment2(session!!))
 
         }
 
@@ -105,8 +117,6 @@ class ProfileFragment : Fragment() {
         val formatWatcher = MaskFormatWatcher(MaskImpl.createTerminated(slots))
         formatWatcher.installOn(binding.editTextPhone)
 
-        val sessionPrefs = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
-        val session = sessionPrefs.getString("session", "")
 
         viewModel.getCurrentAccount(session!!)
 

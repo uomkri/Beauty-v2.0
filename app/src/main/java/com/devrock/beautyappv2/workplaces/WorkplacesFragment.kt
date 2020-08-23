@@ -1,5 +1,6 @@
 package com.devrock.beautyappv2.workplaces
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,13 @@ class WorkplacesFragment : Fragment() {
         binding = FragmentWorkplacesBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
         binding.viewModel = viewModel
+
+        activity!!.window.apply {
+
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            statusBarColor = Color.WHITE
+
+        }
 
         binding.wpViewpager.adapter = WorkplacesFragmentStateAdapter(activity!!)
 

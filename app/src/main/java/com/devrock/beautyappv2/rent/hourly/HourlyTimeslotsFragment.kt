@@ -47,9 +47,6 @@ class HourlyTimeslotsFragment : Fragment() {
 
         val date = HourlyTimeslotsFragmentArgs.fromBundle(arguments!!).selectedDate
 
-        viewModel.getTimeslots(1, date)
-        viewModel.getHourPrices(1)
-
         val selectedMonth = getFormattedMonth(date.substring(5, 7))
         val formattedDate = "${date.substring(8, 10)} $selectedMonth ${date.substring(0, 4)}"
 
@@ -57,6 +54,11 @@ class HourlyTimeslotsFragment : Fragment() {
 
         val prefs: SharedPreferences = activity!!.getSharedPreferences("SalonInfo", Context.MODE_PRIVATE)
         val prefEditor: SharedPreferences.Editor = prefs.edit()
+
+        val salonId = prefs.getInt("salonId", 0)
+
+        viewModel.getTimeslots(salonId, date)
+        viewModel.getHourPrices(1)
 
         binding.popup.setOnClickListener { v ->
             v.visibility = View.GONE
@@ -166,15 +168,17 @@ class HourlyTimeslotsFragment : Fragment() {
                     for (price in viewModel.hourPrices.value!!) {
 
                         if (it.size >= price.hours) {
-                            binding.hourPrice.text = "${price.price} ₽ / час"
-                            hourPrice = price.price
+                            binding.hourPrice.text = "${price.price / price.hours} ₽ / час"
+                            hourPrice = price.price / price.hours
                         }
+                    }
 
+                    popupLoop@ for (price in viewModel.hourPrices.value!!) {
                         if (it.isNotEmpty() && it.size == price.hours - 1) {
-                            binding.popupPrice.text = "от ${price.hours} часов - ${price.price} ₽ / час"
+                            binding.popupPrice.text = "от ${price.hours} часов - ${price.price / price.hours} ₽ / час"
                             binding.popup.visibility = View.VISIBLE
-                        } //else binding.popup.visibility = View.GONE
-
+                            break@popupLoop
+                        } else binding.popup.visibility = View.GONE
                     }
 
                     resultPrice = it.size * hourPrice

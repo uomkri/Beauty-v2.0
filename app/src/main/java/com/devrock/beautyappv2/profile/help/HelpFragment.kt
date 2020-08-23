@@ -1,5 +1,6 @@
 package com.devrock.beautyappv2.profile.help
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,13 @@ class HelpFragment : Fragment() {
         binding.lifecycleOwner = this
 
         viewModel.initQs()
+
+        activity!!.window.apply {
+
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            statusBarColor = Color.WHITE
+
+        }
 
 
         binding.buttonBack.setOnClickListener {

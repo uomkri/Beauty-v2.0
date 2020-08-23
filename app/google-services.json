@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "529599157143-qcs259s6cb3nig2spbf08n0bstk8q7ug.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devrock.beautyappv2",
+            "certificate_hash": "899950a111253b6686c827599635bf7ad2cef592"
+          }
+        },
+        {
           "client_id": "529599157143-04pkgg0s1uo8nag3uupmunodf3p0457h.apps.googleusercontent.com",
           "client_type": 3
         }

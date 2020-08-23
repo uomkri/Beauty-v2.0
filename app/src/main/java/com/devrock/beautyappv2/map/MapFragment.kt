@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
@@ -11,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
@@ -34,8 +36,8 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.card.MaterialCardView
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_app.*
-
 import kotlinx.android.synthetic.main.map_popup.*
 import kotlinx.android.synthetic.main.map_popup.view.*
 import kotlin.properties.Delegates
@@ -70,8 +72,23 @@ class MapFragment : Fragment() {
         binding = FragmentMapBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
 
+        activity!!.window.apply {
+            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            statusBarColor = Color.TRANSPARENT
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
+
         val sessionPrefs = activity!!.getSharedPreferences("Session", Context.MODE_PRIVATE)
+        val phonePrefs = activity!!.getSharedPreferences("Phone", Context.MODE_PRIVATE)
+        val phone = phonePrefs.getString("phone", "")
         val session = sessionPrefs.getString("session", "")
+
+        FirebaseMessaging.getInstance().subscribeToTopic(phone!!.drop(1))
+            .addOnCompleteListener {
+                Log.d("task", it.isSuccessful.toString())
+            }
 
 
         activity!!.onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -80,12 +97,7 @@ class MapFragment : Fragment() {
             }
         })
 
-        val amplitude = Amplitude.getInstance()
 
-        amplitude.initialize(context, getString(R.string.amplitude_apikey))
-        amplitude.enableForegroundTracking(activity!!.application)
-        amplitude.enableCoppaControl()
-        amplitude.logEvent("Map opened")
 
         mapView = binding.mapView
 
@@ -280,8 +292,6 @@ class MapFragment : Fragment() {
             mFusedLocationProviderClient.lastLocation?.addOnCompleteListener(activity!!
             ) { p0 ->
                 if (p0.isSuccessful) {
-
-                    Log.e("p0", p0.result.toString())
 
                     val mLastKnownLocation = p0.result
                     userLon = mLastKnownLocation!!.longitude

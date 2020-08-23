@@ -11,7 +11,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 
-private const val BASE_URL = "https://beauty.judoekb.ru/api/"
+private const val BASE_URL = "https://beauty2.judoekb.ru/api/"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -33,7 +33,7 @@ private val retrofit = Retrofit.Builder()
 
 interface BeautyApiService {
 
-    @POST("auth/send_code")
+    @POST("auth/sendCode")
     fun authSendCode(
         @Query("phone") phone: String
     ): Deferred<Status>

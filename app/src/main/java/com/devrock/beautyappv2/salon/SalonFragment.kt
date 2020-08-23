@@ -2,6 +2,7 @@ package com.devrock.beautyappv2.salon
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast

@@ -61,6 +61,8 @@ class AuthPinFragment : Fragment() {
 
         binding.root.showKeyboard()
 
+        val phonePrefs = activity!!.getSharedPreferences("Phone", Context.MODE_PRIVATE)
+
         otpTextView.otpListener = object : OTPListener {
             override fun onOTPComplete(otp: String) {
                 viewModel.phoneConfirm(phone, otp)
@@ -99,7 +101,10 @@ class AuthPinFragment : Fragment() {
                 })
             } else if (v == "Ok"){
                 viewModel.session.observe(this, Observer {
-                    if (it != null) prefEditor.putString("session", it).apply()
+                    if (it != null) {
+                        prefEditor.putString("session", it).apply()
+                        phonePrefs.edit().putString("phone", phone).apply()
+                    }
                 })
                 otpTextView.showSuccess()
                 binding.pinError.visibility = View.GONE

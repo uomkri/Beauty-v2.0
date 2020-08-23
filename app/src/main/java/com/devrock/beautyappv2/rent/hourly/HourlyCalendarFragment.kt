@@ -2,6 +2,7 @@ package com.devrock.beautyappv2.rent.hourly
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -40,6 +41,13 @@ class HourlyCalendarFragment : Fragment() {
         binding.buttonClose.setOnClickListener {
 
             closePrompt.show(activity!!.supportFragmentManager, "close_prompt")
+
+        }
+
+        activity!!.window.apply {
+
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            statusBarColor = Color.WHITE
 
         }
 

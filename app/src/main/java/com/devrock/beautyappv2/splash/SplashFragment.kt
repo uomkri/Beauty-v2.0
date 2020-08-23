@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.devrock.beautyappv2.AppActivity
 import com.devrock.beautyappv2.databinding.FragmentSplashBinding
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 
 class SplashFragment : Fragment() {
 

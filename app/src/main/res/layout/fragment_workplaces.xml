@@ -26,8 +26,6 @@
             app:tabIndicator="@drawable/tab_indicator"
             app:tabIndicatorFullWidth="false"
             app:tabIndicatorHeight="3dp"
-            android:layout_marginTop="16dp"
-
             app:tabMode="fixed" />
         <View
             android:id="@+id/dividerTabs"
